@@ -35,6 +35,11 @@
 1. If not already done, [install Docker Compose](https://docs.docker.com/compose/install/) (v2.10+)
 2. Run `docker compose build --pull --no-cache` to build fresh images
 3. Run `docker compose up --wait` to set up and start a fresh Symfony project
+4. Run docker compose exec php bin/console tailwind:build --watch
+6. Run docker compose exec php bin/console doctrine:database:drop --force
+        docker compose exec php bin/console doctrine:database:create
+        docker compose exec php bin/console doctrine:migrations:migrate --no-interaction
+        docker compose exec php bin/console doctrine:fixtures:load --no-interaction
 4. Open `https://localhost` in your favorite web browser and [accept the auto-generated TLS certificate](https://stackoverflow.com/a/15076602/1352334)
 5. Run `docker compose down --remove-orphans` to stop the Docker containers.
 
@@ -47,9 +52,6 @@
 * Automatic HTTPS (in dev and prod)
 * HTTP/3 and [Early Hints](https://symfony.com/blog/new-in-symfony-6-3-early-hints) support
 * Real-time messaging thanks to a built-in [Mercure hub](https://symfony.com/doc/current/mercure.html)
-* [Vulcain](https://vulcain.rocks) support
-* Native [XDebug](docs/xdebug.md) integration
-* Super-readable configuration
 
 ## License
 

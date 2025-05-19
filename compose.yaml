@@ -18,6 +18,7 @@ services:
     volumes:
       - caddy_data:/data
       - caddy_config:/config
+      - php_config:/usr/local/etc/php
     ports:
       # HTTP
       - target: 80
@@ -58,6 +59,7 @@ services:
 volumes:
   caddy_data:
   caddy_config:
+  php_config:
 ###> symfony/mercure-bundle ###
 ###< symfony/mercure-bundle ###
 
