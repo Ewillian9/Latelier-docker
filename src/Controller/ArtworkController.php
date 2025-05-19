@@ -76,16 +76,16 @@ final class ArtworkController extends AbstractController
         }
 
         $form = $this->createForm(CommentType::class, $comment);
+        $emptyForm = clone $form;
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($comment);
             $em->flush();
-            $update = new Update(
+            $hub->publish(new Update(
                 'comment',
-                $this->renderBlock('comment/comment.stream.html.twig', 'new_comment', ['comment' => $form->getData()])
-            );
-            $hub->publish($update);
-            return new Response('', Response::HTTP_OK, ['Content-Type' => 'text/vnd.turbo-stream.html']);
+                $this->renderBlock('comment/comment.stream.html.twig', 'new_comment', ['comment' => $form->getData([])])
+            ));
+            $form = $emptyForm;
         }
         return $this->render('artwork/show.html.twig', [
             'artwork' => $artwork,
