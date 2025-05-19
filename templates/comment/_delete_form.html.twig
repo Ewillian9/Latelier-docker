@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('app_comment_delete', {'id': comment.id}) }}" data-turbo-confirm="Are you sure you want to delete this comment?">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+    <button class="px-3 py-1 rounded bg-red-300 dark:bg-red-700 text-sm inline-block hover:bg-red-400 dark:hover:bg-red-600 transition">Delete</button>
+</form>

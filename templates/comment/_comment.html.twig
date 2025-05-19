@@ -1,0 +1,23 @@
+<section class="mt-4 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 w-full overflow-hidden">
+    <h2 id="comments" class="text-xl font-semibold mb-4" {{ turbo_stream_listen('comment') }}>Commentaires</h2>
+    {% for comment in artwork.comments %}
+        <article id="comment{{ comment.id }}" class="mb-4 border-l-4 border-blue-500 pl-4">
+            {% if app.user == comment.user or is_granted('ROLE_ADMIN') %}
+                <nav aria-label="Comment actions" class="mt-2 flex gap-2 text-sm">
+                    <a href="{{ path('app_comment_edit', {'id': comment.id}) }}" class="px-3 py-1 rounded bg-blue-300 dark:bg-blue-700 hover:bg-blue-400 hover:dark:bg-blue-600 text-sm inline-block transition">Edit</a>
+                    {{ include('comment/_delete_form.html.twig', {'comment': comment}) }}
+                </nav>
+            {% endif %}
+            <p class="text-gray-800 dark:text-gray-200">{{ comment.content }}</p>
+            <p class="text-sm text-gray-500">By {{ comment.user.username }} • {{ comment.createdAt|ago }}</p>
+        </article>
+    {% else %}
+        <p id="no_comment" class="text-gray-500">Aucun commentaire pour l’instant.</p>
+    {% endfor %}
+    
+    {% if app.user %}
+        {{ include('comment/_form.html.twig') }}
+    {% else %}
+        <p class="text-sm text-gray-500 mt-4">Connectez-vous pour laisser un commentaire.</p>
+    {% endif %}
+</section>

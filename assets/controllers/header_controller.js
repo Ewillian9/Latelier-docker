@@ -1,0 +1,21 @@
+import{Controller}from'@hotwired/stimulus'/*stimulusFetch:'lazy'*/
+export default class extends Controller{
+    lastScroll=0
+    isHovered=false
+    connect(){
+        window.addEventListener('scroll',this.handleScroll.bind(this))
+        this.element.addEventListener('mouseenter',this.showHeader.bind(this))
+        this.element.addEventListener('mouseleave',this.handleMouseLeave.bind(this))}
+    handleScroll(){
+        if(window.pageYOffset>this.lastScroll&&window.pageYOffset>50){this.hideHeader()}else{this.showHeader()}
+        this.lastScroll=window.pageYOffset}
+    showHeader(){
+        this.isHovered=true
+        this.element.classList.remove('-translate-y-full')}
+    hideHeader(){
+        this.isHovered=false
+        this.element.classList.add('-translate-y-full')}
+    handleMouseLeave(){
+        this.isHovered=false
+        if(window.pageYOffset>this.lastScroll&&window.pageYOffset>50)this.hideHeader()}
+}

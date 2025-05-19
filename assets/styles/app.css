@@ -1,0 +1,3 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+html { scrollbar-width: none; }

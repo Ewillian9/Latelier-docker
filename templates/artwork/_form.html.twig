@@ -1,0 +1,23 @@
+<turbo-frame id="upload_form">
+{{ form_start(form, {'attr': {'enctype': 'multipart/form-data', 'data-turbo-frame': 'upload_form', 'data-turbo-frame': '_top'}}) }}
+    <div id="image-fields" data-controller="image-fields" data-image-fields-target="container" data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}" data-max="10">
+        {{ form_label(form.images, null, {'label_attr': {'class': 'font-semibold'}}) }}
+        {% for imageForm in form.images %}
+            <div>{{ form_widget(imageForm) }}</div>
+        {% endfor %}
+    </div>
+    <div>
+        {{ form_label(form.title, null, {'label_attr': {'class': 'font-semibold'}}) }}
+        {{ form_widget(form.title, {'attr': {'class': 'border p-2 w-full'}}) }}
+    </div>
+    <div>
+        {{ form_label(form.description, null, {'label_attr': {'class': 'font-semibold'}}) }}
+        {{ form_widget(form.description, {'attr': {'class': 'border p-2 w-full'}}) }}
+    </div>
+    <div>
+        {{ form_label(form.keywords, null, {'label_attr': {'class': 'font-semibold'}}) }}
+        {{ form_widget(form.keywords, {'attr': {'class': 'border p-2 w-full'}}) }}
+    </div>
+    <button class="px-3 py-1 rounded bg-green-300 dark:bg-green-700 text-sm inline-block hover:bg-green-400 dark:hover:bg-green-600 transition">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+</turbo-frame>

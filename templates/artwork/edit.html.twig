@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+{% block title %}Edit {{artwork.title}}{% endblock %}
+{% block body %}
+    <article class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-4 md:p-8 w-full overflow-hidden">
+        {{ include('components/_nav.html.twig') }}
+        {{ include('artwork/_form.html.twig') }}
+    </article>
+{% endblock %}
