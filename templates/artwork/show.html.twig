@@ -6,12 +6,12 @@
         {% if artwork.images|length > 0 %}
             <figure aria-live="polite" class="relative aspect-video overflow-hidden rounded-lg shadow-lg mb-4">
                 {% for image in artwork.images %}
-                    <img data-carousel-target="mainImage" src="{{ vich_uploader_asset(image, 'imageFile') }}" alt="Image {{ artwork.title }} n°{{ loop.index }}" data-index="{{ loop.index0 }}" class="carousel-main-image w-full h-full object-cover absolute top-0 left-0 transition-opacity duration-500 ease-in-out {% if loop.first %}opacity-100 z-10{% else %}opacity-0 z-0{% endif %}">
+                    <img loading="lazy" data-carousel-target="mainImage" src="{{ vich_uploader_asset(image, 'imageFile') }}" alt="Image {{ artwork.title }} n°{{ loop.index }}" data-index="{{ loop.index0 }}" class="carousel-main-image w-full h-full object-cover absolute top-0 left-0 transition-opacity duration-500 ease-in-out {% if loop.first %}opacity-100 z-10{% else %}opacity-0 z-0{% endif %}">
                 {% endfor %}
             </figure>
             <figure class="flex gap-2 justify-center">
                 {% for image in artwork.images %}
-                    <img src="{{ vich_uploader_asset(image, 'imageFile') }}" data-carousel-target="thumb" class="carousel-thumb w-16 h-16 object-cover rounded cursor-pointer border-2 border-transparent hover:border-gray-400 transition" data-index="{{ loop.index0 }}" alt="Thumb {{ artwork.title }} n°{{ loop.index }}">
+                    <img loading="lazy" src="{{ vich_uploader_asset(image, 'imageFile') }}" data-carousel-target="thumb" class="carousel-thumb w-16 h-16 object-cover rounded cursor-pointer border-2 border-transparent hover:border-gray-400 transition" data-index="{{ loop.index0 }}" alt="Thumb {{ artwork.title }} n°{{ loop.index }}">
                 {% endfor %}
             </figure>
         {% else %}

@@ -8,11 +8,11 @@
         <p class="text-gray-500 dark:text-gray-400 mt-1">Historique de vos commentaires publiés</p>
     </div>
     {% if comments is empty %}
-        <p class="text-gray-600 dark:text-gray-300">Vous n’avez encore publié aucun commentaire.</p>
+        <p id="no_comment_user" class="text-gray-600 dark:text-gray-300">Vous n'avez pour le moment posté aucun commentaire.</p>
     {% else %}
-        <ul class="space-y-6 w-full">
+        <ul id="comments_user" class="space-y-6 w-full" {{ turbo_stream_listen('comment') }}>
             {% for comment in comments %}
-                <li class="p-4 rounded-xl shadow-sm bg-gray-100 dark:bg-gray-700 flex justify-between items-start">
+                <li id="comment{{ comment.id }}" class="p-4 rounded-xl shadow-sm bg-gray-100 dark:bg-gray-700 flex justify-between items-start">
                     <div class="flex-1">
                         <p class="text-gray-600 dark:text-gray-300">{{ comment.content }}</p>
                         <time datetime="{{ comment.createdAt ? comment.createdAt|date('c') : '' }}" class="block text-sm text-gray-500 dark:text-gray-400 mt-2">Publié {{ comment.createdAt ? comment.createdAt|ago : 'il y a un moment'}} on {{comment.artwork.title}}</time>

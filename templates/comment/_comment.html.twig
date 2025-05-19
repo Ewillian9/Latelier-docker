@@ -1,5 +1,5 @@
 <section class="mt-4 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 w-full overflow-hidden">
-    <h2 id="comments" class="text-xl font-semibold mb-4" {{ turbo_stream_listen('comment') }}>Commentaires</h2>
+    <h2 id="comments_artwork" class="text-xl font-semibold mb-4" {{ turbo_stream_listen('comment') }}>Commentaires</h2>
     {% for comment in artwork.comments %}
         <article id="comment{{ comment.id }}" class="mb-4 border-l-4 border-blue-500 pl-4">
             {% if app.user == comment.user or is_granted('ROLE_ADMIN') %}
@@ -12,7 +12,7 @@
             <p class="text-sm text-gray-500">By {{ comment.user.username }} • {{ comment.createdAt|ago }}</p>
         </article>
     {% else %}
-        <p id="no_comment" class="text-gray-500">Aucun commentaire pour l’instant.</p>
+        <p id="no_comment_artwork" class="text-gray-500">Aucun commentaire pour le moment été posté.</p>
     {% endfor %}
     
     {% if app.user %}

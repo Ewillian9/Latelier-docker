@@ -8,7 +8,7 @@
                     <span class="w-full h-48 flex items-center justify-center bg-gray-100 text-gray-400 text-4xl">+</span>
                     <figcaption class="p-4">
                         <h2 class="text-lg font-semibold">New</h2>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">{{ 'Add a new artwork' ~ '...' }}</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Add a new artwork...</p>
                     </figcaption>
                 </a>
             </figure> 
@@ -17,13 +17,13 @@
             <figure class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
                 <a href="{{ path('app_artwork_show', {'id': artwork.id}) }}">
                     {% if artwork.images|length > 0 %}
-                        <img src="{{ vich_uploader_asset(artwork.images[0], 'imageFile') }}" alt="{{ artwork.title }}" class="w-full h-48 object-cover">
+                        <img src="{{ vich_uploader_asset(artwork.images[0], 'imageFile') }}" alt="{{ artwork.title }}" class="w-full h-48 object-cover" loading="lazy">
                     {% else %}
                         <span class="w-full h-48 flex items-center justify-center bg-gray-100 text-gray-400 text-4xl">X</span>
                     {% endif %}
                     <figcaption class="p-4">
                         <h2 class="text-lg font-semibold">{{ artwork.title }}</h2>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">{{ artwork.description|slice(0, 50) ~ '...' }}</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">{{ artwork.description|slice(0, 50) }}...</p>
                     </figcaption>
                 </a>
             </figure>

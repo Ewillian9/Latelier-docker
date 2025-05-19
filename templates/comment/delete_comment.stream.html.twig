@@ -3,9 +3,16 @@
         <template></template>
     </turbo-stream>
     {% if remainingCommentsCount == 0 %}
-        <turbo-stream action="after" target="comments">
+        <turbo-stream action="after" target="comments_artwork">
             <template>
-                <p id="no_comment" class="text-gray-500">Aucun commentaire pour l’instant.</p>
+                <p id="no_comment_artwork" class="text-gray-500">Aucun commentaire pour le moment été posté.</p>
+            </template>
+        </turbo-stream>
+    {% endif %}
+    {% if remainingUserCommentsCount == 0 %}
+        <turbo-stream action="replace" target="comments_user">
+            <template>
+                <p id="no_comment_user" class="text-gray-600 dark:text-gray-300">Vous n'avez pour le moment posté aucun commentaire.</p>
             </template>
         </turbo-stream>
     {% endif %}

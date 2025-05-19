@@ -1,5 +1,5 @@
 {% block new_comment %}
-    <turbo-stream action="after" target="comments">
+    <turbo-stream action="after" target="comments_artwork">
         <template>
             <article id="comment{{ comment.id }}" class="mb-4 border-l-4 border-blue-500 pl-4">
                 {% if app.user == comment.user or is_granted('ROLE_ADMIN') %}
@@ -13,7 +13,10 @@
             </article>
         </template>
     </turbo-stream>
-    <turbo-stream action="remove" target="no_comment">
+    <turbo-stream action="remove" target="no_comment_artwork">
+        <template></template>
+    </turbo-stream>
+    <turbo-stream action="remove" target="no_comment_user">
         <template></template>
     </turbo-stream>
 {% endblock %}

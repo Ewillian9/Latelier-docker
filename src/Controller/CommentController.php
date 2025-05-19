@@ -72,13 +72,18 @@ final class CommentController extends AbstractController
 
         if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->getPayload()->getString('_token'))) {
             $commentId = $comment->getId();
+            $commentUser = $comment->getUser();
             $em->remove($comment);
             $em->flush();
-            $update = new Update(
+            $hub->publish(new Update(
                 'comment',
-                $this->renderBlock('comment/delete_comment.stream.html.twig', 'delete_comment', ['commentId' => $commentId, 'remainingCommentsCount' => $cr->count(['artwork' => $comment->getArtwork()])])
-            );
-            $hub->publish($update);
+                $this->renderBlock('comment/delete_comment.stream.html.twig', 'delete_comment', [
+                    'commentId' => $commentId,
+                    'remainingCommentsCount' => $cr->count(['artwork' => $comment->getArtwork()]),
+                    'remainingUserCommentsCount' => $cr->count(['commenter' => $commentUser]),
+                    ]
+                )
+            ));
         }
         return new Response(null, Response::HTTP_NO_CONTENT);
     }
