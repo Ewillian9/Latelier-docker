@@ -1,9 +1,34 @@
-# Symfony Docker
+# L'atelier - Site vitrine pour des œuvres d'art maison
 
-A [Docker](https://www.docker.com/)-based installer and runtime for the [Symfony](https://symfony.com) web framework,
-with [FrankenPHP](https://frankenphp.dev) and [Caddy](https://caddyserver.com/) inside!
+## Technologies utilisées
+- **Symfony7/Twig/Turbo/Mercure**
+- **TailwindCSS4**
+- **PostSQL**
+- **Docker**
 
-![CI](https://github.com/dunglas/symfony-docker/workflows/CI/badge.svg)
+## Fonctionnalités (complémentaires)
+
+### Administration
+- Modération des commentaires ---OK
+- et des utilisateurs
+
+### Artists
+- Gestion de ses œuvres (ajout, modification, suppression) ---OK
+- Ajout de titre, images, description et mots-clés ---OK
+- Generation par IA de titre, description, mots-clés
+
+### Utilisateurs (inscription requise)
+- Création de compte avec confirmation par email
+- Communication avec l'artiste via une messagerie instantanée ---SOON
+- Commande d'une œuvre et suivi du statut (validation et avancement via la messagerie instantanée)
+- Notification par email une fois l'œuvre terminée
+- Commentaires instantanés sous les œuvres ---OK
+
+### Visiteurs (sans inscription)
+- Consultation des œuvres ---OK
+- Recherche par titre et mots-clés ---OK
+- Mode clair/sombre ---OK
+- Support multilingue (FR/EN) ---SOON
 
 ## Getting Started
 
@@ -25,22 +50,6 @@ with [FrankenPHP](https://frankenphp.dev) and [Caddy](https://caddyserver.com/) 
 * [Vulcain](https://vulcain.rocks) support
 * Native [XDebug](docs/xdebug.md) integration
 * Super-readable configuration
-
-**Enjoy!**
-
-## Docs
-
-1. [Options available](docs/options.md)
-2. [Using Symfony Docker with an existing project](docs/existing-project.md)
-3. [Support for extra services](docs/extra-services.md)
-4. [Deploying in production](docs/production.md)
-5. [Debugging with Xdebug](docs/xdebug.md)
-6. [TLS Certificates](docs/tls.md)
-7. [Using MySQL instead of PostgreSQL](docs/mysql.md)
-8. [Using Alpine Linux instead of Debian](docs/alpine.md)
-9. [Using a Makefile](docs/makefile.md)
-10. [Updating the template](docs/updating.md)
-11. [Troubleshooting](docs/troubleshooting.md)
 
 ## License
 
