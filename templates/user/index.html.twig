@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block title %}My profile{% endblock %}
 {% block body %}
-<section class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-4 md:p-8 flex flex-col gap-6">
+<section class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-4 md:p-8 flex flex-col gap-4">
     {{ include('components/_nav.html.twig') }}
     <div class="w-full border-b border-gray-300 dark:border-gray-600 pb-4 flex justify-between items-center">
         <div>
@@ -9,36 +9,34 @@
             <p class="text-gray-500 dark:text-gray-400 mt-1">Informations de votre compte</p>
         </div>
     </div>
-
     <ul class="w-full space-y-4 text-gray-700 dark:text-gray-200 text-base">
-        <li class="flex justify-between border-b border-dashed pb-2">
+        <li class="flex justify-between border-b border-dashed pb-4">
             <span class="font-medium text-gray-500 dark:text-gray-400">Nom d'utilisateur</span>
             <span>{{ user.username }}</span>
         </li>
-        <li class="flex justify-between border-b border-dashed pb-2">
+        <li class="flex justify-between border-b border-dashed pb-4">
             <span class="font-medium text-gray-500 dark:text-gray-400">Email</span>
             <span>{{ user.email }}</span>
         </li>
-        <li class="flex justify-between border-b border-dashed pb-2">
+        <li class="flex justify-between border-b border-dashed pb-4">
             <span class="font-medium text-gray-500 dark:text-gray-400">Rôles</span>
             <span>{{ user.roles | join(', ') }}</span>
         </li>
-        <li class="flex justify-between border-b border-dashed pb-2">
-            <span class="font-medium text-gray-500 dark:text-gray-400">Créé</span>
-            <span>{{ user.createdAt ? user.createdAt|ago : 'N/A' }}</span>
-        </li>
-        <li class="flex justify-between">
-            <span class="font-medium text-gray-500 dark:text-gray-400">Mis à jour</span>
-            <span>{{ user.updatedAt ? user.updatedAt|ago : 'N/A' }}</span>
-        </li>
     </ul>
-
-    <div class="w-full mt-6 space-y-3">
-        <a href="{{ path('app_my_comments', {'id': user.id}) }}" class="text-sm bg-gray-300 dark:bg-gray-700 px-3 py-1 rounded hover:bg-gray-400 dark:hover:bg-gray-600 transition">Voir mes commentaires</a>
-
-        {% if is_granted('ROLE_ARTIST') and user.artworks|length > 0 %}
-            <a href="{{ path('app_my_artworks', {'id': user.id}) }}" class="text-sm bg-gray-300 dark:bg-gray-700 px-3 py-1 rounded hover:bg-gray-400 dark:hover:bg-gray-600 transition">Voir mes œuvres</a>
-        {% endif %}
+    <nav class="w-full mt-6 space-y-3">
+    <div class="flex justify-between items-center">
+        <div class="space-x-2">
+            {% if user.comments|length > 0 %}
+                <a href="{{ path('app_my_comments', {'id': user.id}) }}" class="text-sm bg-gray-300 dark:bg-gray-700 px-3 py-1 rounded hover:bg-gray-400 dark:hover:bg-gray-600 transition"> Voir mes commentaires ({{ user.comments|length }})</a>
+            {% endif %}
+            {% if user.artworks|length > 0 %}
+                <a href="{{ path('app_my_artworks', {'id': user.id}) }}" class="text-sm bg-gray-300 dark:bg-gray-700 px-3 py-1 rounded hover:bg-gray-400 dark:hover:bg-gray-600 transition"> Voir mes œuvres ({{ user.artworks|length }})</a>
+            {% endif %}
+        </div>
+        <div class="text-xs text-gray-500 dark:text-gray-400 text-right">
+            <div>Crée {{ user.createdAt ? user.createdAt|ago : 'N/A' }} | Mis à jour {{ user.updatedAt ? user.updatedAt|ago : 'N/A' }}</div>
+        </div>
     </div>
+</nav>
 </section>
 {% endblock %}
