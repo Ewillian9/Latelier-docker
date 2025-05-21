@@ -17,9 +17,9 @@ final class UserController extends AbstractController
     #[Route('/profile', name: 'app_profile', methods: ['GET'])]
     public function index(): Response
     {
-        $user = $this->getUser();
-        if (!$user) throw $this->createAccessDeniedException();
-
+        if (!$user = $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
         return $this->render('user/index.html.twig', [
             'user' => $user,
         ]);
