@@ -37,8 +37,7 @@ final class ArtworkController extends AbstractController
     #[Route('artwork/new', name: 'app_artwork_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $em): Response
     {
-        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_ARTIST')) throw $this->createAccessDeniedException();
-
+        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_ARTIST')) { throw $this->createAccessDeniedException(); }
         $artwork = new Artwork();
         $artworkImage = new ArtworkImage();
         $artwork->setArtist($this->getUser());
@@ -53,10 +52,8 @@ final class ArtworkController extends AbstractController
             }
             $em->persist($artwork);
             $em->flush();
-            
-            return $this->redirectToRoute('app_artwork_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_artwork_show', ['id' => $artwork->getId()], Response::HTTP_SEE_OTHER);
         }
-
         return $this->render('artwork/new.html.twig', [
             'artwork' => $artwork,
             'form' => $form,
@@ -66,26 +63,25 @@ final class ArtworkController extends AbstractController
     #[Route('artwork/{id}', name: 'app_artwork_show', methods: ['GET', 'POST'])]
     public function show(Artwork $artwork, Request $request, HubInterface $hub, EntityManagerInterface $em): Response
     {
-        $comment = new Comment();
-        $comment->setArtwork($artwork);
-        $comment->setCreatedAt(new \DateTimeImmutable());
-        $comment->setUpdatedAt(new \DateTimeImmutable());
-
-        if ($this->getUser()) {
-            $comment->setUser($this->getUser());
-        }
-
-        $form = $this->createForm(CommentType::class, $comment);
-        $emptyForm = clone $form;
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($comment);
-            $em->flush();
-            $hub->publish(new Update(
-                'comment',
-                $this->renderBlock('comment/comment.stream.html.twig', 'new_comment', ['comment' => $form->getData([])])
-            ));
-            $form = $emptyForm;
+        $form = null;
+        if ($user = $this->getUser()) {
+            $comment = new Comment();
+            $comment->setArtwork($artwork);
+            $comment->setCreatedAt(new \DateTimeImmutable());
+            $comment->setUpdatedAt(new \DateTimeImmutable());
+            $comment->setUser($user);
+            $form = $this->createForm(CommentType::class, $comment);
+            $emptyForm = clone $form;
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em->persist($comment);
+                $em->flush();
+                $hub->publish(new Update(
+                    'comment',
+                    $this->renderBlock('comment/comment.stream.html.twig', 'new_comment', ['comment' => $form->getData([])])
+                ));
+                $form = $emptyForm;
+            }
         }
         return $this->render('artwork/show.html.twig', [
             'artwork' => $artwork,
@@ -96,7 +92,7 @@ final class ArtworkController extends AbstractController
     #[Route('artwork/{id}/edit', name: 'app_artwork_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Artwork $artwork, EntityManagerInterface $em): Response
     {
-        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_ARTIST')) {
+        if (!$this->isGranted('ROLE_ADMIN') && $this->getUser() !== $artwork->getArtist()) {
             throw $this->createAccessDeniedException();
         }
         $form = $this->createForm(ArtworkType::class, $artwork);
@@ -104,7 +100,6 @@ final class ArtworkController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
-
             return $this->redirectToRoute('app_artwork_show', ['id' => $artwork->getId()], Response::HTTP_SEE_OTHER);
         }
 
@@ -117,14 +112,17 @@ final class ArtworkController extends AbstractController
     #[Route('artwork/{id}/delete', name: 'app_artwork_delete', methods: ['POST'])]
     public function delete(Request $request, Artwork $artwork, EntityManagerInterface $em): Response
     {
-        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_ARTIST')) {
+        if (!$this->isGranted('ROLE_ADMIN') && $this->getUser() !== $artwork->getArtist()) {
             throw $this->createAccessDeniedException();
         }
         if ($this->isCsrfTokenValid('delete'.$artwork->getId(), $request->getPayload()->getString('_token'))) {
             $em->remove($artwork);
             $em->flush();
+            $refererPath = parse_url($request->headers->get('referer'), PHP_URL_PATH);
+            $route = $refererPath === '/profile/my-artworks' ? 'app_my_artworks' : 'app_artwork_index';
+            return $this->redirectToRoute($route, [], Response::HTTP_SEE_OTHER);
+        } else {
+            $this->addFlash('error', 'Error when trying to delete.');
         }
-
-        return $this->redirectToRoute('app_artwork_index', [], Response::HTTP_SEE_OTHER);
     }
 }
