@@ -24,10 +24,10 @@ class Message
     private ?Conversation $conversations = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $edited_at = null;
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function getId(): ?int
     {
@@ -72,25 +72,24 @@ class Message
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    #[ORM\PrePersist]
+    public function onPrePersist(): void
     {
-        $this->created_at = $created_at;
-
-        return $this;
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
-    public function getEditedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->edited_at;
+        return $this->updatedAt;
     }
 
-    public function setEditedAt(\DateTimeImmutable $edited_at): static
+    #[ORM\PreUpdate]
+    public function onPreUpdate(): void
     {
-        $this->edited_at = $edited_at;
-
-        return $this;
+        $this->updatedAt = new \DateTimeImmutable();
     }
 }

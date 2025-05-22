@@ -29,7 +29,7 @@ class ArtworkImage
     private ?int $imageSize = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $updatedAt = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
@@ -45,7 +45,7 @@ class ArtworkImage
         $this->imageFile = $imageFile;
 
         if (null !== $imageFile) {
-            $this->updatedAt = new \DateTimeImmutable();
+            $this->createdAt = new \DateTimeImmutable();
         }
     }
 
@@ -82,7 +82,9 @@ class ArtworkImage
     public function setArtwork(?Artwork $artwork): static
     {
         $this->artwork = $artwork;
-
+        if ($artwork !== null) {
+            $artwork->setUpdatedAt();
+        }
         return $this;
     }
 

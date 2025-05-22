@@ -67,8 +67,6 @@ final class ArtworkController extends AbstractController
         if ($user = $this->getUser()) {
             $comment = new Comment();
             $comment->setArtwork($artwork);
-            $comment->setCreatedAt(new \DateTimeImmutable());
-            $comment->setUpdatedAt(new \DateTimeImmutable());
             $comment->setUser($user);
             $form = $this->createForm(CommentType::class, $comment);
             $emptyForm = clone $form;
@@ -92,9 +90,8 @@ final class ArtworkController extends AbstractController
     #[Route('artwork/{id}/edit', name: 'app_artwork_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Artwork $artwork, EntityManagerInterface $em): Response
     {
-        if (!$this->isGranted('ROLE_ADMIN') && $this->getUser() !== $artwork->getArtist()) {
-            throw $this->createAccessDeniedException();
-        }
+        if (!$this->isGranted('ROLE_ADMIN') && $this->getUser() !== $artwork->getArtist()) { throw $this->createAccessDeniedException(); }
+
         $form = $this->createForm(ArtworkType::class, $artwork);
         $form->handleRequest($request);
 

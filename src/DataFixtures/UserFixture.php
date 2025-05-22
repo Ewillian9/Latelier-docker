@@ -17,8 +17,6 @@ class UserFixture extends Fixture
         $admin->setEmail('admin@example.com')
             ->setRoles(['ROLE_ADMIN'])
             ->setUsername('admin')
-            ->setCreatedAt(new \DateTimeImmutable())
-            ->setUpdatedAt(new \DateTimeImmutable())
             ->setPassword($this->passwordHasher->hashPassword($admin, 'adminpass'));
         $manager->persist($admin);
 
@@ -26,8 +24,6 @@ class UserFixture extends Fixture
         $artist->setEmail('artist@example.com')
             ->setRoles(['ROLE_ARTIST'])
             ->setUsername('artist')
-            ->setCreatedAt(new \DateTimeImmutable())
-            ->setUpdatedAt(new \DateTimeImmutable())
             ->setPassword($this->passwordHasher->hashPassword($artist, 'artistpass'));
         $manager->persist($artist);
 
@@ -35,8 +31,6 @@ class UserFixture extends Fixture
         $user->setEmail('user@example.com')
             ->setRoles(['ROLE_USER'])
             ->setUsername('user')
-            ->setCreatedAt(new \DateTimeImmutable())
-            ->setUpdatedAt(new \DateTimeImmutable())
             ->setPassword($this->passwordHasher->hashPassword($user, 'userpass'));
         $manager->persist($user);
 
