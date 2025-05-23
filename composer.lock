@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bd4b495dd71decb777194dde227ec74d",
+    "content-hash": "1fc5fdb2526ff927c783835dc3551fc9",
     "packages": [
         {
             "name": "composer/semver",
@@ -3392,16 +3392,16 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v2.5.1",
+            "version": "v2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "62d5c38c7af6280d8605b725364680838b475641"
+                "reference": "ccc4d2dc15e90f0fed555d6078c3698396306cdd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/62d5c38c7af6280d8605b725364680838b475641",
-                "reference": "62d5c38c7af6280d8605b725364680838b475641",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/ccc4d2dc15e90f0fed555d6078c3698396306cdd",
+                "reference": "ccc4d2dc15e90f0fed555d6078c3698396306cdd",
                 "shasum": ""
             },
             "require": {
@@ -3440,7 +3440,7 @@
             "description": "Composer plugin for Symfony",
             "support": {
                 "issues": "https://github.com/symfony/flex/issues",
-                "source": "https://github.com/symfony/flex/tree/v2.5.1"
+                "source": "https://github.com/symfony/flex/tree/v2.6.0"
             },
             "funding": [
                 {
@@ -3456,7 +3456,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-05-10T14:05:03+00:00"
+            "time": "2025-05-21T07:23:28+00:00"
         },
         {
             "name": "symfony/form",
@@ -4149,6 +4149,72 @@
                 }
             ],
             "time": "2025-04-04T09:50:51+00:00"
+        },
+        {
+            "name": "symfony/mailjet-mailer",
+            "version": "v7.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/mailjet-mailer.git",
+                "reference": "1387c1fa5f10f0d9fd2ef9716b47f2cadd67519a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/mailjet-mailer/zipball/1387c1fa5f10f0d9fd2ef9716b47f2cadd67519a",
+                "reference": "1387c1fa5f10f0d9fd2ef9716b47f2cadd67519a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "symfony/mailer": "^7.2"
+            },
+            "require-dev": {
+                "symfony/http-client": "^6.4|^7.0",
+                "symfony/webhook": "^6.4|^7.0"
+            },
+            "type": "symfony-mailer-bridge",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Mailer\\Bridge\\Mailjet\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Mailjet Mailer Bridge",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/mailjet-mailer/tree/v7.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-10-18T09:50:33+00:00"
         },
         {
             "name": "symfony/mercure",
@@ -5917,16 +5983,16 @@
         },
         {
             "name": "symfony/stimulus-bundle",
-            "version": "v2.25.1",
+            "version": "v2.25.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/stimulus-bundle.git",
-                "reference": "9954aeb3c807578cc8f3c2ffc31556ba21dda804"
+                "reference": "5a6aef0646119530da862d5afa1386ade3b9ed43"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/stimulus-bundle/zipball/9954aeb3c807578cc8f3c2ffc31556ba21dda804",
-                "reference": "9954aeb3c807578cc8f3c2ffc31556ba21dda804",
+                "url": "https://api.github.com/repos/symfony/stimulus-bundle/zipball/5a6aef0646119530da862d5afa1386ade3b9ed43",
+                "reference": "5a6aef0646119530da862d5afa1386ade3b9ed43",
                 "shasum": ""
             },
             "require": {
@@ -5966,7 +6032,7 @@
                 "symfony-ux"
             ],
             "support": {
-                "source": "https://github.com/symfony/stimulus-bundle/tree/v2.25.1"
+                "source": "https://github.com/symfony/stimulus-bundle/tree/v2.25.2"
             },
             "funding": [
                 {
@@ -5982,7 +6048,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-05-19T07:20:25+00:00"
+            "time": "2025-05-19T11:54:27+00:00"
         },
         {
             "name": "symfony/stopwatch",
@@ -6577,16 +6643,16 @@
         },
         {
             "name": "symfony/ux-turbo",
-            "version": "v2.25.1",
+            "version": "v2.25.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/ux-turbo.git",
-                "reference": "d9ad7cc258e8da152632dd157fea07d3af5737fe"
+                "reference": "11ebca138005c7e25678c3f98a07ddf718a0480c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/ux-turbo/zipball/d9ad7cc258e8da152632dd157fea07d3af5737fe",
-                "reference": "d9ad7cc258e8da152632dd157fea07d3af5737fe",
+                "url": "https://api.github.com/repos/symfony/ux-turbo/zipball/11ebca138005c7e25678c3f98a07ddf718a0480c",
+                "reference": "11ebca138005c7e25678c3f98a07ddf718a0480c",
                 "shasum": ""
             },
             "require": {
@@ -6655,7 +6721,7 @@
                 "turbo-stream"
             ],
             "support": {
-                "source": "https://github.com/symfony/ux-turbo/tree/v2.25.1"
+                "source": "https://github.com/symfony/ux-turbo/tree/v2.25.2"
             },
             "funding": [
                 {
@@ -6671,7 +6737,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-05-19T07:20:25+00:00"
+            "time": "2025-05-19T11:54:27+00:00"
         },
         {
             "name": "symfony/validator",
