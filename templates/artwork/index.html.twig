@@ -1,6 +1,13 @@
 {% extends 'base.html.twig' %}
 {% block title %}Home - Artworks{% endblock %}
 {% block body %}
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert alert-{{ label }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
     <section class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
         {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ARTIST') %}
             <figure class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
