@@ -18,7 +18,7 @@
 - Generation par IA de titre, description, mots-clés
 
 ### Utilisateurs (inscription requise)
-- Création de compte avec confirmation par email
+- Création de compte avec confirmation par email ---OK
 - Communication avec l'artiste via une messagerie instantanée ---SOON
 - Commande d'une œuvre et suivi du statut (validation et avancement via la messagerie instantanée)
 - Notification par email une fois l'œuvre terminée
