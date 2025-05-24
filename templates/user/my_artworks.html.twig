@@ -17,17 +17,17 @@
                         <div class="flex-1">
                             <p class="text-xl font-semibold text-gray-800 dark:text-white">{{ artwork.title }}</p>
                             <p class="text-gray-600 dark:text-gray-300 mt-1">{{ artwork.description|length > 100 ? artwork.description|slice(0, 100) ~ '...' : artwork.description }}</p>
-                            <time datetime="{{ artwork.createdAt ? artwork.createdAt|date('c') : '' }}" class="block text-sm text-gray-500 dark:text-gray-400 mt-2">Publiée {{ artwork.createdAt ? artwork.createdAt|ago : 'il y a un moment' }}</time>
+                            <time datetime="{{ artwork.createdAt|date('c') }}" class="block text-sm text-gray-500 dark:text-gray-400 mt-2">Publiée {{ artwork.createdAt|ago }}</time>
                         </div>
                         <div class="flex flex-col items-end gap-2">
-                            <a href="{{ path('app_artwork_show', {'id': artwork.id}) }}" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500 text-sm inline-block">Voir l’œuvre</a>
+                            <a href="{{ path('app_artwork_show', {'id': artwork.id}) }}" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500 text-sm inline-block">{{'artwork.show'|trans}}</a>
                             {{ include('artwork/_delete_form.html.twig') }}
                         </div>
                     </li>
                 {% endfor %}
                 </ul>
         {% else %}
-            <p class="text-gray-600 dark:text-gray-300">Vous n’avez publié aucune œuvre pour le moment.</p>
+            <p class="text-gray-600 dark:text-gray-300">{{'artwork.none'|trans}}</p>
         {% endif %}
     </section>
 {% endblock %}

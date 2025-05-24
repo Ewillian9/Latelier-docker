@@ -1,0 +1,25 @@
+vich_uploader.form_label.delete_confirm: 'Delete?'
+vich_uploader.link.download: Download
+artwork.image.lost: The image got lost :/
+artwork.new.decription: Click here to add a new artwork
+artwork.new: New artwork
+artwork.show: See it
+artwork.none: You didn't published any artwork yet
+back: ← Back
+register: Register
+signin: Sign in
+signout: Sign out
+profile: Profile
+added: Added
+updated: Updated
+by: by
+delete: Delete
+edit: Edit
+send: Send
+comments: Comments
+home: Home
+nocomments: No comment have been posted yet
+profile.nocomments: You didn't posted any comment yet
+connecttocomment: Connect to leave a comment
+nomatch: No artworks match your criterias.
+nomatch.artist: You are an artist, feel free to add one!

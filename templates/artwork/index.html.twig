@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}Home - Artworks{% endblock %}
+{% block title %}{{'home'|trans}} - Artworks{% endblock %}
 {% block body %}
 {% for label, messages in app.flashes %}
     {% for message in messages %}
@@ -14,8 +14,8 @@
                 <a href="{{ path('app_artwork_new') }}">
                     <span class="w-full h-48 flex items-center justify-center bg-gray-100 text-gray-400 text-4xl">+</span>
                     <figcaption class="p-4">
-                        <h2 class="text-lg font-semibold">New</h2>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Add a new artwork...</p>
+                        <h2 class="text-lg font-semibold">{{'artwork.new'|trans}}</h2>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">{{'artwork.new.decription'|trans}}</p>
                     </figcaption>
                 </a>
             </figure> 
@@ -35,7 +35,7 @@
                 </a>
             </figure>
         {% else %}
-            <p class="text-lg font-semibold">No artworks match your criterias. {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ARTIST') %}You are an artist, feel free to add one!{% endif %}</p>
+            <p class="text-lg font-semibold">{{'nomatch'|trans}} {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ARTIST') %}{{'nomatch.artist'|trans}}{% endif %}</p>
         {% endfor %}
     </section>
 {% endblock %}

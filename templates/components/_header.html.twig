@@ -12,16 +12,16 @@
         <nav aria-label="Main navigation" class="flex flex-wrap gap-2 md:gap-4 justify-end items-center">
             <button data-controller="theme" data-theme-target="button" data-action="click->theme#toggle" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">☀️</button>
             {% if app.user %}
-                <a href="{{ path('app_profile') }}" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">Profil</a>
-                <a href="{{ path('app_logout') }}" class="px-3 py-1 rounded bg-red-300 dark:bg-red-700 text-sm hover:bg-red-400 dark:hover:bg-red-600 transition">Sign out</a>
+                <a href="{{ path('app_profile') }}" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{'profile'|trans}}</a>
+                <a href="{{ path('app_logout') }}" class="px-3 py-1 rounded bg-red-300 dark:bg-red-700 text-sm hover:bg-red-400 dark:hover:bg-red-600 transition">{{'signout'|trans}}</a>
             {% else %}
                 {% if app.request.attributes.get('_route') == 'app_login' %}
-                    <a href="{{ path('app_register') }}" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">Register</a>
+                    <a href="{{ path('app_register') }}" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{'register'|trans}}</a>
                 {% elseif app.request.attributes.get('_route') == 'app_register' %}
-                    <a href="{{ path('app_login') }}" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">Sign in</a>
+                    <a href="{{ path('app_login') }}" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{'signin'|trans}}</a>
                 {% else %}
-                    <a href="{{ path('app_login') }}" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">Sign in</a>
-                    <a href="{{ path('app_register') }}" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">Register</a>
+                    <a href="{{ path('app_login') }}" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{'signin'|trans}}</a>
+                    <a href="{{ path('app_register') }}" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{'register'|trans}}</a>
                 {% endif %}
             {% endif %}
         </nav>

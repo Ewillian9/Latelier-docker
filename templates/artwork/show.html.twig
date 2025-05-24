@@ -15,7 +15,7 @@
                 {% endfor %}
             </figure>
         {% else %}
-            <p class="w-full rounded-lg shadow-lg h-48 flex items-center justify-center bg-gray-300 dark:bg-white text-gray-400 text-4xl">L'image a été perdu :/</p>
+            <p class="w-full rounded-lg shadow-lg h-48 flex items-center justify-center bg-gray-300 dark:bg-white text-gray-400 text-4xl">{{'artwork.image.lost'|trans}}</p>
         {% endif %}
         <section class="space-y-4">
             <h2 class="text-3xl font-bold text-gray-800 dark:text-white">{{ artwork.title }}</h2>
@@ -26,9 +26,9 @@
                         <li class="bg-gray-200 dark:bg-gray-700 text-sm text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full">{{ keyword|trim }}</li>
                     {% endfor %}
                 </ul>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Updated <time datetime="{{ artwork.updatedAt ? artwork.updatedAt|date('c') : '' }}">{{ artwork.updatedAt ? artwork.updatedAt|ago : 'NaN' }}</time></p>
+                <p class="text-sm text-gray-500 dark:text-gray-400">{{'updated'|trans}} <time datetime="{{ artwork.updatedAt ? artwork.updatedAt|date('c') : '' }}">{{ artwork.updatedAt ? artwork.updatedAt|ago : 'NaN' }}</time></p>
             {% endif %}
-            <p class="text-sm text-gray-500 dark:text-gray-400">Added <time datetime="{{ artwork.createdAt ? artwork.createdAt|date('c') : '' }}">{{ artwork.createdAt ? artwork.createdAt|ago : 'NaN' }}</time> by {{ artwork.artist.username }}</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">{{'added'|trans}} <time datetime="{{ artwork.createdAt ? artwork.createdAt|date('c') : '' }}">{{ artwork.createdAt ? artwork.createdAt|ago : 'NaN' }}</time> {{'by'|trans}} {{ artwork.artist.username }}</p>
         </section>
     </article>
     {{ include('comment/_comment.html.twig') }}

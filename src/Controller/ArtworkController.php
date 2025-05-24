@@ -16,9 +16,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 final class ArtworkController extends AbstractController
 {
+    public function redirectToPreferredLocale(Request $request): RedirectResponse
+    {
+        return new RedirectResponse('/' . $request->getPreferredLanguage());
+    }
+
     #[Route('/', name: 'app_artwork_index', methods: ['GET'])]
     public function index(Request $request, ArtworkRepository $artworkRepository): Response
     {
