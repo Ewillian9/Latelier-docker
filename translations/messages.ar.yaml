@@ -1,0 +1,25 @@
+vich_uploader.form_label.delete_confirm: 'هل تريد الحذف؟'
+vich_uploader.link.download: تنزيل
+artwork.image.lost: تم فقدان الصورة :/
+artwork.new.decription: انقر هنا لإضافة عمل جديد
+artwork.new: عمل جديد
+artwork.show: عرض
+artwork.none: لم تنشر أي عمل بعد
+back: ← رجوع
+register: تسجيل
+signin: تسجيل الدخول
+signout: تسجيل الخروج
+profile: الملف الشخصي
+added: مضاف
+updated: محدث
+by: بواسطة
+delete: حذف
+edit: تعديل
+send: إرسال
+comments: التعليقات
+home: الصفحة الرئيسية
+nocomments: لم يتم نشر أي تعليق بعد
+profile.nocomments: لم تنشر أي تعليق بعد
+connecttocomment: سجل الدخول لترك تعليق
+nomatch: لا توجد أعمال تطابق معاييرك.
+nomatch.artist: أنت فنان، لا تتردد في إضافة عمل!

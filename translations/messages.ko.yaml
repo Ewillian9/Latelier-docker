@@ -1,0 +1,25 @@
+vich_uploader.form_label.delete_confirm: '삭제하시겠습니까?'
+vich_uploader.link.download: 다운로드
+artwork.image.lost: 이미지가 손실되었습니다 :/
+artwork.new.decription: 새로운 작품을 추가하려면 클릭하세요
+artwork.new: 새 작품
+artwork.show: 보기
+artwork.none: 아직 작품을 게시하지 않았습니다
+back: ← 뒤로
+register: 회원가입
+signin: 로그인
+signout: 로그아웃
+profile: 프로필
+added: 추가됨
+updated: 업데이트됨
+by: 작성자
+delete: 삭제
+edit: 편집
+send: 보내기
+comments: 댓글
+home: 홈
+nocomments: 아직 댓글이 없습니다
+profile.nocomments: 아직 작성한 댓글이 없습니다
+connecttocomment: 댓글을 작성하려면 로그인하세요
+nomatch: 기준에 맞는 작품이 없습니다.
+nomatch.artist: 당신은 아티스트입니다. 자유롭게 작품을 추가하세요!

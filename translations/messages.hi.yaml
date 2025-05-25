@@ -1,0 +1,25 @@
+vich_uploader.form_label.delete_confirm: 'हटाना चाहते हैं?'
+vich_uploader.link.download: डाउनलोड करें
+artwork.image.lost: छवि खो गई है :/
+artwork.new.decription: एक नया कलाकृति जोड़ने के लिए यहां क्लिक करें
+artwork.new: नई कलाकृति
+artwork.show: देखें
+artwork.none: आपने अभी तक कोई कलाकृति प्रकाशित नहीं की है
+back: ← वापस
+register: पंजीकरण करें
+signin: साइन इन करें
+signout: साइन आउट करें
+profile: प्रोफ़ाइल
+added: जोड़ा गया
+updated: अद्यतन किया गया
+by: द्वारा
+delete: हटाएं
+edit: संपादित करें
+send: भेजें
+comments: टिप्पणियाँ
+home: होम
+nocomments: अभी तक कोई टिप्पणी नहीं की गई है
+profile.nocomments: आपने अभी तक कोई टिप्पणी नहीं की है
+connecttocomment: टिप्पणी करने के लिए लॉग इन करें
+nomatch: आपकी शर्तों से मेल खाने वाली कोई कलाकृति नहीं मिली।
+nomatch.artist: आप एक कलाकार हैं, कृपया स्वतंत्र रूप से जोड़ें!

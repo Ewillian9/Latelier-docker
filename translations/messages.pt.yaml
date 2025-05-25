@@ -1,0 +1,25 @@
+vich_uploader.form_label.delete_confirm: 'Excluir?'
+vich_uploader.link.download: Baixar
+artwork.image.lost: A imagem foi perdida :/
+artwork.new.decription: Clique aqui para adicionar uma nova obra
+artwork.new: Nova obra
+artwork.show: Ver
+artwork.none: Você ainda não publicou nenhuma obra
+back: ← Voltar
+register: Registrar
+signin: Entrar
+signout: Sair
+profile: Perfil
+added: Adicionado
+updated: Atualizado
+by: por
+delete: Excluir
+edit: Editar
+send: Enviar
+comments: Comentários
+home: Início
+nocomments: Nenhum comentário foi postado ainda
+profile.nocomments: Você ainda não postou nenhum comentário
+connecttocomment: Conecte-se para deixar um comentário
+nomatch: Nenhuma obra corresponde aos seus critérios.
+nomatch.artist: Você é artista, fique à vontade para adicionar uma.

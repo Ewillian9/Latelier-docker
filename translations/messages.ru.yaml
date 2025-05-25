@@ -1,0 +1,25 @@
+vich_uploader.form_label.delete_confirm: 'Удалить?'
+vich_uploader.link.download: Скачать
+artwork.image.lost: Изображение потеряно :/
+artwork.new.decription: Нажмите здесь, чтобы добавить новое произведение
+artwork.new: Новое произведение
+artwork.show: Посмотреть
+artwork.none: Вы еще не опубликовали ни одного произведения
+back: ← Назад
+register: Регистрация
+signin: Войти
+signout: Выйти
+profile: Профиль
+added: Добавлено
+updated: Обновлено
+by: от
+delete: Удалить
+edit: Редактировать
+send: Отправить
+comments: Комментарии
+home: Главная
+nocomments: Пока нет комментариев
+profile.nocomments: Вы еще не оставляли комментариев
+connecttocomment: Войдите, чтобы оставить комментарий
+nomatch: Нет произведений, соответствующих вашим критериям.
+nomatch.artist: Вы — художник, не стесняйтесь добавить своё произведение!

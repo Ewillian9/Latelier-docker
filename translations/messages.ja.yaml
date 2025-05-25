@@ -1,0 +1,25 @@
+vich_uploader.form_label.delete_confirm: '削除しますか？'
+vich_uploader.link.download: ダウンロード
+artwork.image.lost: 画像が失われました :/
+artwork.new.decription: ここをクリックして新しい作品を追加
+artwork.new: 新しい作品
+artwork.show: 表示
+artwork.none: まだ作品を公開していません
+back: ← 戻る
+register: 登録
+signin: サインイン
+signout: サインアウト
+profile: プロフィール
+added: 追加済み
+updated: 更新済み
+by: による
+delete: 削除
+edit: 編集
+send: 送信
+comments: コメント
+home: ホーム
+nocomments: まだコメントが投稿されていません
+profile.nocomments: あなたはまだコメントを投稿していません
+connecttocomment: コメントを残すにはログインしてください
+nomatch: 条件に合う作品がありません。
+nomatch.artist: あなたはアーティストです。自由に作品を追加してください！

@@ -1,0 +1,25 @@
+vich_uploader.form_label.delete_confirm: '删除？'
+vich_uploader.link.download: 下载
+artwork.image.lost: 图片丢失了 :/
+artwork.new.decription: 点击此处添加新作品
+artwork.new: 新作品
+artwork.show: 查看
+artwork.none: 您还没有发布任何作品
+back: ← 返回
+register: 注册
+signin: 登录
+signout: 登出
+profile: 个人资料
+added: 已添加
+updated: 已更新
+by: 由
+delete: 删除
+edit: 编辑
+send: 发送
+comments: 评论
+home: 首页
+nocomments: 还没有发布任何评论
+profile.nocomments: 您还没有发布过评论
+connecttocomment: 登录以发表评论
+nomatch: 没有符合您条件的作品。
+nomatch.artist: 您是艺术家，欢迎添加作品！

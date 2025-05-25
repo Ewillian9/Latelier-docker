@@ -1,0 +1,25 @@
+vich_uploader.form_label.delete_confirm: 'Löschen?'
+vich_uploader.link.download: Herunterladen
+artwork.image.lost: Das Bild ist verloren gegangen :/
+artwork.new.decription: Klicke hier, um ein neues Kunstwerk hinzuzufügen
+artwork.new: Neues Kunstwerk
+artwork.show: Anzeigen
+artwork.none: Du hast noch kein Kunstwerk veröffentlicht
+back: ← Zurück
+register: Registrieren
+signin: Anmelden
+signout: Abmelden
+profile: Profil
+added: Hinzugefügt
+updated: Aktualisiert
+by: von
+delete: Löschen
+edit: Bearbeiten
+send: Senden
+comments: Kommentare
+home: Startseite
+nocomments: Es wurden noch keine Kommentare veröffentlicht
+profile.nocomments: Du hast noch keine Kommentare gepostet
+connecttocomment: Melde dich an, um einen Kommentar zu hinterlassen
+nomatch: Keine Kunstwerke entsprechen deinen Kriterien.
+nomatch.artist: Du bist Künstler, fühle dich frei, eines hinzuzufügen.

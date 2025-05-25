@@ -1,25 +1,25 @@
 vich_uploader.form_label.delete_confirm: 'Supprimer?'
 vich_uploader.link.download: Télécharger
 artwork.image.lost: L'image a été perdue :/
-artwork.new.decription: Clique ici pour en ajouter une
+artwork.new.decription: Cliquez ici pour ajouter une nouvelle œuvre
 artwork.new: Nouvelle oeuvre
-artwork.show: Voire l'oeuvre
-artwork.none: Vous n’avez publié aucune œuvre pour le moment
+artwork.show: Voir
+artwork.none: Vous n’avez publié aucune œuvre
 back: ← Retour
-register: Inscription
-signin: Connexion
-signout: Deconnexion
+register: S'inscrire
+signin: Se connecter
+signout: Se déconnecter
 profile: Profil
 added: Ajouté
-updated: Mis a jour
+updated: Mis à jour
 by: par
 delete: Supprimer
 edit: Modifier
 send: Envoyer
 comments: Commentaires
 home: Acceuil
-nocomments: Aucun commentaire n'a été posté pour l'instant
-profile.nocomments: Vous n'avez posté aucun commantaire pour l'instant
-connecttocomment: Connectez vous pour laiser un commantaire
-nomatch: Aucune oeuvre correspond a vos critères.
-nomatch.artist: Vous etes un(e) artist(e). Ajoutez en une!
+nocomments: Aucun commentaire publié pour le moment
+profile.nocomments: Vous n'avez encore posté aucun commentaire
+connecttocomment: Connectez-vous pour laisser un commantaire
+nomatch: Aucune œuvre ne correspond à vos critères.
+nomatch.artist: Vous êtes artiste, ajoutez en une !

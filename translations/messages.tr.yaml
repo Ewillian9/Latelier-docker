@@ -1,0 +1,25 @@
+vich_uploader.form_label.delete_confirm: 'Silmek istiyor musunuz?'
+vich_uploader.link.download: İndir
+artwork.image.lost: Görsel kayboldu :/
+artwork.new.decription: Yeni bir eser eklemek için buraya tıklayın
+artwork.new: Yeni eser
+artwork.show: Görüntüle
+artwork.none: Henüz hiç eser yayınlamadınız
+back: ← Geri
+register: Kayıt ol
+signin: Giriş yap
+signout: Çıkış yap
+profile: Profil
+added: Eklendi
+updated: Güncellendi
+by: tarafından
+delete: Sil
+edit: Düzenle
+send: Gönder
+comments: Yorumlar
+home: Anasayfa
+nocomments: Henüz yorum yapılmamış
+profile.nocomments: Henüz yorum yapmadınız
+connecttocomment: Yorum yapmak için giriş yapın
+nomatch: Kriterlerinize uygun eser bulunamadı.
+nomatch.artist: Bir sanatçısınız, istediğiniz gibi eser ekleyebilirsiniz!
