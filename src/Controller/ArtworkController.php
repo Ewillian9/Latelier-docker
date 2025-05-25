@@ -22,7 +22,7 @@ final class ArtworkController extends AbstractController
 {
     public function redirectToPreferredLocale(Request $request): RedirectResponse
     {
-        return new RedirectResponse('/' . $request->getPreferredLanguage());
+        return new RedirectResponse('/' . substr($request->getPreferredLanguage(), 0, 2));
     }
 
     #[Route('/', name: 'app_artwork_index', methods: ['GET'])]
