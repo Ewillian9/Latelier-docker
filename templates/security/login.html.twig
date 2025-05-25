@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
-{% block title %}Sign in!{% endblock %}
+{% block title %}{{ 'signin'|trans }}{% endblock %}
 {% block body %}
-<main class="flex-1 pt-24 md:pt-28 w-[95%] max-w-md mx-auto">
+<section class="max-w-md mx-auto">
     <form method="post" class="bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-8 space-y-6 flex items-center flex-col">
         {% if error %}
             <div class="bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300 p-3 rounded-md text-sm">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
 
-        <h1 class="text-2xl font-semibold text-gray-800 dark:text-white text-center">Sign in!</h1>
-        <input type="email" value="{{ last_username }}" name="_username" id="username" class="w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Your Email" autocomplete="email" required autofocus>
-        <input type="password" name="_password" id="password" class="w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Your Password" autocomplete="current-password" required>
+        <h1 class="text-2xl font-semibold text-gray-800 dark:text-white text-center">{{ 'signin'|trans }}!</h1>
+        <input type="email" value="{{ last_username }}" name="_username" id="username" class="w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="{{ 'email'|trans }}" autocomplete="email" required autofocus>
+        <input type="password" name="_password" id="password" class="w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="{{ 'password'|trans }}" autocomplete="current-password" required>
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
         {#
@@ -22,8 +22,8 @@
             </div>
         #}
 
-        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition" type="submit">Sign in</button>
-        <a href="{{ path('app_register') }}" class="w-1/2 py-2 text-center px-3 rounded-md bg-gray-300 dark:bg-gray-700 text-sm">New? Create an account</a>
+        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition" type="submit">{{ 'signin'|trans }}</button>
+        <a href="{{ path('app_register') }}" class="w-1/2 py-2 text-center px-3 rounded-md bg-gray-300 dark:bg-gray-700 text-sm">{{ 'register.new'|trans }}</a>
     </form>
-</main>
+</section>
 {% endblock %}

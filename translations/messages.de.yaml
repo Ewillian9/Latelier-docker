@@ -5,12 +5,19 @@ artwork.new.decription: Klicke hier, um ein neues Kunstwerk hinzuzufügen
 artwork.new: Neues Kunstwerk
 artwork.show: Anzeigen
 artwork.none: Du hast noch kein Kunstwerk veröffentlicht
-back: ← Zurück
+back: Zurück
 register: Registrieren
+register.new: Neu? Erstelle ein Konto
+password: Dein Passwort
+email: Deine E-Mail
+username: Benutzername
+signin.notnew: Schon ein Konto? Anmelden
 signin: Anmelden
 signout: Abmelden
 profile: Profil
+hello: Hallo
 added: Hinzugefügt
+created: Erstellt
 updated: Aktualisiert
 by: von
 delete: Löschen

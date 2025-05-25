@@ -5,12 +5,19 @@ artwork.new.decription: 点击此处添加新作品
 artwork.new: 新作品
 artwork.show: 查看
 artwork.none: 您还没有发布任何作品
-back: ← 返回
+back: 返回
 register: 注册
+register.new: 新用户？创建账号
+password: 密码
+email: 电子邮件
+username: 用户名
+signin.notnew: 已有账号？登录
 signin: 登录
 signout: 登出
 profile: 个人资料
+hello: 你好
 added: 已添加
+created: 已创建
 updated: 已更新
 by: 由
 delete: 删除

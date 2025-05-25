@@ -1,5 +1,35 @@
 <footer class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg px-6 py-4 w-[96%] max-w-5xl mx-auto my-4">
-    <section class="flex flex-col md:flex-row justify-center items-center text-sm gap-2">
+    <section class="flex justify-between text-sm items-center">
         <p>&copy; {{ "now"|date("Y") }} Made by Me</p>
+        <section class="flex justify-end sm:hidden items-center space-x-2">
+            <button data-controller="theme" data-theme-target="button" data-action="click->theme#toggle" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">☀️</button>
+            <div class="relative group">
+                {% set flags = {
+                    'ar': 'flag:arab-4x3',
+                    'de': 'flag:de-4x3',
+                    'en': 'flag:gb-4x3',
+                    'es': 'flag:es-4x3',
+                    'fr': 'flag:fr-4x3',
+                    'hi': 'flag:in-4x3',
+                    'it': 'flag:it-4x3',
+                    'ja': 'flag:jp-4x3',
+                    'ko': 'flag:kr-4x3',
+                    'pt': 'flag:pt-4x3',
+                    'ru': 'flag:ru-4x3',
+                    'tr': 'flag:tr-4x3',
+                    'zh': 'flag:cn-4x3'
+                } %}
+                <ul class="absolute left-0 bottom-full hidden group-hover:block z-50 bg-transparent shadow-md">
+                    {% for lang, flag in flags %}
+                        {% if app.request.locale != lang %}
+                            <li>
+                                <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale': lang})) }}" data-turbo="false" class="flex items-center gap-1 px-3 py-1 text-sm rounded bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{ ux_icon(flag, { class: 'w-5 h-5' }) }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                <button class="flex items-center gap-1 px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{ ux_icon(flags[app.request.locale] ?? 'flag:gb-4x3', { class: 'w-5 h-5' }) }}</button>
+            </div>
+        </section>
     </section>
 </footer>

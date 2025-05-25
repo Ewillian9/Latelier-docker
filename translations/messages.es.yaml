@@ -5,12 +5,19 @@ artwork.new.decription: Haz clic aquí para agregar una nueva obra
 artwork.new: Nueva obra
 artwork.show: Ver
 artwork.none: No has publicado ninguna obra aún
-back: ← Atrás
+back: Atrás
 register: Registrarse
+register.new: ¿Nuevo? Crea una cuenta
+password: Tu contraseña
+email: Tu correo electrónico
+username: Nombre de usuario
+signin.notnew: ¿Ya tienes una cuenta? Inicia sesión
 signin: Iniciar sesión
 signout: Cerrar sesión
 profile: Perfil
+hello: Hola
 added: Añadido
+created: Creado
 updated: Actualizado
 by: por
 delete: Eliminar

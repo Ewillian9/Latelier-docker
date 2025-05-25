@@ -5,12 +5,19 @@ artwork.new.decription: 새로운 작품을 추가하려면 클릭하세요
 artwork.new: 새 작품
 artwork.show: 보기
 artwork.none: 아직 작품을 게시하지 않았습니다
-back: ← 뒤로
+back: 뒤로
 register: 회원가입
+register.new: 처음이신가요? 계정 만들기
+password: 비밀번호
+email: 이메일 주소
+username: 사용자 이름
+signin.notnew: 이미 계정이 있으신가요? 로그인
 signin: 로그인
 signout: 로그아웃
 profile: 프로필
+hello: 안녕하세요
 added: 추가됨
+created: 생성됨
 updated: 업데이트됨
 by: 작성자
 delete: 삭제

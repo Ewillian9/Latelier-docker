@@ -5,12 +5,19 @@ artwork.new.decription: انقر هنا لإضافة عمل جديد
 artwork.new: عمل جديد
 artwork.show: عرض
 artwork.none: لم تنشر أي عمل بعد
-back: ← رجوع
+back: رجوع
 register: تسجيل
+register.new: جديد؟ أنشئ حسابًا
+password: كلمة المرور
+email: بريدك الإلكتروني
+username: اسم المستخدم
+signin.notnew: لديك حساب بالفعل؟ سجّل الدخول
 signin: تسجيل الدخول
 signout: تسجيل الخروج
 profile: الملف الشخصي
+hello: مرحبًا
 added: مضاف
+created: تم الإنشاء
 updated: محدث
 by: بواسطة
 delete: حذف

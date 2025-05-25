@@ -5,12 +5,19 @@ artwork.new.decription: Click here to add a new artwork
 artwork.new: New artwork
 artwork.show: See it
 artwork.none: You didn't published any artwork yet
-back: ← Back
+back: Back
 register: Register
+register.new: New? Create an account
+password: Your Password
+email: Your Email
+username: Your Username
+signin.notnew: Already an account? Sign in
 signin: Sign in
 signout: Sign out
 profile: Profile
+hello: Hello
 added: Added
+created: Created
 updated: Updated
 by: by
 delete: Delete

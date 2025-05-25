@@ -5,12 +5,19 @@ artwork.new.decription: Yeni bir eser eklemek için buraya tıklayın
 artwork.new: Yeni eser
 artwork.show: Görüntüle
 artwork.none: Henüz hiç eser yayınlamadınız
-back: ← Geri
+back: Geri
 register: Kayıt ol
+register.new: Yeni misiniz? Hesap oluşturun
+password: Şifreniz
+email: E-posta adresiniz
+username: Kullanıcı adı
+signin.notnew: Zaten hesabınız var mı? Giriş yapın
 signin: Giriş yap
 signout: Çıkış yap
 profile: Profil
+hello: Merhaba
 added: Eklendi
+created: Oluşturuldu
 updated: Güncellendi
 by: tarafından
 delete: Sil
