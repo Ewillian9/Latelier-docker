@@ -1,6 +1,7 @@
 <header id="site-header" data-controller="header" class="fixed top-4 left-1/2 duration-300 transition-transform -translate-x-1/2 z-50 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl shadow-lg px-4 md:px-8 py-4 w-[96%] max-w-5xl">
     <section class="container mx-auto flex justify-between items-center gap-2 md:gap-4">
         <a href="{{ path('app_artwork_index') }}" class="text-2xl font-bold">
+            {{ ux_icon('ic:round-home') }}
             <span class="hidden md:inline">L'Atelier de Gilles</span>
             <span class="inline md:hidden">ADG</span>
         </a>
@@ -11,17 +12,44 @@
         {% endif %}
         <nav aria-label="Main navigation" class="flex flex-wrap gap-2 md:gap-4 justify-end items-center">
             <button data-controller="theme" data-theme-target="button" data-action="click->theme#toggle" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">☀️</button>
+            <div class="relative group">
+            {% set flags = {
+                'ar': 'flag:arab-4x3',
+                'de': 'flag:de-4x3',
+                'en': 'flag:gb-4x3',
+                'es': 'flag:es-4x3',
+                'fr': 'flag:fr-4x3',
+                'hi': 'flag:in-4x3',
+                'it': 'flag:it-4x3',
+                'ja': 'flag:jp-4x3',
+                'ko': 'flag:kr-4x3',
+                'pt': 'flag:pt-4x3',
+                'ru': 'flag:ru-4x3',
+                'tr': 'flag:tr-4x3',
+                'zh': 'flag:cn-4x3'
+            } %}
+                <button class="flex items-center min-w-[4rem] px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{ ux_icon(flags[app.request.locale] ?? 'flag:gb-4x3', { class: 'w-5 h-4 shrink-0 mr-1' }) }} <span class="hidden md:inline">{{ app.request.locale|upper }}</span></button>
+                <ul class="absolute left-0 hidden group-hover:block z-50 bg-none shadow-md min-w-[4rem]">
+                    {% for lang, flag in flags %}
+                        {% if app.request.locale != lang %}
+                            <li>
+                                <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale': lang})) }}" class="flex items-center px-3 py-1 text-sm rounded bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{ ux_icon(flag, { class: 'w-full h-full block align-middle' }) }} <span class="hidden md:inline">{{ lang|upper }}</span></a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
             {% if app.user %}
-                <a href="{{ path('app_profile') }}" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{'profile'|trans}}</a>
-                <a href="{{ path('app_logout') }}" class="px-3 py-1 rounded bg-red-300 dark:bg-red-700 text-sm hover:bg-red-400 dark:hover:bg-red-600 transition">{{'signout'|trans}}</a>
+                <a href="{{ path('app_profile') }}" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{ ux_icon('ic:outline-account-circle') }}{{'profile'|trans}}</a>
+                <a href="{{ path('app_logout') }}" class="px-3 py-1 rounded bg-red-300 dark:bg-red-700 text-sm hover:bg-red-400 dark:hover:bg-red-600 transition">{{ ux_icon('mdi:logout') }}{{'signout'|trans}}</a>
             {% else %}
                 {% if app.request.attributes.get('_route') == 'app_login' %}
-                    <a href="{{ path('app_register') }}" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{'register'|trans}}</a>
+                    <a href="{{ path('app_register') }}" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{ ux_icon('mdi:register') }}{{'register'|trans}}</a>
                 {% elseif app.request.attributes.get('_route') == 'app_register' %}
-                    <a href="{{ path('app_login') }}" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{'signin'|trans}}</a>
+                    <a href="{{ path('app_login') }}" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{ ux_icon('mdi:login') }}{{'signin'|trans}}</a>
                 {% else %}
-                    <a href="{{ path('app_login') }}" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{'signin'|trans}}</a>
-                    <a href="{{ path('app_register') }}" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{'register'|trans}}</a>
+                    <a href="{{ path('app_login') }}" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{ ux_icon('mdi:login') }}{{'signin'|trans}}</a>
+                    <a href="{{ path('app_register') }}" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{ ux_icon('mdi:register') }}{{'register'|trans}}</a>
                 {% endif %}
             {% endif %}
         </nav>
