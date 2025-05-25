@@ -28,7 +28,7 @@
 - Consultation des œuvres ---OK
 - Recherche par titre et mots-clés ---OK
 - Mode clair/sombre ---OK
-- Support multilingue (FR/EN) ---SOON
+- Support multilingues ---OK
 
 ## Getting Started
 
