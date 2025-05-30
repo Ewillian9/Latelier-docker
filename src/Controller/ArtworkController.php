@@ -46,7 +46,7 @@ final class ArtworkController extends AbstractController
         if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_ARTIST')) { throw $this->createAccessDeniedException(); }
         $artwork = new Artwork();
         $artwork->setArtist($this->getUser());
-        for ($i = 0; $i < 6; $i++) {
+        for ($i = 0; $i < 8; $i++) {
             $artworkImage = new ArtworkImage();
             $artwork->addImage($artworkImage);
         }
