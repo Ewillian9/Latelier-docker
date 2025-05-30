@@ -39,13 +39,8 @@
                 <a href="{{ path('app_profile') }}" class="flex items-center gap-1 px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{ ux_icon('ic:outline-account-circle', { class: 'w-5 h-5' }) }}<span class="hidden md:inline">{{'profile'|trans}}</span></a>
                 <a href="{{ path('app_logout') }}" class="flex items-center gap-1 px-3 py-1 rounded bg-red-300 dark:bg-red-700 text-sm hover:bg-red-400 dark:hover:bg-red-600 transition">{{ ux_icon('mdi:logout', { class: 'w-5 h-5' }) }}<span class="hidden md:inline">{{'signout'|trans}}</span></a>
             {% else %}
-                {% if app.request.attributes.get('_route') == 'app_login' %}
-                    <a href="{{ path('app_register') }}" class="flex items-center gap-1 px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{ ux_icon('mdi:register', { class: 'w-5 h-5' }) }}<span class="hidden md:inline">{{'register'|trans}}</span></a>
-                {% elseif app.request.attributes.get('_route') == 'app_register' %}
+                {% if (app.request.attributes.get('_route') != 'app_login') and (app.request.attributes.get('_route') != 'app_register') %}
                     <a href="{{ path('app_login') }}" class="flex items-center gap-1 px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{ ux_icon('mdi:login', { class: 'w-5 h-5' }) }}<span class="hidden md:inline">{{'signin'|trans}}</span></a>
-                {% else %}
-                    <a href="{{ path('app_login') }}" class="flex items-center gap-1 px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{ ux_icon('mdi:login', { class: 'w-5 h-5' }) }}<span class="hidden md:inline">{{'signin'|trans}}</span></a>
-                    <a href="{{ path('app_register') }}" class="flex items-center gap-1 px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{ ux_icon('mdi:register', { class: 'w-5 h-5' }) }}<span class="hidden md:inline">{{'register'|trans}}</span></a>
                 {% endif %}
             {% endif %}
         </nav>

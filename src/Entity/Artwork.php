@@ -47,7 +47,7 @@ class Artwork
     /**
      * @var Collection<int, ArtworkImage>
      */
-    #[ORM\OneToMany(targetEntity: ArtworkImage::class, mappedBy: 'artwork', cascade: ['persist'], orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: ArtworkImage::class, mappedBy: 'artwork', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $images;
 
     #[ORM\ManyToOne(inversedBy: 'artworks')]

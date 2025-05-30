@@ -45,16 +45,22 @@ final class ArtworkController extends AbstractController
     {
         if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_ARTIST')) { throw $this->createAccessDeniedException(); }
         $artwork = new Artwork();
-        $artworkImage = new ArtworkImage();
         $artwork->setArtist($this->getUser());
-        $artwork->addImage($artworkImage);
+        for ($i = 0; $i < 6; $i++) {
+            $artworkImage = new ArtworkImage();
+            $artwork->addImage($artworkImage);
+        }
         $form = $this->createForm(ArtworkType::class, $artwork);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             foreach ($artwork->getImages() as $image) {
-                $image->setArtwork($artwork);
-                $em->persist($image);
+                if ($image->getImageFile() === null) {
+                    $artwork->removeImage($image);
+                } else {
+                    $image->setArtwork($artwork);
+                    $em->persist($image);
+                }
             }
             $em->persist($artwork);
             $em->flush();
