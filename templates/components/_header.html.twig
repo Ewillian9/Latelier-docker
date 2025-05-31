@@ -7,7 +7,7 @@
         </form>
         {% endif %}
         <nav aria-label="Main navigation" class="flex justify-end items-center gap-2 md:gap-4">
-            <button data-controller="theme" data-theme-target="button" data-action="click->theme#toggle" class="hidden sm:inline px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">☀️</button>
+            <button data-controller="theme" data-theme-target="button" data-action="click->theme#toggle" class="btn btn-gray sm">☀️</button>
             <div class="relative hidden sm:inline group">
             {% set flags = {
                 'ar': 'flag:arab-4x3',
@@ -24,23 +24,23 @@
                 'tr': 'flag:tr-4x3',
                 'zh': 'flag:cn-4x3'
             } %}
-                <button class="flex items-center gap-1 px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{ ux_icon(flags[app.request.locale] ?? 'flag:gb-4x3', { class: 'w-5 h-5' }) }}<span class="hidden md:inline">{{ app.request.locale|upper }}</span></button>
+                <button class="btn btn-gray">{{ ux_icon(flags[app.request.locale] ?? 'flag:gb-4x3', { class: 'w-5 h-5' }) }}<span class="md">{{ app.request.locale|upper }}</span></button>
                 <ul class="absolute left-0 hidden group-hover:block z-50 bg-none shadow-md">
                     {% for lang, flag in flags %}
                         {% if app.request.locale != lang %}
                             <li>
-                                <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale': lang})) }}" data-turbo="false" class="flex items-center gap-1 px-3 py-1 text-sm rounded bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{ ux_icon(flag, { class: 'w-5 h-5' }) }}<span class="hidden md:inline">{{ lang|upper }}</span></a>
+                                <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale': lang})) }}" data-turbo="false" class="btn btn-gray">{{ ux_icon(flag, { class: 'w-5 h-5' }) }}<span class="md">{{ lang|upper }}</span></a>
                             </li>
                         {% endif %}
                     {% endfor %}
                 </ul>
             </div>
             {% if app.user %}
-                <a href="{{ path('app_profile') }}" class="flex items-center gap-1 px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{ ux_icon('ic:outline-account-circle', { class: 'w-5 h-5' }) }}<span class="hidden md:inline">{{'profile'|trans}}</span></a>
-                <a href="{{ path('app_logout') }}" class="flex items-center gap-1 px-3 py-1 rounded bg-red-300 dark:bg-red-700 text-sm hover:bg-red-400 dark:hover:bg-red-600 transition">{{ ux_icon('mdi:logout', { class: 'w-5 h-5' }) }}<span class="hidden md:inline">{{'signout'|trans}}</span></a>
+                <a href="{{ path('app_profile') }}" class="btn btn-gray">{{ ux_icon('ic:outline-account-circle', { class: 'w-5 h-5' }) }}<span class="md">{{'profile'|trans}}</span></a>
+                <a href="{{ path('app_logout') }}" class="btn btn-red">{{ ux_icon('mdi:logout', { class: 'w-5 h-5' }) }}<span class="md">{{'signout'|trans}}</span></a>
             {% else %}
                 {% if (app.request.attributes.get('_route') != 'app_login') and (app.request.attributes.get('_route') != 'app_register') %}
-                    <a href="{{ path('app_login') }}" class="flex items-center gap-1 px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm hover:bg-gray-400 dark:hover:bg-gray-600 transition">{{ ux_icon('mdi:login', { class: 'w-5 h-5' }) }}<span class="hidden md:inline">{{'signin'|trans}}</span></a>
+                    <a href="{{ path('app_login') }}" class="btn btn-gray">{{ ux_icon('mdi:login', { class: 'w-5 h-5' }) }}<span class="md">{{'signin'|trans}}</span></a>
                 {% endif %}
             {% endif %}
         </nav>

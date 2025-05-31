@@ -56,9 +56,9 @@
                 {% endfor %}
             </div>
         </div>
-        {{ form_widget(form.title, {'attr': {'class': 'w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400', 'placeholder': 'A catchy title...'}}) }}
-        {{ form_widget(form.description, {'attr': {'class': 'w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400', 'placeholder': 'Write here the detailed description of your artwork'}}) }}
-        {{ form_widget(form.keywords, {'attr': {'class': 'w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400', 'placeholder': 'Keywords, comma seperated words. ex: tree,green,party'}}) }}
-        <button class="px-4 py-2 rounded bg-green-500 dark:bg-green-600 hover:bg-green-600 dark:hover:bg-green-700 text-white font-semibold transition shadow">{{ button_label|default('Save') }}</button>
+        {{ form_widget(form.title, {'attr': {'class': 'form-gray', 'placeholder': 'A catchy title...'}}) }}
+        {{ form_widget(form.description, {'attr': {'class': 'form-gray', 'placeholder': 'Write here the detailed description of your artwork'}}) }}
+        {{ form_widget(form.keywords, {'attr': {'class': 'form-gray', 'placeholder': 'Keywords, comma seperated words. ex: tree,green,party'}}) }}
+        <button class="btn btn-green">{{ button_label|default('Save') }}</button>
     {{ form_end(form) }}
 </turbo-frame>

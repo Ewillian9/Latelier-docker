@@ -18,7 +18,7 @@
                         <time datetime="{{ comment.createdAt ? comment.createdAt|date('c') : '' }}" class="block text-sm text-gray-500 dark:text-gray-400 mt-2">Publié {{ comment.createdAt ? comment.createdAt|ago : 'il y a un moment'}} on {{comment.artwork.title}}</time>
                     </div>
                     <div class="flex flex-col items-end gap-2">
-                        <a href="{{ path('app_artwork_show', {'id': comment.artwork.id}) }}" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500 text-sm inline-block">Voir mon commentaire</a>
+                        <a href="{{ path('app_artwork_show', {'id': comment.artwork.id}) }}" class="btn btn-gray">Voir mon commentaire</a>
                         {{ include('comment/_delete_form.html.twig', {'comment': comment}) }}
                     </div>
                 </li>
