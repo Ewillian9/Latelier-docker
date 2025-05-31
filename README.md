@@ -1,21 +1,20 @@
 # L'atelier - Site vitrine pour des œuvres d'art maison
 
 ## Technologies utilisées
-- **Symfony7/Twig/Turbo/Mercure**
-- **TailwindCSS4**
-- **PostSQL**
-- **Docker**
+- **Docker/Caddy**
+- **PHP8/PostSQL17/Symfony7**
+- **TailwindCSS4/Twig/Turbo/Mercure**
 
 ## Fonctionnalités (complémentaires)
 
 ### Administration
 - Modération des commentaires ---OK
-- et des utilisateurs
+- et des utilisateurs avec strikes
 
 ### Artists
 - Gestion de ses œuvres (ajout, modification, suppression) ---OK
 - Ajout de titre, images, description et mots-clés ---OK
-- Generation par IA de titre, description, mots-clés
+- Generation par IA de titre, description, mots-clés ---LATER
 
 ### Utilisateurs (inscription requise)
 - Création de compte avec confirmation par email ---OK
@@ -26,7 +25,7 @@
 
 ### Visiteurs (sans inscription)
 - Consultation des œuvres ---OK
-- Recherche par titre et mots-clés ---OK
+- Recherche par titre, description et mots-clés ---OK
 - Mode clair/sombre ---OK
 - Support multilingues ---OK
 
