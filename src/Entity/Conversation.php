@@ -34,13 +34,11 @@ class Conversation
     #[ORM\ManyToOne(inversedBy: 'conversations')]
     private ?User $client = null;
 
-    #[ORM\ManyToOne(inversedBy: 'conversations')]
+    #[ORM\ManyToOne]
     private ?User $artist = null;
 
     public function __construct()
     {
-        $this->messaginguser = new ArrayCollection();
-        $this->artist = new ArrayCollection();
         $this->messages = new ArrayCollection();
     }
 
@@ -136,5 +134,23 @@ class Conversation
         $this->artist = $artist;
 
         return $this;
+    }
+
+    public function isParticipant(User $user): bool
+    {
+        return $this->client === $user || $this->artist === $user;
+    }
+
+    public function getOtherParticipant(User $currentUser): ?User
+    {
+        if ($this->client === $currentUser) {
+            return $this->artist;
+        }
+        
+        if ($this->artist === $currentUser) {
+            return $this->client;
+        }
+        
+        return null;
     }
 }
