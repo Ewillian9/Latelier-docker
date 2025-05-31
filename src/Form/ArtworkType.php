@@ -13,15 +13,16 @@ class ArtworkType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('title')
+        $builder
             ->add('images', CollectionType::class, [
                 'entry_type' => ArtworkImageType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
                 'prototype' => true,
-                'label' => 'Images',
+                'label' => false,
             ])
+            ->add('title')
             ->add('description')
             ->add('keywords')
         ;

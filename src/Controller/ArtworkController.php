@@ -104,10 +104,25 @@ final class ArtworkController extends AbstractController
     {
         if (!$this->isGranted('ROLE_ADMIN') && $this->getUser() !== $artwork->getArtist()) { throw $this->createAccessDeniedException(); }
 
+        $imagesToAdd = 8 - $artwork->getImages()->count();
+        if ($imagesToAdd > 0) {
+            for ($i = 0; $i < $imagesToAdd; $i++) {
+                $artworkImage = new ArtworkImage();
+                $artwork->addImage($artworkImage);
+            }
+        }
         $form = $this->createForm(ArtworkType::class, $artwork);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($artwork->getImages() as $image) {
+                if ($image->getImageFile() === null && $image->getId() === null) {
+                    $artwork->removeImage($image);
+                } elseif ($image->getImageFile() !== null) {
+                    $image->setArtwork($artwork);
+                    $em->persist($image);
+                }
+            }
             $em->flush();
             return $this->redirectToRoute('app_artwork_show', ['id' => $artwork->getId()], Response::HTTP_SEE_OTHER);
         }
@@ -121,9 +136,8 @@ final class ArtworkController extends AbstractController
     #[Route('artwork/{id}/delete', name: 'app_artwork_delete', methods: ['POST'])]
     public function delete(Request $request, Artwork $artwork, EntityManagerInterface $em): Response
     {
-        if (!$this->isGranted('ROLE_ADMIN') && $this->getUser() !== $artwork->getArtist()) {
-            throw $this->createAccessDeniedException();
-        }
+        if (!$this->isGranted('ROLE_ADMIN') && $this->getUser() !== $artwork->getArtist()) { throw $this->createAccessDeniedException(); }
+        
         if ($this->isCsrfTokenValid('delete'.$artwork->getId(), $request->getPayload()->getString('_token'))) {
             $em->remove($artwork);
             $em->flush();
