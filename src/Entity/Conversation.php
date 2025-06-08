@@ -28,7 +28,7 @@ class Conversation
     /**
      * @var Collection<int, Message>
      */
-    #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'conversations')]
+    #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'conversation', cascade: ['persist'], orphanRemoval: true)]
     private Collection $messages;
 
     #[ORM\ManyToOne(inversedBy: 'conversations')]
@@ -94,7 +94,7 @@ class Conversation
     {
         if (!$this->messages->contains($message)) {
             $this->messages->add($message);
-            $message->setConversations($this);
+            $message->setConversation($this);
         }
 
         return $this;
@@ -104,8 +104,8 @@ class Conversation
     {
         if ($this->messages->removeElement($message)) {
             // set the owning side to null (unless already changed)
-            if ($message->getConversations() === $this) {
-                $message->setConversations(null);
+            if ($message->getConversation() === $this) {
+                $message->setConversation(null);
             }
         }
 

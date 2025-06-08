@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Message
 {
     #[ORM\Id]
@@ -21,7 +22,7 @@ class Message
     private ?User $sender = null;
 
     #[ORM\ManyToOne(inversedBy: 'messages')]
-    private ?Conversation $conversations = null;
+    private ?Conversation $conversation = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -58,14 +59,14 @@ class Message
         return $this;
     }
 
-    public function getConversations(): ?Conversation
+    public function getConversation(): ?Conversation
     {
-        return $this->conversations;
+        return $this->conversation;
     }
 
-    public function setConversations(?Conversation $conversations): static
+    public function setConversation(?Conversation $conversation): static
     {
-        $this->conversations = $conversations;
+        $this->conversation = $conversation;
 
         return $this;
     }
