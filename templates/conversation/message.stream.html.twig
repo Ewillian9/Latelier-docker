@@ -1,0 +1,16 @@
+{% block create %}
+<turbo-stream action="after" target="messages_artwork">
+    <template>
+        <article id="message_{{ message.id }}" class="mb-4">
+            <p class="{{ message.sender == app.user ? 'text-green-600' : 'text-blue-600' }}"><strong>{{ message.sender.username }}</strong>: {{ message.content }}</p>
+            <p class="text-sm text-gray-500">{{ message.createdAt|ago }}</p>
+        </article>
+    </template>
+</turbo-stream>
+
+<turbo-stream action="replace" target="new_message_form">
+    <template>
+        {{ include('conversation/_form.html.twig') }}
+    </template>
+</turbo-stream>
+{% endblock %}

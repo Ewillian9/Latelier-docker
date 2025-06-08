@@ -1,7 +1,6 @@
 <section class="mt-4 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-4 md:p-8 w-full overflow-hidden">
     <h2 id="comments_artwork" class="text-xl font-semibold mb-4" {{ turbo_stream_listen('comment') }}>{{'comments'|trans}}</h2>
     {% for comment in artwork.comments %}
-
         <article id="comment_{{ comment.id }}" class="mb-4 border-l-4 border-blue-500 pl-4">
             <turbo-frame id="comment_edit_{{ comment.id }}">
                 {% if app.user == comment.user or is_granted('ROLE_ADMIN') %}
@@ -10,15 +9,14 @@
                         {{ include('comment/_delete_form.html.twig', {'comment': comment}) }}
                     </nav>
                 {% endif %}
-                <p class="text-gray-800 dark:text-gray-200">{{ comment.content }}</p>
+                <p>{{ comment.content }}</p>
                 <p class="text-sm text-gray-500">{{ comment.user.username }} • {{ comment.createdAt|ago }}</p>
             </turbo-frame>
         </article>
-
     {% else %}
         <p id="no_comment_artwork" class="text-gray-500">{{'nocomments'|trans}}</p>
     {% endfor %}
-    
+
     {% if app.user %}
         {{ include('comment/_form.html.twig') }}
     {% else %}
