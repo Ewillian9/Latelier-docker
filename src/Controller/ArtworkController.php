@@ -88,7 +88,9 @@ final class ArtworkController extends AbstractController
                 $em->flush();
                 $hub->publish(new Update(
                     'comment',
-                    $this->renderBlock('comment/comment.stream.html.twig', 'new_comment', ['comment' => $form->getData([])])
+                    $this->renderBlock('comment/comment.stream.html.twig', 'create', [
+                        'comment' => $form->getData([]),
+                    ])
                 ));
                 $form = $emptyForm;
             }

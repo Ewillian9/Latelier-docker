@@ -1,22 +1,62 @@
-{% block new_comment %}
+{% block create %}
     <turbo-stream action="after" target="comments_artwork">
         <template>
-            <article id="comment{{ comment.id }}" class="mb-4 border-l-4 border-blue-500 pl-4">
+            <article id="comment_{{ comment.id }}" class="mb-4 border-l-4 border-blue-500 pl-4">
+                <turbo-frame id="comment_edit_{{ comment.id }}">
+                    {% if app.user == comment.user or is_granted('ROLE_ADMIN') %}
+                        <nav aria-label="Comment actions" class="mt-2 flex gap-2 text-sm">
+                            <a href="{{ path('app_comment_edit', {'id': comment.id}) }}" class="btn btn-blue" data-turbo-frame="comment_edit_{{ comment.id }}">Edit</a>
+                            {{ include('comment/_delete_form.html.twig', {'comment': comment}) }}
+                        </nav>
+                    {% endif %}
+                    <p class="text-gray-800 dark:text-gray-200">{{ comment.content }}</p>
+                    <p class="text-sm text-gray-500">By {{ comment.user.username }} • {{ comment.createdAt|ago }}</p>
+                </turbo-frame>
+            </article>
+        </template>
+    </turbo-stream>
+
+    <turbo-stream action="remove" target="no_comment_artwork">
+        <template></template>
+    </turbo-stream>
+
+    <turbo-stream action="remove" target="no_comment_user">
+        <template></template>
+    </turbo-stream>
+{% endblock %}
+
+{% block update %}
+    <turbo-stream action="update" target="comment_{{ id }}">
+        <template>
+            <turbo-frame id="comment_edit_{{ comment.id }}">
                 {% if app.user == comment.user or is_granted('ROLE_ADMIN') %}
                     <nav aria-label="Comment actions" class="mt-2 flex gap-2 text-sm">
-                        <a href="{{ path('app_comment_edit', {'id': comment.id}) }}" class="btn btn-blue">Edit</a>
+                        <a href="{{ path('app_comment_edit', {'id': comment.id}) }}" class="btn btn-blue" data-turbo-frame="comment_edit_{{ comment.id }}">Edit</a>
                         {{ include('comment/_delete_form.html.twig', {'comment': comment}) }}
                     </nav>
                 {% endif %}
                 <p class="text-gray-800 dark:text-gray-200">{{ comment.content }}</p>
                 <p class="text-sm text-gray-500">By {{ comment.user.username }} • {{ comment.createdAt|ago }}</p>
-            </article>
+            </turbo-frame>
         </template>
     </turbo-stream>
-    <turbo-stream action="remove" target="no_comment_artwork">
-        <template></template>
-    </turbo-stream>
-    <turbo-stream action="remove" target="no_comment_user">
-        <template></template>
-    </turbo-stream>
+{% endblock %}
+
+{% block delete %}
+    <turbo-stream action="remove" target="comment_{{ id }}"></turbo-stream>
+
+    {% if remainingCommentsCount == 0 %}
+        <turbo-stream action="after" target="comments_artwork">
+            <template>
+                <p id="no_comment_artwork" class="text-gray-500">{{'nocomments'|trans}}</p>
+            </template>
+        </turbo-stream>
+    {% endif %}
+    {% if remainingUserCommentsCount == 0 %}
+        <turbo-stream action="replace" target="comments_user">
+            <template>
+                <p id="no_comment_user" class="text-gray-600 dark:text-gray-300">{{'profile.nocomments'|trans}}</p>
+            </template>
+        </turbo-stream>
+    {% endif %}
 {% endblock %}
