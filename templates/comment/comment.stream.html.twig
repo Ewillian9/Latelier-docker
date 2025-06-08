@@ -16,6 +16,12 @@
         </template>
     </turbo-stream>
 
+    <turbo-stream action="replace" target="new_comment_form">
+        <template>
+            {{ include('comment/_form.html.twig') }}
+        </template>
+    </turbo-stream>
+
     <turbo-stream action="remove" target="no_comment_artwork">
         <template></template>
     </turbo-stream>

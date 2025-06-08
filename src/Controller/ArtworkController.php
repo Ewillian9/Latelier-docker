@@ -90,9 +90,9 @@ final class ArtworkController extends AbstractController
                     'comment',
                     $this->renderBlock('comment/comment.stream.html.twig', 'create', [
                         'comment' => $form->getData([]),
+                        'form' => $emptyForm,
                     ])
                 ));
-                $form = $emptyForm;
             }
         }
         return $this->render('artwork/show.html.twig', [
