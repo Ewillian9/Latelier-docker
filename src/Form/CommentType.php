@@ -16,7 +16,7 @@ class CommentType extends AbstractType
         $builder
             ->add('content', TextType::class, [
             'attr' => [
-                'placeholder' => 'Type a message...',
+                'placeholder' => 'Type a message... (max 100 caracteres)',
                 'maxlength' => 100,
             ],
             'constraints' => [
