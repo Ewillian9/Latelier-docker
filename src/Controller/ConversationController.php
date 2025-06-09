@@ -61,11 +61,24 @@ final class ConversationController extends AbstractController
             $em->persist($message);
             $em->flush();
 
+            $receiver = $conversation->getOtherParticipant($this->getUser());
+
             $hub->publish(new Update(
-                sprintf('conversation-%d', $conversation->getId()),
+                sprintf('conversation-%d-%d', $conversation->getId(), $message->getSender()->getId()),
                 $this->renderBlock('conversation/message.stream.html.twig', 'create', [
                     'conversation' => $conversation,
                     'message' => $message,
+                    'user' => $message->getSender(),
+                    'form' => $emptyForm
+                ])
+            ));
+
+            $hub->publish(new Update(
+                sprintf('conversation-%d-%d', $conversation->getId(), $receiver->getId()),
+                $this->renderBlock('conversation/message.stream.html.twig', 'create', [
+                    'conversation' => $conversation,
+                    'message' => $message,
+                    'user' => $receiver,
                     'form' => $emptyForm
                 ])
             ));

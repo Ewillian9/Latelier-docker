@@ -5,14 +5,14 @@
 {% block body %}
 <section class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-4 md:p-8 w-full overflow-hidden">
     {{ include('components/_nav.html.twig') }}
-    <a href="{{ path('app_artwork_show', {'id': conversation.artwork.id}) }}" id="messages_artwork" class="flex gap-2 text-xl font-semibold mb-4" {{ turbo_stream_listen('conversation-' ~ conversation.id) }}>
+    <a href="{{ path('app_artwork_show', {'id': conversation.artwork.id}) }}" class="flex gap-2 text-xl font-semibold mb-4" {{ turbo_stream_listen('conversation-' ~ conversation.id ~ '-' ~ app.user.id) }}>
         {% set firstImage = conversation.artwork.images|first %}
         {% if firstImage %}
             <img src="{{ vich_uploader_asset(firstImage, 'imageFile') }}" alt="Artwork thumbnail" class="w-16 h-16 object-cover rounded-md">
         {% endif %}
         {{conversation.artwork.title}}
     </a>
-    <div class="flex flex-col gap-2 mb-4 overflow-y-auto max-h-[400px] px-2">
+    <div data-controller="scroll" data-scroll-target="container" data-action="turbo:before-stream-render@window->scroll#scrollToMessage" id="messages_artwork" class="flex flex-col gap-2 mb-4 overflow-y-auto max-h-[400px] px-2">
     {% for message in messages %}
         {% set isOwn = message.sender == app.user %}
         <article id="message_{{ message.id }}" class="flex {{ isOwn ? 'justify-end' : 'justify-start' }}">
