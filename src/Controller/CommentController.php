@@ -21,7 +21,8 @@ final class CommentController extends AbstractController
     public function edit(Request $request, Comment $comment, HubInterface $hub, EntityManagerInterface $em): Response
     {
         if ($comment->getUser() !== $this->getUser() && !$this->isGranted('ROLE_ADMIN')) {
-            throw $this->createAccessDeniedException();
+            $this->addFlash('error', 'You must login to do that!');
+            return $this->redirectToRoute('app_login');
         }
         $form = $this->createForm(CommentType::class, $comment);
         

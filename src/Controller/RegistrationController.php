@@ -64,15 +64,17 @@ class RegistrationController extends AbstractController
     {
         $id = $request->query->get('id');
         if (null === $id) {
+            $this->addFlash('error', 'Somthing went wrong with the link!');
             return $this->redirectToRoute('app_register');
         }
 
         $user = $userRepository->find($id);
         if (null === $user) {
+            $this->addFlash('error', 'Somthing went wrong with the link!');
             return $this->redirectToRoute('app_register');
         }
         if ($user->isVerified()) {
-            $this->addFlash('info', 'The email verification link has already been used');
+            $this->addFlash('info', 'The email verification link has already been used!');
             return $this->redirectToRoute('app_artwork_index');
         }
 

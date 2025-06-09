@@ -43,7 +43,10 @@ final class ArtworkController extends AbstractController
     #[Route('artwork/new', name: 'app_artwork_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $em): Response
     {
-        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_ARTIST')) { throw $this->createAccessDeniedException(); }
+        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_ARTIST')) {
+            $this->addFlash('error', 'You must login to do that!');
+            return $this->redirectToRoute('app_login');
+        }
         $artwork = new Artwork();
         $artwork->setArtist($this->getUser());
         for ($i = 0; $i < 8; $i++) {
@@ -104,7 +107,10 @@ final class ArtworkController extends AbstractController
     #[Route('artwork/{id}/edit', name: 'app_artwork_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Artwork $artwork, EntityManagerInterface $em): Response
     {
-        if (!$this->isGranted('ROLE_ADMIN') && $this->getUser() !== $artwork->getArtist()) { throw $this->createAccessDeniedException(); }
+        if (!$this->isGranted('ROLE_ADMIN') && $this->getUser() !== $artwork->getArtist()) {
+            $this->addFlash('error', 'No!');
+            return $this->redirectToRoute('app_login');
+        }
 
         $imagesToAdd = 8 - $artwork->getImages()->count();
         if ($imagesToAdd > 0) {
@@ -138,7 +144,9 @@ final class ArtworkController extends AbstractController
     #[Route('artwork/{id}/delete', name: 'app_artwork_delete', methods: ['POST'])]
     public function delete(Request $request, Artwork $artwork, EntityManagerInterface $em): Response
     {
-        if (!$this->isGranted('ROLE_ADMIN') && $this->getUser() !== $artwork->getArtist()) { throw $this->createAccessDeniedException(); }
+        if (!$this->isGranted('ROLE_ADMIN') && $this->getUser() !== $artwork->getArtist()) {
+            throw $this->createAccessDeniedException();
+        }
         
         if ($this->isCsrfTokenValid('delete'.$artwork->getId(), $request->getPayload()->getString('_token'))) {
             $em->remove($artwork);
