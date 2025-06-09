@@ -24,19 +24,22 @@
         </li>
     </ul>
     <nav class="w-full mt-6 space-y-3">
-    <div class="flex justify-between items-center">
-        <div class="space-x-2">
-            {% if user.comments|length > 0 %}
-                <a href="{{ path('app_my_comments', {'id': user.id}) }}" class="btn btn-gray"> Voir mes commentaires ({{ user.comments|length }})</a>
-            {% endif %}
-            {% if user.artworks|length > 0 %}
-                <a href="{{ path('app_my_artworks', {'id': user.id}) }}" class="btn btn-gray"> Voir mes œuvres ({{ user.artworks|length }})</a>
-            {% endif %}
+        <div class="flex justify-between items-center">
+            <div class="flex space-x-2">
+                {% if user.comments is not empty %}
+                    <a href="{{ path('app_my_comments') }}" class="btn btn-gray"> Voir mes commentaires ({{ user.comments|length }})</a>
+                {% endif %}
+                {% if user.artworks is not empty %}
+                    <a href="{{ path('app_my_artworks') }}" class="btn btn-gray"> Voir mes œuvres ({{ user.artworks|length }})</a>
+                {% endif %}
+                {% if user.conversations is not empty or user.artistConversations is not empty %}
+                    <a href="{{ path('app_my_conversations') }}" class="btn btn-gray"> Voir mes conversations ({{ user.conversations is not empty ? user.conversations|length : user.artistConversations|length }})</a>
+                {% endif %}
+            </div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 text-right">
+                <p>{{'created'|trans }} {{ user.createdAt ? user.createdAt|ago : 'N/A' }} | {{'updated'|trans }} {{ user.updatedAt ? user.updatedAt|ago : 'N/A' }}</p>
+            </div>
         </div>
-        <div class="text-xs text-gray-500 dark:text-gray-400 text-right">
-            <div>{{'created'|trans }} {{ user.createdAt ? user.createdAt|ago : 'N/A' }} | {{'updated'|trans }} {{ user.updatedAt ? user.updatedAt|ago : 'N/A' }}</div>
-        </div>
-    </div>
-</nav>
+    </nav>
 </section>
 {% endblock %}

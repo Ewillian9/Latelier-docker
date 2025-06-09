@@ -37,6 +37,9 @@ class Conversation
     #[ORM\ManyToOne]
     private ?User $artist = null;
 
+    #[ORM\ManyToOne(inversedBy: 'conversations')]
+    private ?Artwork $artwork = null;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
@@ -152,5 +155,17 @@ class Conversation
         }
         
         return null;
+    }
+
+    public function getArtwork(): ?Artwork
+    {
+        return $this->artwork;
+    }
+
+    public function setArtwork(?Artwork $artwork): static
+    {
+        $this->artwork = $artwork;
+
+        return $this;
     }
 }

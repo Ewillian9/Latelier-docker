@@ -6,6 +6,7 @@ use App\Entity\Conversation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\User;
+use App\Entity\Artwork;
 
 /**
  * @extends ServiceEntityRepository<Conversation>
@@ -17,14 +18,25 @@ class ConversationRepository extends ServiceEntityRepository
         parent::__construct($registry, Conversation::class);
     }
 
-    public function findOneByUsers(User $user, User $artist): ?Conversation
+    public function findOneByUsersAndArtwork(User $userA, User $userB, Artwork $artwork): ?Conversation
     {
         return $this->createQueryBuilder('c')
-            ->where('c.client = :user AND c.artist = :artist')
-            ->orWhere('c.client = :artist AND c.artist = :user')
-            ->setParameter('user', $user)
-            ->setParameter('artist', $artist)
+            ->where('c.artwork = :artwork')
+            ->andWhere('(c.client = :userA AND c.artist = :userB) OR (c.client = :userB AND c.artist = :userA)')
+            ->setParameter('userA', $userA)
+            ->setParameter('userB', $userB)
+            ->setParameter('artwork', $artwork)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function findByUser(User $user): array
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.client = :user OR c.artist = :user')
+            ->setParameter('user', $user)
+            ->orderBy('c.updatedAt', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 }

@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\User;
+use App\Entity\Artwork;
 use App\Entity\Message;
 use App\Form\MessageType;
 use App\Entity\Conversation;
@@ -18,19 +19,30 @@ use Symfony\Component\Mercure\Update;
 
 final class ConversationController extends AbstractController
 {
-    #[Route('/conversation/{artist}', name: 'app_conversation')]
+    #[Route('/conversation/{artist}', name: 'app_conversation', methods: ['GET', 'POST'])]
     public function show(ConversationRepository $cr, MessageRepository $mr, User $artist, Request $request, EntityManagerInterface $em, HubInterface $hub): Response
     {
         $user = $this->getUser();
-        if (!$user || $user === $artist) {
-            throw $this->createAccessDeniedException();
+        if (!$user) {
+            $this->addFlash('info', 'You must login to do that!');
+            return $this->redirectToRoute('app_login');
         }
-
-        $conversation = $cr->findOneByUsers($user, $artist);
+        
+        $artworkId = $request->query->get('artwork');
+        $artwork = $em->getRepository(Artwork::class)->find($artworkId);
+        if (!$artwork) {
+            $this->addFlash('error', 'The artwork is missing to create a conversation!');
+            return $this->redirectToRoute('app_artwork_index');
+        }
+        $conversation = $cr->findOneByUsersAndArtwork($user, $artist, $artwork);
         
         if (!$conversation) {
+            if ($user === $artist) {
+                $this->addFlash('info', 'You cannot create a conversation with yourself!');
+                return $this->redirectToRoute('app_artwork_index');
+            }
             $conversation = new Conversation();
-
+            $conversation->setArtwork($artwork);
             $conversation->setClient($user);
             $conversation->setArtist($artist);
 

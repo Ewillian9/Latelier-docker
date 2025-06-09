@@ -37,7 +37,7 @@
             {% endif %}
             <p class="text-sm text-gray-500 dark:text-gray-400">{{'added'|trans}} <time datetime="{{ artwork.createdAt ? artwork.createdAt|date('c') : '' }}">{{ artwork.createdAt ? artwork.createdAt|ago : 'NaN' }}</time> {{'by'|trans}} {{ artwork.artist.username }}</p>
             {% if app.user and app.user != artwork.artist %}
-                <a href="{{ path('app_conversation', {artist: artwork.artist.id}) }}" class="inline-block mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg shadow">💬 {{ 'artwork.talk.to'|trans }} {{ artwork.artist.username }}</a>
+                <a href="{{ path('app_conversation', {artist: artwork.artist.id, artwork: artwork.id}) }}" class="inline-block mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg shadow">💬 {{ 'artwork.talk.to'|trans }} {{ artwork.artist.username }}</a>
             {% endif %}
         </section>
     </article>

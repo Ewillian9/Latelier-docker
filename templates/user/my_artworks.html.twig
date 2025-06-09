@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Mes œuvres{% endblock %}
-
 {% block body %}
     <section class="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-4 md:p-8 flex flex-col items-start gap-6">
-    {{ include('components/_nav.html.twig') }}
+        {{ include('components/_nav.html.twig') }}
         <section class="w-full border-b border-gray-300 dark:border-gray-600 pb-4">
             <h2 class="text-3xl font-semibold text-gray-800 dark:text-white">Mes œuvres</h2>
             <p class="text-gray-500 dark:text-gray-400 mt-1">Voici la liste de vos œuvres publiées</p>
         </section>
 
-        {% if artworks|length > 0 %}
+        {% if artworks is empty %}
+            <p class="text-gray-600 dark:text-gray-300">{{'artwork.none'|trans}}</p>
+        {% else %}
             <ul class="w-full space-y-6">
                 {% for artwork in artworks %}
                     <li class="p-4 rounded-xl shadow-sm bg-gray-100 dark:bg-gray-700 flex justify-between items-start">
@@ -25,9 +25,7 @@
                         </div>
                     </li>
                 {% endfor %}
-                </ul>
-        {% else %}
-            <p class="text-gray-600 dark:text-gray-300">{{'artwork.none'|trans}}</p>
+            </ul>
         {% endif %}
     </section>
 {% endblock %}

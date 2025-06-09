@@ -9,6 +9,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ArtworkRepository;
 use App\Repository\CommentRepository;
+use App\Repository\ConversationRepository;
 use Symfony\Component\HttpFoundation\Request;
 
 #[IsGranted('IS_AUTHENTICATED_FULLY')]
@@ -18,7 +19,8 @@ final class UserController extends AbstractController
     public function index(): Response
     {
         if (!$user = $this->getUser()) {
-            throw $this->createAccessDeniedException();
+            $this->addFlash('error', 'You are not connected!');
+            return $this->redirectToRoute('app_login');
         }
         return $this->render('user/index.html.twig', [
             'user' => $user,
@@ -29,7 +31,10 @@ final class UserController extends AbstractController
     public function edit(Request $request, UserPasswordHasherInterface $hasher, EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
-        if (!$user) throw $this->createAccessDeniedException();
+        if (!$user) {
+            $this->addFlash('error', 'You are not connected!');
+            return $this->redirectToRoute('app_login');
+        }
 
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -40,7 +45,7 @@ final class UserController extends AbstractController
             }
             $em->flush();
 
-            $this->addFlash('success', 'Profil mis à jour.');
+            $this->addFlash('success', 'Profile updated successfully!');
             return $this->redirectToRoute('app_profile');
         }
 
@@ -53,8 +58,10 @@ final class UserController extends AbstractController
     public function myArtworks(ArtworkRepository $ar): Response
     {
         $user = $this->getUser();
-        if (!$user) throw $this->createAccessDeniedException();
-        
+        if (!$user) {
+            $this->addFlash('error', 'You are not connected!');
+            return $this->redirectToRoute('app_login');
+        }
         $artworks = $ar->findBy(['artist' => $user]);
 
         return $this->render('user/my_artworks.html.twig', [
@@ -66,12 +73,29 @@ final class UserController extends AbstractController
     public function myComments(CommentRepository $cr): Response
     {
         $user = $this->getUser();
-        if (!$user) throw $this->createAccessDeniedException();
-
+        if (!$user) {
+            $this->addFlash('error', 'You are not connected!');
+            return $this->redirectToRoute('app_login');
+        }
         $comments = $cr->findBy(['commenter' => $user]);
 
         return $this->render('user/my_comments.html.twig', [
             'comments' => $comments,
+        ]);
+    }
+
+    #[Route('/profile/my-conversations', name: 'app_my_conversations', methods: ['GET'])]
+    public function myConversations(ConversationRepository $cr): Response
+    {
+        $user = $this->getUser();
+        if (!$user) {
+            $this->addFlash('error', 'You are not connected!');
+            return $this->redirectToRoute('app_login');
+        }
+        $conversations = $cr->findByUser($user);
+
+        return $this->render('user/my_conversations.html.twig', [
+            'conversations' => $conversations,
         ]);
     }
 }

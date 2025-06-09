@@ -70,6 +70,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Conversation::class, mappedBy: 'client')]
     private Collection $conversations;
 
+    #[ORM\OneToMany(mappedBy: 'artist', targetEntity: Conversation::class)]
+    private Collection $artistConversations;
+
     #[ORM\Column]
     private bool $isVerified = false;
 
@@ -85,6 +88,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->orders = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->conversations = new ArrayCollection();
+        $this->artistConversations = new ArrayCollection();
         $this->artworks = new ArrayCollection();
     }
 
@@ -316,6 +320,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    public function getArtistConversations(): Collection
+    {
+        return $this->artistConversations;
     }
 
     public function isVerified(): bool
