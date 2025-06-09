@@ -5,13 +5,24 @@
 {% block body %}
 <section class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-4 md:p-8 w-full overflow-hidden">
     {{ include('components/_nav.html.twig') }}
-    <h2 id="messages_artwork" class="text-xl font-semibold mb-4" {{ turbo_stream_listen('conversation-' ~ conversation.id) }}>{{conversation.artwork.title}}</h2>
+    <a href="{{ path('app_artwork_show', {'id': conversation.artwork.id}) }}" id="messages_artwork" class="flex gap-2 text-xl font-semibold mb-4" {{ turbo_stream_listen('conversation-' ~ conversation.id) }}>
+        {% set firstImage = conversation.artwork.images|first %}
+        {% if firstImage %}
+            <img src="{{ vich_uploader_asset(firstImage, 'imageFile') }}" alt="Artwork thumbnail" class="w-16 h-16 object-cover rounded-md">
+        {% endif %}
+        {{conversation.artwork.title}}
+    </a>
+    <div class="flex flex-col gap-2 mb-4 overflow-y-auto max-h-[400px] px-2">
     {% for message in messages %}
-        <article id="message_{{ message.id }}" class="mb-4">
-            <p class="{{ message.sender == app.user ? 'text-green-600' : 'text-blue-600' }}"><strong>{{ message.sender.username }}</strong>: {{ message.content }}</p>
-            <p class="text-sm text-gray-500">{{ message.createdAt|ago }}</p>
+        {% set isOwn = message.sender == app.user %}
+        <article id="message_{{ message.id }}" class="flex {{ isOwn ? 'justify-end' : 'justify-start' }}">
+            <div class="inline-block max-w-[70%] px-4 py-2 rounded-2xl shadow break-words whitespace-normal {{ isOwn ? 'bg-green-100 dark:bg-green-700 text-green-900 dark:text-white rounded-br-none' : 'bg-blue-100 dark:bg-blue-700 text-blue-900 dark:text-white rounded-bl-none'}}">
+                <p class="text-sm leading-snug break-words">{{ message.content }}</p>
+                <p class="text-xs text-gray-500 dark:text-gray-300 mt-1 text-right">{{ message.createdAt|ago }}</p>
+            </div>
         </article>
     {% endfor %}
+    </div>
     {{ include('conversation/_form.html.twig') }}
 </section>
 {% endblock %}

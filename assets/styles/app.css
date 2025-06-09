@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 html { scrollbar-width: none; }
+div { scrollbar-width: thin; }
 .btn {
     @apply flex items-center gap-1 px-4 py-2 rounded-lg text-sm transition;
 }
