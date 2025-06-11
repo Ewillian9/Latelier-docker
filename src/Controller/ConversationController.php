@@ -79,7 +79,6 @@ final class ConversationController extends AbstractController
                     'conversation' => $conversation,
                     'message' => $message,
                     'user' => $receiver,
-                    'form' => $emptyForm
                 ])
             ));
         }
