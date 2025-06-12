@@ -10,27 +10,27 @@
 {% endfor %}
     <section class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4">
         {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ARTIST') %}
-            <figure class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+            <figure class="main-color rounded-lg shadow-md overflow-hidden">
                 <a href="{{ path('app_artwork_new') }}">
-                    <span class="w-full h-48 flex items-center justify-center bg-gray-100 text-gray-400">{{ ux_icon('ic:outline-plus', { class: 'w-16 h-16' }) }}</span>
+                    <span class="w-full h-48 flex items-center justify-center bg-gray-100 secondary-text">{{ ux_icon('ic:outline-plus', { class: 'w-16 h-16' }) }}</span>
                     <figcaption class="p-2 sm:p-4">
                         <h2 class="text-lg font-semibold">{{'artwork.new'|trans}}</h2>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">{{'artwork.new.decription'|trans}}</p>
+                        <p class="text-sm secondary-text">{{'artwork.new.decription'|trans}}</p>
                     </figcaption>
                 </a>
             </figure> 
         {% endif %}
         {% for artwork in artworks %}
-            <figure class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+            <figure class="main-color rounded-lg shadow-md overflow-hidden">
                 <a href="{{ path('app_artwork_show', {'id': artwork.id}) }}">
                     {% if artwork.images|length > 0 %}
                         <img src="{{ vich_uploader_asset(artwork.images[0], 'imageFile') }}" alt="{{ artwork.title }}" class="w-full h-48 object-cover" loading="lazy">
                     {% else %}
-                        <span class="w-full h-48 flex items-center justify-center bg-gray-100 text-gray-400 text-4xl">X</span>
+                        <span class="w-full h-48 flex items-center justify-center bg-gray-100 secondary-text text-4xl">X</span>
                     {% endif %}
                     <figcaption class="p-2 sm:p-4">
                         <h2 class="text-lg font-semibold">{{ artwork.title }}</h2>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">{{ artwork.description|slice(0, 50) }}...</p>
+                        <p class="text-sm secondary-text">{{ artwork.description|slice(0, 50) }}...</p>
                     </figcaption>
                 </a>
             </figure>

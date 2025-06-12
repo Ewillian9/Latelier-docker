@@ -1,4 +1,4 @@
-<section class="flex flex-col w-full bg-white dark:bg-gray-800 rounded-xl shadow-lg p-2 sm:p-4 gap-2 sm:gap-4">
+<section class="base main-color">
     <h3 id="comments_artwork" class="text-xl font-semibold" {{ turbo_stream_listen('comment') }}>{{'comments'|trans}}</h3>
     {% for comment in artwork.comments %}
         <article id="comment_{{ comment.id }}" class="border-l-4 border-blue-500 pl-2">
@@ -10,16 +10,16 @@
                     </nav>
                 {% endif %}
                 <p>{{ comment.content }}</p>
-                <p class="text-sm text-gray-500">{{ comment.user.username }} • {{ comment.createdAt|ago }}</p>
+                <p class="text-sm secondary-text">{{ comment.user.username }} • {{ comment.createdAt|ago }}</p>
             </turbo-frame>
         </article>
     {% else %}
-        <p id="no_comment_artwork" class="text-gray-500">{{'nocomments'|trans}}</p>
+        <p id="no_comment_artwork" class="secondary-text">{{'nocomments'|trans}}</p>
     {% endfor %}
 
     {% if app.user %}
         {{ include('comment/_form.html.twig') }}
     {% else %}
-        <p class="text-sm text-gray-500">{{'connecttocomment'|trans}}</p>
+        <p class="text-sm secondary-text">{{'connecttocomment'|trans}}</p>
     {% endif %}
 </section>

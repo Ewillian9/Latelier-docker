@@ -1,31 +1,31 @@
 {% extends 'base.html.twig' %}
 {% block title %}Mes œuvres{% endblock %}
 {% block body %}
-    <section class="flex flex-col w-full bg-white dark:bg-gray-800 rounded-xl shadow-md items-start p-2 sm:p-4 gap-2 sm:gap-4">
-        {{ include('components/_nav.html.twig') }}
-        <section class="w-full border-b border-gray-300 dark:border-gray-600 pb-2 sm:pb-4">
-            <h2 class="text-3xl font-semibold">Mes œuvres</h2>
-            <p class="text-gray-500 dark:text-gray-400 mt-1">Voici la liste de vos œuvres</p>
-        </section>
-
-        {% if artworks is empty %}
-            <p class="text-gray-600 dark:text-gray-300">{{'artwork.none'|trans}}</p>
-        {% else %}
-            <ul class="w-full space-y-2 sm:space-y-4">
-                {% for artwork in artworks %}
-                    <li class="flex justify-between items-start rounded-xl shadow-md bg-gray-100 dark:bg-gray-900 p-2 sm:p-4">
-                        <div class="flex-1">
-                            <p class="text-xl font-semibold text-gray-800 dark:text-white">{{ artwork.title }}</p>
-                            <p class="text-gray-600 dark:text-gray-300">{{ artwork.description|length > 50 ? artwork.description|slice(0, 50) ~ '...' : artwork.description }}</p>
-                            <time datetime="{{ artwork.createdAt|date('c') }}" class="block text-sm text-gray-500 dark:text-gray-400 mt-2">{{'created'|trans}} {{ artwork.createdAt|ago }}</time>
-                        </div>
-                        <div class="flex flex-col items-end gap-2">
-                            <a href="{{ path('app_artwork_show', {'id': artwork.id}) }}" class="btn btn-gray">{{ ux_icon('ic:outline-arrow-forward', { class: 'w-5 h-5' }) }}<span class="md">{{'artwork.show'|trans}}</span></a>
-                            {{ include('artwork/_delete_form.html.twig') }}
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+<section class="base main-color">
+    {{ include('components/_nav.html.twig') }}
+    <section class="w-full border-b border-gray-300 dark:border-gray-600 pb-2 sm:pb-4">
+        <h2 class="text-3xl font-semibold">Mes œuvres</h2>
+        <p class="secondary-text mt-1">Voici la liste de vos œuvres</p>
     </section>
+
+    {% if artworks is empty %}
+        <p class="secondary-text">{{'artwork.none'|trans}}</p>
+    {% else %}
+        <ul class="w-full space-y-2 sm:space-y-4">
+            {% for artwork in artworks %}
+                <li class="flex justify-between items-start rounded-xl shadow-md bg-gray-100 dark:bg-gray-900 p-2 sm:p-4">
+                    <div class="flex-1">
+                        <p class="text-xl font-semibold">{{ artwork.title }}</p>
+                        <p>{{ artwork.description|length > 50 ? artwork.description|slice(0, 50) ~ '...' : artwork.description }}</p>
+                        <time datetime="{{ artwork.createdAt|date('c') }}" class="text-xs secondary-text mt-2">{{'created'|trans}} {{ artwork.createdAt|ago }}</time>
+                    </div>
+                    <div class="flex flex-col items-end gap-2">
+                        <a href="{{ path('app_artwork_show', {'id': artwork.id}) }}" class="btn btn-gray">{{ ux_icon('ic:outline-arrow-forward', { class: 'w-5 h-5' }) }}<span class="md">{{'artwork.show'|trans}}</span></a>
+                        {{ include('artwork/_delete_form.html.twig') }}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</section>
 {% endblock %}

@@ -1,29 +1,29 @@
 {% extends 'base.html.twig' %}
 {% block title %}{{'profile'|trans}}{% endblock %}
 {% block body %}
-<section class="flex flex-col w-full bg-white dark:bg-gray-800 rounded-xl shadow-md p-2 sm:p-4 gap-2 sm:gap-4">
+<section class="base main-color">
     {{ include('components/_nav.html.twig') }}
     <section class="w-full border-b border-gray-300 dark:border-gray-600 pb-4 flex flex-col justify-between items-center">
         <h2 class="text-3xl font-semibold">{{'hello'|trans }} {{ user.username }}</h2>
-        <p class="text-gray-500 dark:text-gray-400 mt-1">Informations de votre compte</p>
+        <p class="secondary-text mt-1">Informations de votre compte</p>
     </section>
 
-    <ul class="w-full space-y-4 text-gray-700 dark:text-gray-200 text-base">
+    <ul class="w-full space-y-4">
         <li class="flex justify-between border-b border-dashed pb-4">
-            <span class="font-medium text-gray-500 dark:text-gray-400">{{'username'|trans }}</span>
+            <span class="font-medium secondary-text">{{'username'|trans }}</span>
             <span>{{ user.username }}</span>
         </li>
         <li class="flex justify-between border-b border-dashed pb-4">
-            <span class="font-medium text-gray-500 dark:text-gray-400">{{'email'|trans }}</span>
+            <span class="font-medium secondary-text">{{'email'|trans }}</span>
             <span>{{ user.email }}</span>
         </li>
         <li class="flex justify-between border-b border-dashed pb-4">
-            <span class="font-medium text-gray-500 dark:text-gray-400">Rôles</span>
+            <span class="font-medium secondary-text">Rôles</span>
             <span>{{ user.roles[0] }}</span>
         </li>
     </ul>
 
-    <p class="text-xs text-gray-500 dark:text-gray-400 text-right">{{'created'|trans }} {{ user.createdAt ? user.createdAt|ago : 'N/A' }}<br>{{'updated'|trans }} {{ user.updatedAt ? user.updatedAt|ago : 'N/A' }}</p>
+    <p class="text-xs secondary-text text-right">{{'created'|trans }} {{ user.createdAt ? user.createdAt|ago : 'N/A' }}<br>{{'updated'|trans }} {{ user.updatedAt ? user.updatedAt|ago : 'N/A' }}</p>
 
     <nav class="flex flex-col sm:flex-row gap-2">
         {% if user.comments is not empty %}

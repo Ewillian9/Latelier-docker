@@ -1,9 +1,9 @@
-<header id="site-header" data-controller="header" class="fixed left-1/2 duration-300 transition-transform -translate-x-1/2 z-50 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl shadow-lg w-[97%] max-w-5xl p-2 sm:p-4 top-2 sm:top-4">
+<header id="site-header" data-controller="header" class="fixed left-1/2 duration-300 transition-transform -translate-x-1/2 z-50 bg-zinc-100/70 dark:bg-zinc-800/70 backdrop-blur-sm rounded-xl shadow-lg w-[97%] max-w-5xl p-2 sm:p-4 top-2 sm:top-4">
     <section class="flex justify-between items-center gap-2 sm:gap-4">
         <a href="{{ path('app_artwork_index') }}" class="flex items-center gap-1 text-2xl font-bold">{{ ux_icon('ic:round-home', { class: 'w-6 h-6' }) }}ADG</a>
         {% if app.request.attributes.get('_route') == 'app_artwork_index' %}
         <form method="get" action="{{ path('app_artwork_index') }}" class="w-full flex-1">
-            <input type="text" name="q" value="{{ query }}" placeholder="Search artworks..." class="w-full border border-gray-300 dark:border-gray-700 rounded-md px-2 sm:px-4 bg-white/80 dark:bg-gray-700/80 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-400">
+            <input type="text" name="q" value="{{ query }}" placeholder="Search artworks..." class="w-full border border-gray-300 dark:border-gray-700 rounded-md px-2 sm:px-4 bg-zinc-100/80 dark:bg-zinc-800/80 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-400">
         </form>
         {% endif %}
         <nav aria-label="Main navigation" class="flex justify-end items-center gap-2 sm:gap-4">

@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block title %}Edit {{artwork.title}}{% endblock %}
 {% block body %}
-    <article class="flex flex-col w-full bg-white dark:bg-gray-800 rounded-xl shadow-lg p-2 sm:p-4 gap-2 sm:gap-4">
+    <article class="base main-color">
         {{ include('components/_nav.html.twig') }}
         {{ include('artwork/_form.html.twig') }}
     </article>

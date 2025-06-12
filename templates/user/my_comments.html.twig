@@ -1,22 +1,22 @@
 {% extends 'base.html.twig' %}
 {% block title %}My comments{% endblock %}
 {% block body %}
-<section class="flex flex-col w-full bg-white dark:bg-gray-800 rounded-xl shadow-lg p-2 sm:p-4 gap-2 sm:gap-4">
+<section class="base main-color">
     {{ include('components/_nav.html.twig') }}
     <section class="w-full border-b border-gray-300 dark:border-gray-600 pb-2 sm:pb-4">
         <h2 class="text-3xl font-semibold">Mes commentaires</h2>
-        <p class="text-gray-500 dark:text-gray-400 mt-1">Historique de vos commentaires</p>
+        <p class="secondary-text mt-1">Historique de vos commentaires</p>
     </section>
 
     {% if comments is empty %}
-        <p id="no_comment_user" class="text-gray-600 dark:text-gray-300">Vous n'avez pour le moment posté aucun commentaire.</p>
+        <p id="no_comment_user" class="secondary-text">Vous n'avez pour le moment posté aucun commentaire.</p>
     {% else %}
         <ul id="comments_user" class="w-full space-y-2 sm:space-y-4" {{ turbo_stream_listen('comment') }}>
             {% for comment in comments %}
-                <li id="comment_{{ comment.id }}" class="flex justify-between items-start rounded-xl shadow-md bg-gray-100 dark:bg-gray-700 p-2 sm:p-4">
+                <li id="comment_{{ comment.id }}" class="flex justify-between items-start rounded-xl shadow-md bg-gray-100 dark:bg-gray-900 p-2 sm:p-4">
                     <div class="flex-1">
-                        <p class="text-gray-600 dark:text-gray-300">{{ comment.content }}</p>
-                        <time datetime="{{ comment.createdAt ? comment.createdAt|date('c') : '' }}" class="block text-sm text-gray-500 dark:text-gray-400 mt-2">Publié {{ comment.createdAt ? comment.createdAt|ago : 'il y a un moment'}} on {{comment.artwork.title}}</time>
+                        <p>{{ comment.content }}</p>
+                        <time datetime="{{ comment.createdAt ? comment.createdAt|date('c') : '' }}" class="text-xs secondary-text mt-2">{{ comment.createdAt ? comment.createdAt|ago : 'il y a un moment'}} on {{comment.artwork.title}}</time>
                     </div>
                     <div class="flex flex-col items-end gap-2">
                         <a href="{{ path('app_artwork_show', {'id': comment.artwork.id}) }}" class="btn btn-gray">{{ ux_icon('ic:outline-arrow-forward', { class: 'w-5 h-5' }) }}<span class="md">{{'artwork.show'|trans}}</span></a>

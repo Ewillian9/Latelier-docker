@@ -10,7 +10,7 @@
                         </nav>
                     {% endif %}
                     <p>{{ comment.content }}</p>
-                    <p class="text-sm text-gray-500">By {{ comment.user.username }} • {{ comment.createdAt|ago }}</p>
+                    <p class="text-sm secondary-text">By {{ comment.user.username }} • {{ comment.createdAt|ago }}</p>
                 </turbo-frame>
             </article>
         </template>
@@ -42,7 +42,7 @@
                     </nav>
                 {% endif %}
                 <p>{{ comment.content }}</p>
-                <p class="text-sm text-gray-500">By {{ comment.user.username }} • {{ comment.createdAt|ago }}</p>
+                <p class="text-sm secondary-text">By {{ comment.user.username }} • {{ comment.createdAt|ago }}</p>
             </turbo-frame>
         </template>
     </turbo-stream>
@@ -54,14 +54,14 @@
     {% if remainingCommentsCount == 0 %}
         <turbo-stream action="after" target="comments_artwork">
             <template>
-                <p id="no_comment_artwork" class="text-gray-500">{{'nocomments'|trans}}</p>
+                <p id="no_comment_artwork" class="secondary-text">{{'nocomments'|trans}}</p>
             </template>
         </turbo-stream>
     {% endif %}
     {% if remainingUserCommentsCount == 0 %}
         <turbo-stream action="replace" target="comments_user">
             <template>
-                <p id="no_comment_user" class="text-gray-600 dark:text-gray-300">{{'profile.nocomments'|trans}}</p>
+                <p id="no_comment_user" class="secondary-text">{{'profile.nocomments'|trans}}</p>
             </template>
         </turbo-stream>
     {% endif %}

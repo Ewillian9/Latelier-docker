@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block title %}Conversation{% endblock %}
 {% block body %}
-<section class="flex flex-col w-full bg-white dark:bg-gray-800 rounded-xl shadow-lg p-2 sm:p-4 gap-2 sm:gap-4">
+<section class="base main-color">
     {{ include('components/_nav.html.twig') }}
     <a href="{{ path('app_artwork_show', {'id': conversation.artwork.id}) }}" class="flex gap-2 text-xl font-semibold" {{ turbo_stream_listen('conversation-' ~ conversation.id ~ '-' ~ app.user.id) }}>
         {% set firstImage = conversation.artwork.images|first %}
@@ -16,7 +16,7 @@
         <article id="message_{{ message.id }}" class="flex {{ isOwn ? 'justify-end' : 'justify-start' }}">
             <div class="inline-block max-w-[70%] px-2 py-1 rounded-xl shadow break-words whitespace-normal {{ isOwn ? 'bg-green-100 dark:bg-green-700 rounded-br-none' : 'bg-blue-100 dark:bg-blue-700 rounded-bl-none'}}">
                 <p class="text-sm leading-snug break-words">{{ message.content }}</p>
-                <p class="text-xs text-gray-500 dark:text-gray-300 mt-1 text-right">{{ message.createdAt|ago }}</p>
+                <p class="text-xs secondary-text mt-1 text-right">{{ message.createdAt|ago }}</p>
             </div>
         </article>
     {% endfor %}
