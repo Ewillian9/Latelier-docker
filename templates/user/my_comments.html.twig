@@ -13,14 +13,14 @@
     {% else %}
         <ul id="comments_user" class="w-full space-y-2 sm:space-y-4" {{ turbo_stream_listen('comment') }}>
             {% for comment in comments %}
-                <li id="comment{{ comment.id }}" class="flex justify-between items-start rounded-xl shadow-md bg-gray-100 dark:bg-gray-700 p-2 sm:p-4">
+                <li id="comment_{{ comment.id }}" class="flex justify-between items-start rounded-xl shadow-md bg-gray-100 dark:bg-gray-700 p-2 sm:p-4">
                     <div class="flex-1">
                         <p class="text-gray-600 dark:text-gray-300">{{ comment.content }}</p>
                         <time datetime="{{ comment.createdAt ? comment.createdAt|date('c') : '' }}" class="block text-sm text-gray-500 dark:text-gray-400 mt-2">Publié {{ comment.createdAt ? comment.createdAt|ago : 'il y a un moment'}} on {{comment.artwork.title}}</time>
                     </div>
                     <div class="flex flex-col items-end gap-2">
                         <a href="{{ path('app_artwork_show', {'id': comment.artwork.id}) }}" class="btn btn-gray">{{ ux_icon('ic:outline-arrow-forward', { class: 'w-5 h-5' }) }}<span class="md">{{'artwork.show'|trans}}</span></a>
-                        {{ include('comment/_delete_form.html.twig', {'comment': comment}) }}
+                        {{ include('comment/_delete_form.html.twig') }}
                     </div>
                 </li>
             {% endfor %}
