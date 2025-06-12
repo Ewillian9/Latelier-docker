@@ -49,7 +49,7 @@ final class ArtworkController extends AbstractController
         }
         $artwork = new Artwork();
         $artwork->setArtist($this->getUser());
-        for ($i = 0; $i < 8; $i++) {
+        for ($i = 0; $i < 6; $i++) {
             $artworkImage = new ArtworkImage();
             $artwork->addImage($artworkImage);
         }
