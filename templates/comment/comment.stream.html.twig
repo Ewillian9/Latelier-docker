@@ -1,15 +1,15 @@
 {% block create %}
     <turbo-stream action="after" target="comments_artwork">
         <template>
-            <article id="comment_{{ comment.id }}" class="mb-4 border-l-4 border-blue-500 pl-4">
+            <article id="comment_{{ comment.id }}" class="border-l-4 border-blue-500 pl-2">
                 <turbo-frame id="comment_edit_{{ comment.id }}">
                     {% if app.user == comment.user or is_granted('ROLE_ADMIN') %}
-                        <nav aria-label="Comment actions" class="mt-2 flex gap-2 text-sm">
-                            <a href="{{ path('app_comment_edit', {'id': comment.id}) }}" class="btn btn-blue" data-turbo-frame="comment_edit_{{ comment.id }}">Edit</a>
+                        <nav aria-label="Comment actions" class="flex gap-2 text-sm">
+                            <a href="{{ path('app_comment_edit', {'id': comment.id}) }}" class="btn btn-blue" data-turbo-frame="comment_edit_{{ comment.id }}">{{ ux_icon('ic:outline-edit', { class: 'w-5 h-5' }) }}<span class="md">{{'edit'|trans}}</span></a>
                             {{ include('comment/_delete_form.html.twig', {'comment': comment}) }}
                         </nav>
                     {% endif %}
-                    <p class="text-gray-800 dark:text-gray-200">{{ comment.content }}</p>
+                    <p>{{ comment.content }}</p>
                     <p class="text-sm text-gray-500">By {{ comment.user.username }} • {{ comment.createdAt|ago }}</p>
                 </turbo-frame>
             </article>
@@ -36,12 +36,12 @@
         <template>
             <turbo-frame id="comment_edit_{{ comment.id }}">
                 {% if app.user == comment.user or is_granted('ROLE_ADMIN') %}
-                    <nav aria-label="Comment actions" class="mt-2 flex gap-2 text-sm">
-                        <a href="{{ path('app_comment_edit', {'id': comment.id}) }}" class="btn btn-blue" data-turbo-frame="comment_edit_{{ comment.id }}">Edit</a>
+                    <nav aria-label="Comment actions" class="flex gap-2 text-sm">
+                        <a href="{{ path('app_comment_edit', {'id': comment.id}) }}" class="btn btn-blue" data-turbo-frame="comment_edit_{{ comment.id }}">{{ ux_icon('ic:outline-edit', { class: 'w-5 h-5' }) }}<span class="md">{{'edit'|trans}}</span></a>
                         {{ include('comment/_delete_form.html.twig', {'comment': comment}) }}
                     </nav>
                 {% endif %}
-                <p class="text-gray-800 dark:text-gray-200">{{ comment.content }}</p>
+                <p>{{ comment.content }}</p>
                 <p class="text-sm text-gray-500">By {{ comment.user.username }} • {{ comment.createdAt|ago }}</p>
             </turbo-frame>
         </template>

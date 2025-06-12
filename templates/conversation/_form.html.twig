@@ -1,5 +1,5 @@
 <turbo-frame id="new_message_form">
-    {{ form_start(form, {'attr': {'class': 'flex mt-4 items-center gap-3 p-3 rounded-lg border border-gray-200 focus-within:border-green-500 transition-colors'} }) }}
+    {{ form_start(form, {'attr': {'class': 'flex items-center gap-2 p-2 rounded-lg border border-gray-200 focus-within:border-green-500 transition-colors'} }) }}
         {{ form_errors(form.content) }}
         {{ form_widget(form.content, {'attr': {'class': 'flex-1 bg-transparent border-0 outline-none resize-none placeholder-gray-500 text-sm leading-relaxed'} }) }}
         <button class="btn btn-green">{{ ux_icon('ic:outline-send', { class: 'w-5 h-5' }) }}<span class="md">{{'send'|trans}}</span></button>

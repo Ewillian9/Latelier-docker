@@ -11,9 +11,9 @@
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
-    <body class="bg-[length:400%_400%] bg-gradient-to-r from-gray-100 via-gray-400 to-gray-200 dark:bg-gradient-to-r dark:from-gray-600 dark:via-gray-700 dark:to-gray-500 min-h-screen flex flex-col text-gray-900 dark:text-white">
+    <body class="flex flex-col bg-[length:400%_400%] bg-gradient-to-r from-gray-100 via-gray-400 to-gray-200 dark:bg-gradient-to-r dark:from-gray-600 dark:via-gray-700 dark:to-gray-500 min-h-screen text-gray-800 dark:text-white gap-2 sm:gap-4">
         {% include 'components/_header.html.twig' %}
-        <main class="flex-1 pt-24 w-[97%] max-w-5xl mx-auto">
+        <main class="flex flex-col flex-1 items-center pt-18 sm:pt-24 w-[97%] max-w-5xl mx-auto gap-2 sm:gap-4">
             {% block body %}{% endblock %}
         </main>
         {% include 'components/_footer.html.twig' %}

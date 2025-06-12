@@ -1,7 +1,7 @@
-<nav aria-label="Artwork actions" class="flex justify-between items-center mb-4">
+<nav aria-label="Artwork actions" class="flex justify-between items-center">
     <button data-controller="back-button" data-action="click->back-button#goBack" class="btn btn-gray">{{ ux_icon('ic:outline-arrow-back', { class: 'w-5 h-5' }) }}<span class="md">{{'back'|trans}}</span></button>
     {% if app.request.attributes.get('_route') == 'app_artwork_show' and (is_granted('ROLE_ADMIN') or is_granted('ROLE_ARTIST') and artwork.artist == app.user) %}
-        <ul class="flex gap-2 md:gap-4">
+        <ul class="flex gap-2 sm:gap-4">
             <li><a href="{{ path('app_artwork_edit', {'id': artwork.id}) }}" class="btn btn-gray">{{ ux_icon('ic:outline-edit', { class: 'w-5 h-5' }) }}<span class="md">{{'edit'|trans}}</span></a></li>
             <li>{{ include('artwork/_delete_form.html.twig') }}</li>
         </ul>

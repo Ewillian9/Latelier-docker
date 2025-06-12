@@ -1,5 +1,5 @@
 <turbo-frame id="upload_form">
-    {{ form_start(form, { attr: { enctype: 'multipart/form-data', class: 'space-y-6', 'data-turbo-frame': 'upload_form', 'data-turbo-frame': '_top'}}) }}
+    {{ form_start(form, { attr: { enctype: 'multipart/form-data', class: 'space-y-4', 'data-turbo-frame': 'upload_form', 'data-turbo-frame': '_top'}}) }}
 
         <div id="image-fields" data-controller="image-preview collection" data-collection-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}">
             {{ form_label(form.images, null, {'label_attr': {'class': 'block text-gray-700 dark:text-gray-300 font-semibold mb-3'}}) }}

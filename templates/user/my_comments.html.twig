@@ -1,24 +1,25 @@
 {% extends 'base.html.twig' %}
 {% block title %}My comments{% endblock %}
 {% block body %}
-<section class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-4 md:p-8 flex flex-col gap-6">
+<section class="flex flex-col w-full bg-white dark:bg-gray-800 rounded-xl shadow-lg p-2 sm:p-4 gap-2 sm:gap-4">
     {{ include('components/_nav.html.twig') }}
-    <div class="w-full border-b border-gray-300 dark:border-gray-600 pb-4">
-        <h1 class="text-3xl font-semibold text-gray-800 dark:text-white">Mes commentaires</h1>
-        <p class="text-gray-500 dark:text-gray-400 mt-1">Historique de vos commentaires publiés</p>
-    </div>
+    <section class="w-full border-b border-gray-300 dark:border-gray-600 pb-2 sm:pb-4">
+        <h2 class="text-3xl font-semibold">Mes commentaires</h2>
+        <p class="text-gray-500 dark:text-gray-400 mt-1">Historique de vos commentaires</p>
+    </section>
+
     {% if comments is empty %}
         <p id="no_comment_user" class="text-gray-600 dark:text-gray-300">Vous n'avez pour le moment posté aucun commentaire.</p>
     {% else %}
-        <ul id="comments_user" class="space-y-6 w-full" {{ turbo_stream_listen('comment') }}>
+        <ul id="comments_user" class="w-full space-y-2 sm:space-y-4" {{ turbo_stream_listen('comment') }}>
             {% for comment in comments %}
-                <li id="comment{{ comment.id }}" class="p-4 rounded-xl shadow-sm bg-gray-100 dark:bg-gray-700 flex justify-between items-start">
+                <li id="comment{{ comment.id }}" class="flex justify-between items-start rounded-xl shadow-md bg-gray-100 dark:bg-gray-700 p-2 sm:p-4">
                     <div class="flex-1">
                         <p class="text-gray-600 dark:text-gray-300">{{ comment.content }}</p>
                         <time datetime="{{ comment.createdAt ? comment.createdAt|date('c') : '' }}" class="block text-sm text-gray-500 dark:text-gray-400 mt-2">Publié {{ comment.createdAt ? comment.createdAt|ago : 'il y a un moment'}} on {{comment.artwork.title}}</time>
                     </div>
                     <div class="flex flex-col items-end gap-2">
-                        <a href="{{ path('app_artwork_show', {'id': comment.artwork.id}) }}" class="btn btn-gray">Voir mon commentaire</a>
+                        <a href="{{ path('app_artwork_show', {'id': comment.artwork.id}) }}" class="btn btn-gray">{{ ux_icon('ic:outline-arrow-forward', { class: 'w-5 h-5' }) }}<span class="md">{{'artwork.show'|trans}}</span></a>
                         {{ include('comment/_delete_form.html.twig', {'comment': comment}) }}
                     </div>
                 </li>
