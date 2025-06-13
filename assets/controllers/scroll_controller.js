@@ -16,7 +16,9 @@ export default class extends Controller {
 
     scrollToMessage(event) {
         requestAnimationFrame(() => {
-            this.scrollToBottom()
+            requestAnimationFrame(() => {
+                this.scrollToBottom()
+            })
         })
     }
 }
