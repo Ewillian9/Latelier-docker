@@ -3,7 +3,7 @@
         <a href="{{ path('app_artwork_index') }}" class="flex items-center gap-1 text-2xl font-bold">{{ ux_icon('ic:round-home', { class: 'w-6 h-6' }) }}ADG</a>
         {% if app.request.attributes.get('_route') == 'app_artwork_index' %}
         <form method="get" action="{{ path('app_artwork_index') }}" class="w-full flex-1">
-            <input type="text" name="q" value="{{ query }}" placeholder="Search artworks..." class="w-full border border-gray-300 dark:border-gray-700 rounded-md px-2 sm:px-4 bg-zinc-100/80 dark:bg-zinc-800/80 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-400">
+            <input type="text" name="q" value="{{ query }}" placeholder="Search artworks..." class="w-full border border-gray-300 dark:border-gray-700 rounded-md px-2 sm:px-4 bg-zinc-100/80 dark:bg-zinc-800/80 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-amber-400">
         </form>
         {% endif %}
         <nav aria-label="Main navigation" class="flex justify-end items-center gap-2 sm:gap-4">
