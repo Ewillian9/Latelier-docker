@@ -19,8 +19,8 @@ use Symfony\Component\Mercure\Update;
 
 final class ConversationController extends AbstractController
 {
-    #[Route('/conversation/{artist}', name: 'app_conversation', methods: ['GET', 'POST'])]
-    public function show(ConversationRepository $cr, MessageRepository $mr, User $artist, Request $request, EntityManagerInterface $em, HubInterface $hub): Response
+    #[Route('/conversation/{recipient}', name: 'app_conversation', methods: ['GET', 'POST'])]
+    public function show(ConversationRepository $cr, MessageRepository $mr, User $recipient, Request $request, EntityManagerInterface $em, HubInterface $hub): Response
     {
         $user = $this->getUser();
         if (!$user) {
@@ -34,59 +34,59 @@ final class ConversationController extends AbstractController
             $this->addFlash('error', 'The artwork is missing to create a conversation!');
             return $this->redirectToRoute('app_artwork_index');
         }
-        $conversation = $cr->findOneByUsersAndArtwork($user, $artist, $artwork);
-        
-        if (!$conversation) {
-            if ($user === $artist) {
-                $this->addFlash('info', 'You cannot create a conversation with yourself!');
-                return $this->redirectToRoute('app_artwork_index');
-            }
-            $conversation = new Conversation();
-            $conversation->setArtwork($artwork);
-            $conversation->setClient($user);
-            $conversation->setArtist($artist);
 
-            $em->persist($conversation);
-            $em->flush();
+        if ($user === $recipient) {
+            $this->addFlash('info', 'You cannot create a conversation with yourself!');
+            return $this->redirectToRoute('app_artwork_index');
         }
 
-        $message = new Message();
-        $message->setSender($user);
-        $message->setConversation($conversation);
+        $conversation = $cr->findOneByUsersAndArtwork($user, $recipient, $artwork);
+        
+        if (!$conversation) {
+            $conversation = new Conversation()
+                ->setArtwork($artwork)
+                ->setClient($user)
+                ->setArtist($recipient);
+        }
+
+        $ids = [$artwork->getId(), $user->getId(), $recipient->getId()];
+        sort($ids);
+        $topic = sprintf('%d%d%d', $ids[0], $ids[1], $ids[2]);
+
+        $message = new Message()->setSender($user);
+
         $form = $this->createForm(MessageType::class, $message);
         $emptyForm = clone $form;
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if (null === $conversation->getId()) {
+                $em->persist($conversation);
+                $em->flush();
+            }
+            
+            $message->setConversation($conversation);
             $em->persist($message);
             $em->flush();
 
-            $receiver = $conversation->getOtherParticipant($this->getUser());
-
-            $hub->publish(new Update(
-                sprintf('conversation-%d-%d', $conversation->getId(), $message->getSender()->getId()),
-                $this->renderBlock('conversation/message.stream.html.twig', 'create', [
-                    'conversation' => $conversation,
-                    'message' => $message,
-                    'user' => $message->getSender(),
-                    'form' => $emptyForm
-                ])
-            ));
-
-            $hub->publish(new Update(
-                sprintf('conversation-%d-%d', $conversation->getId(), $receiver->getId()),
-                $this->renderBlock('conversation/message.stream.html.twig', 'create', [
-                    'conversation' => $conversation,
-                    'message' => $message,
-                    'user' => $receiver,
-                ])
-            ));
+            foreach ([$user, $recipient] as $recipient) {
+                $hub->publish(new Update(
+                    $topic . $recipient->getId(),
+                    $this->renderBlock('conversation/message.stream.html.twig', 'create', [
+                        'conversation' => $conversation,
+                        'message' => $message,
+                        'user' => $recipient === $user ? $user : $recipient,
+                        'form' => $recipient === $user ? $emptyForm : null
+                    ])
+                ));
+            }
         }
 
         return $this->render('conversation/show.html.twig', [
             'conversation' => $conversation,
             'messages' => $conversation->getMessages(),
-            'form' => $form
+            'form' => $form,
+            'topic' => $topic
         ]);
     }
 }

@@ -3,7 +3,7 @@
 {% block body %}
 <section class="base main-color">
     {{ include('components/_nav.html.twig') }}
-    <a href="{{ path('app_artwork_show', {'id': conversation.artwork.id}) }}" class="flex gap-2 text-xl font-semibold" {{ turbo_stream_listen('conversation-' ~ conversation.id ~ '-' ~ app.user.id) }}>
+    <a href="{{ path('app_artwork_show', {'id': conversation.artwork.id}) }}" class="flex gap-2 text-xl font-semibold" {{ turbo_stream_listen(topic ~ app.user.id) }}>
         {% set firstImage = conversation.artwork.images|first %}
         {% if firstImage %}
             <img src="{{ vich_uploader_asset(firstImage, 'imageFile') }}" alt="Artwork thumbnail" class="w-16 h-16 object-cover rounded-md">

@@ -11,7 +11,7 @@
                 <figcaption class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 z-20">
                     <div class="relative h-6">
                     {% for image in artwork.images %}
-                        <p data-carousel-target="legend" data-index="{{ loop.index0 }}" class="carousel-legend absolute bottom-0 left-0 right-0 text-center text-sm md:text-base transition-opacity duration-500 ease-in-out {% if loop.first %}opacity-100{% else %}opacity-0{% endif %}">{% if image.legend %}{{ image.legend }}{% endif %}</p>
+                        <p data-carousel-target="legend" data-index="{{ loop.index0 }}" class="carousel-legend absolute bottom-0 left-0 right-0 text-center text-white text-sm md:text-base transition-opacity duration-500 ease-in-out {% if loop.first %}opacity-100{% else %}opacity-0{% endif %}">{% if image.legend %}{{ image.legend }}{% endif %}</p>
                     {% endfor %}
                     </div>
                 </figcaption>
@@ -37,7 +37,7 @@
             {% endif %}
             <p class="text-xs secondary-text">{{'added'|trans}} <time datetime="{{ artwork.createdAt ? artwork.createdAt|date('c') : '' }}">{{ artwork.createdAt ? artwork.createdAt|ago : 'NaN' }}</time> {{'by'|trans}} {{ artwork.artist.username }}</p>
             {% if app.user and app.user != artwork.artist %}
-                <a href="{{ path('app_conversation', {artist: artwork.artist.id, artwork: artwork.id}) }}" class="inline-block mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg shadow">💬 {{ 'artwork.talk.to'|trans }} {{ artwork.artist.username }}</a>
+                <a href="{{ path('app_conversation', {recipient: artwork.artist.id, artwork: artwork.id}) }}" class="inline-block mt-4 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium rounded-lg shadow">💬 {{ 'artwork.talk.to'|trans }} {{ artwork.artist.username }}</a>
             {% endif %}
         </section>
     </section>
