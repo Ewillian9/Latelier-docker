@@ -9,10 +9,10 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ArtworkRepository;
 use App\Repository\CommentRepository;
+use App\Repository\UserRepository;
 use App\Repository\ConversationRepository;
 use Symfony\Component\HttpFoundation\Request;
 
-#[IsGranted('IS_AUTHENTICATED_FULLY')]
 final class UserController extends AbstractController
 {
     #[Route('/profile', name: 'app_profile', methods: ['GET'])]
@@ -24,6 +24,20 @@ final class UserController extends AbstractController
         }
         return $this->render('user/index.html.twig', [
             'user' => $user,
+        ]);
+    }
+
+    #[Route('/artist/{username}', name: 'app_artist_profile', methods: ['GET'])]
+    public function publicProfile(UserRepository $userRepository, string $username): Response
+    {
+        $user = $userRepository->findOneBy(['username' => $username]);
+
+        if (!$user || !(in_array('ROLE_ARTIST', $user->getRoles()) || in_array('ROLE_ADMIN', $user->getRoles()))) {
+            throw $this->createNotFoundException('Artist not found');
+        }
+
+        return $this->render('user/public_profile.html.twig', [
+            'artist' => $user,
         ]);
     }
 

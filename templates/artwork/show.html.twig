@@ -35,7 +35,7 @@
                 </ul>
                 <p class="text-xs secondary-text">{{'updated'|trans}} <time datetime="{{ artwork.updatedAt ? artwork.updatedAt|date('c') : '' }}">{{ artwork.updatedAt ? artwork.updatedAt|ago : 'NaN' }}</time></p>
             {% endif %}
-            <p class="text-xs secondary-text">{{'added'|trans}} <time datetime="{{ artwork.createdAt ? artwork.createdAt|date('c') : '' }}">{{ artwork.createdAt ? artwork.createdAt|ago : 'NaN' }}</time> {{'by'|trans}} {{ artwork.artist.username }}</p>
+            <p class="text-xs secondary-text">{{'added'|trans}} <time datetime="{{ artwork.createdAt ? artwork.createdAt|date('c') : '' }}">{{ artwork.createdAt ? artwork.createdAt|ago : 'NaN' }}</time> {{'by'|trans}} <a href="{{ path('app_artist_profile', {'username': artwork.artist.username}) }}">{{ artwork.artist.username }}</a></p>
             {% if app.user != artwork.artist %}
                 <a href="{{ path('app_conversation', {recipient: artwork.artist.id, artwork: artwork.id}) }}" class="inline-block mt-4 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium rounded-lg shadow">💬 {{ 'artwork.talk.to'|trans }} {{ artwork.artist.username }}</a>
             {% endif %}
