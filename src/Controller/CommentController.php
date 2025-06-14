@@ -30,10 +30,10 @@ final class CommentController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+                $artwork = $comment->getArtwork();
                 $em->flush();
-
                 $hub->publish(new Update(
-                    'comment',
+                    'comment' . $artwork->getId(),
                     $this->renderBlock('comment/comment.stream.html.twig', 'update', [
                         'id' => $comment->getId(),
                         'comment' => $form->getData([]),
@@ -56,11 +56,12 @@ final class CommentController extends AbstractController
         }
         if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->getPayload()->getString('_token'))) {
             $commentId = $comment->getId();
+            $artwork = $comment->getArtwork();
             $em->remove($comment);
             $em->flush();
-
+            
             $hub->publish(new Update(
-                'comment',
+                'comment' . $artwork->getId(),
                 $this->renderBlock('comment/comment.stream.html.twig', 'delete', [
                     'id' => $commentId,
                     'remainingCommentsCount' => $cr->count(['artwork' => $comment->getArtwork()]),

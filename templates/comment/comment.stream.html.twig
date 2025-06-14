@@ -1,7 +1,7 @@
 {% block create %}
-    <turbo-stream action="after" target="comments_artwork">
+    <turbo-stream action="append" target="comments_artwork">
         <template>
-            <article id="comment_{{ comment.id }}" class="border-l-4 border-blue-500 pl-2">
+            <article id="comment_{{ comment.id }}" class="border-l-4 border-amber-500 pl-2">
                 <turbo-frame id="comment_edit_{{ comment.id }}">
                     {% if app.user == comment.user or is_granted('ROLE_ADMIN') %}
                         <nav aria-label="Comment actions" class="flex gap-2 text-sm">
@@ -52,7 +52,7 @@
     <turbo-stream action="remove" target="comment_{{ id }}"></turbo-stream>
 
     {% if remainingCommentsCount == 0 %}
-        <turbo-stream action="after" target="comments_artwork">
+        <turbo-stream action="append" target="comments_artwork">
             <template>
                 <p id="no_comment_artwork" class="secondary-text">{{'nocomments'|trans}}</p>
             </template>

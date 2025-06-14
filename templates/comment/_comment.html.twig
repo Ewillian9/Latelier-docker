@@ -1,7 +1,8 @@
 <section class="base main-color">
-    <h3 id="comments_artwork" class="text-xl font-semibold" {{ turbo_stream_listen('comment') }}>{{'comments'|trans}}</h3>
+    <h3 class="text-xl font-semibold" {{ turbo_stream_listen('comment' ~ artwork.id) }}>{{'comments'|trans}}</h3>
+    <div id="comments_artwork" class="flex flex-col gap-2">
     {% for comment in artwork.comments %}
-        <article id="comment_{{ comment.id }}" class="border-l-4 border-blue-500 pl-2">
+        <article id="comment_{{ comment.id }}" class="border-l-4 border-amber-500 pl-2">
             <turbo-frame id="comment_edit_{{ comment.id }}">
                 {% if app.user == comment.user or is_granted('ROLE_ADMIN') %}
                     <nav aria-label="Comment actions" class="flex gap-2 text-sm">
@@ -16,6 +17,7 @@
     {% else %}
         <p id="no_comment_artwork" class="secondary-text">{{'nocomments'|trans}}</p>
     {% endfor %}
+    </div>
 
     {% if app.user %}
         {{ include('comment/_form.html.twig') }}

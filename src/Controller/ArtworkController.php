@@ -90,7 +90,7 @@ final class ArtworkController extends AbstractController
                 $em->persist($comment);
                 $em->flush();
                 $hub->publish(new Update(
-                    'comment',
+                    'comment' . $artwork->getId(),
                     $this->renderBlock('comment/comment.stream.html.twig', 'create', [
                         'comment' => $form->getData([]),
                         'form' => $emptyForm,
