@@ -24,7 +24,7 @@ export default class extends Controller {
             img.classList.toggle('z-0', !isActive)
         })
         this.thumbTargets.forEach((thumb, i) => {
-            thumb.classList.toggle('border-blue-500', i === index)
+            thumb.classList.toggle('border-amber-500', i === index)
             thumb.classList.toggle('border-transparent', i !== index)
         })
         if (this.hasLegendTarget) {
