@@ -1,6 +1,6 @@
 <nav aria-label="Artwork actions" class="flex justify-between items-center">
     <button data-controller="back-button" data-action="click->back-button#goBack" class="btn btn-gray">{{ ux_icon('ic:outline-arrow-back', { class: 'w-5 h-5' }) }}<span class="md">{{'back'|trans}}</span></button>
-    {% if app.request.attributes.get('_route') == 'app_artwork_show' and (is_granted('ROLE_ADMIN') or is_granted('ROLE_ARTIST') and artwork.artist == app.user) %}
+    {% if app.request.attributes.get('_route') == 'app_artwork_show' and (is_granted('ROLE_ADMIN') or artwork.artist == app.user) %}
         <ul class="flex gap-2 sm:gap-4">
             <li><a href="{{ path('app_artwork_edit', {'id': artwork.id}) }}" class="btn btn-gray">{{ ux_icon('ic:outline-edit', { class: 'w-5 h-5' }) }}<span class="md">{{'edit'|trans}}</span></a></li>
             <li>{{ include('artwork/_delete_form.html.twig') }}</li>
@@ -8,5 +8,51 @@
     {% endif %}
     {% if app.request.attributes.get('_route') is same as('app_profile') %}
         <a href="{{ path('app_profile_edit') }}" class="btn btn-gray">{{ ux_icon('ic:outline-edit', { class: 'w-5 h-5' }) }}<span class="md">{{'edit'|trans}}</span></a>
+    {% endif %}
+    {% if conversation is defined and app.request.attributes.get('_route') == 'app_conversation' %}
+        {% set isArtist = (artwork.artist == app.user) %}
+        {% set order = conversation.order %}
+
+        {# Client sees 'Create Order' if no order exists yet #}
+        <div class="flex gap-2 sm:gap-4">
+        {% if not isArtist and order is null %}
+            <form action="{{ path('app_order_create', { conversation: conversation.id }) }}" method="post">
+                <button type="submit" class="btn btn-accent">Create Order</button>
+            </form>
+        {% endif %}
+        {% if not isArtist and order.status == 'pending' %}
+            <span>en attente de validation</span>
+            <form action="{{ path('app_order_cancel', { id: order.id }) }}" method="post">
+                <button type="submit" class="btn btn-red">Cancel Order</button>
+            </form>
+        {% endif %}
+        {% if not isArtist and order.status == 'accepted' %}
+            <span>en cours de realisation</span>
+        {% endif %}
+        {% if not isArtist and order.status == 'completed' %}
+            <span>Oeuvre terminée</span>
+        {% endif %}
+
+        {# Artist sees order actions if order exists #}
+        {% if isArtist and order is not null %}
+            {% if order.status == 'pending' %}
+                <form action="{{ path('app_order_accept', { id: order.id }) }}" method="post">
+                    <button type="submit" class="btn btn-accent">Accept Order</button>
+                </form>
+            {% elseif order.status == 'accepted' %}
+                <form action="{{ path('app_order_complete', { id: order.id }) }}" method="post">
+                    <button type="submit" class="btn btn-accent">Mark as Finished</button>
+                </form>
+            {% elseif order.status == 'completed' %}
+                <span>Oeuvre terminée</span>
+            {% endif %}
+
+            {% if order.status != 'completed' %}
+                <form action="{{ path('app_order_cancel', { id: order.id }) }}" method="post">
+                    <button type="submit" class="btn btn-red">Cancel Order</button>
+                </form>
+            {% endif %}
+        {% endif %}
+        </div>
     {% endif %}
 </nav>

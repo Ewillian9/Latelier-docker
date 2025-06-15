@@ -17,7 +17,7 @@ class Conversation
     private ?int $id = null;
 
     #[ORM\OneToOne(inversedBy: 'conversation', cascade: ['persist', 'remove'])]
-    private ?Order $orderlink = null;
+    private ?Order $order = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -61,14 +61,14 @@ class Conversation
         return $this->id;
     }
 
-    public function getOrderlink(): ?Order
+    public function getOrder(): ?Order
     {
-        return $this->orderlink;
+        return $this->order;
     }
 
-    public function setOrderlink(?Order $orderlink): static
+    public function setOrder(?Order $order): static
     {
-        $this->orderlink = $orderlink;
+        $this->order = $order;
 
         return $this;
     }

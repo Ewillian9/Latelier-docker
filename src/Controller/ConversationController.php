@@ -91,6 +91,7 @@ final class ConversationController extends AbstractController
 
         return $this->render('conversation/show.html.twig', [
             'conversation' => $conversation,
+            'artwork' => $artwork,
             'messages' => $conversation->getMessages(),
             'form' => $form,
             'topic' => $topic

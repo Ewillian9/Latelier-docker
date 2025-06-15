@@ -6,6 +6,7 @@ use App\Repository\OrderRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Table(name: '`order`')]
 class Order
 {
@@ -24,13 +25,26 @@ class Order
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
-    private ?User $orderinguser = null;
+    private ?User $client = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
     private ?Artwork $artwork = null;
 
-    #[ORM\OneToOne(mappedBy: 'orderlink', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'order', cascade: ['persist', 'remove'])]
     private ?Conversation $conversation = null;
+
+    #[ORM\PrePersist]
+    public function onPrePersist(): void
+    {
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    #[ORM\PreUpdate]
+    public function onPreUpdate(): void
+    {
+        $this->updatedAt = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -54,32 +68,14 @@ class Order
         return $this->createdAt;
     }
 
-    #[ORM\PrePersist]
-    public function onPrePersist(): void
+    public function getClient(): ?User
     {
-        $this->createdAt = new \DateTimeImmutable();
-        $this->updatedAt = new \DateTimeImmutable();
+        return $this->client;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function setClient(?User $client): static
     {
-        return $this->updatedAt;
-    }
-
-    #[ORM\PreUpdate]
-    public function onPreUpdate(): void
-    {
-        $this->updatedAt = new \DateTimeImmutable();
-    }
-
-    public function getOrderinguser(): ?User
-    {
-        return $this->orderinguser;
-    }
-
-    public function setOrderinguser(?User $orderinguser): static
-    {
-        $this->orderinguser = $orderinguser;
+        $this->client = $client;
 
         return $this;
     }
@@ -105,12 +101,12 @@ class Order
     {
         // unset the owning side of the relation if necessary
         if ($conversation === null && $this->conversation !== null) {
-            $this->conversation->setOrderlink(null);
+            $this->conversation->setOrder(null);
         }
 
         // set the owning side of the relation if necessary
-        if ($conversation !== null && $conversation->getOrderlink() !== $this) {
-            $conversation->setOrderlink($this);
+        if ($conversation !== null && $conversation->getOrder() !== $this) {
+            $conversation->setOrder($this);
         }
 
         $this->conversation = $conversation;
