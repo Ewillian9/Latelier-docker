@@ -19,6 +19,9 @@ div { scrollbar-width: thin; }
 .btn-blue {
     @apply bg-blue-300 dark:bg-blue-700 hover:bg-blue-400 hover:dark:bg-blue-600;
 }
+.btn-accent {
+    @apply bg-amber-300 dark:bg-amber-700 hover:bg-amber-400 hover:dark:bg-amber-600;
+}
 
 .form-gray {
     @apply w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400;
