@@ -66,6 +66,13 @@ final class ConversationController extends AbstractController
             }
             
             $message->setConversation($conversation);
+
+            if ($conversation->getClient() === $user) {
+                $conversation->setIsDeletedByArtist(false);
+            } elseif ($conversation->getArtist() === $user) {
+                $conversation->setIsDeletedByClient(false);
+            }
+
             $em->persist($message);
             $em->flush();
 
@@ -89,4 +96,31 @@ final class ConversationController extends AbstractController
             'topic' => $topic
         ]);
     }
+
+    #[Route('/conversation/{id}/delete', name: 'app_conversation_delete', methods: ['POST'])]
+    public function delete(Conversation $conversation, EntityManagerInterface $em): Response
+    {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createAccessDeniedException();
+        }
+
+        if ($user === $conversation->getClient()) {
+            $conversation->setIsDeletedByClient(true);
+        } elseif ($user === $conversation->getArtist()) {
+            $conversation->setIsDeletedByArtist(true);
+        } else {
+            throw $this->createAccessDeniedException();
+        }
+
+        if ($conversation->isDeletedByBoth()) {
+            $em->remove($conversation);
+        }
+
+        $em->flush();
+
+        $this->addFlash('success', 'Conversation deleted.');
+        return $this->redirectToRoute('app_my_conversations');
+    }
+
 }

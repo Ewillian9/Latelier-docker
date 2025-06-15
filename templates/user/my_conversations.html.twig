@@ -22,6 +22,7 @@
                     </div>
                     <div class="flex flex-col items-end gap-2">
                         <a href="{{ path('app_conversation', {recipient: other.id, artwork: conversation.artwork.id}) }}" class="btn btn-gray">{{ ux_icon('ic:outline-arrow-forward', { class: 'w-5 h-5' }) }}<span class="md">{{'conversation.show'|trans}}</span></a>
+                        {{ include('conversation/_delete_form.html.twig') }}
                     </div>
                 </li>
             {% endfor %}

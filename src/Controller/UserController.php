@@ -106,7 +106,7 @@ final class UserController extends AbstractController
             $this->addFlash('error', 'You are not connected!');
             return $this->redirectToRoute('app_login');
         }
-        $conversations = $cr->findByUser($user);
+        $conversations = $cr->findVisibleForUser($user);
 
         return $this->render('user/my_conversations.html.twig', [
             'conversations' => $conversations,

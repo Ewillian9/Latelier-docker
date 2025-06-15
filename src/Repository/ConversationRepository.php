@@ -30,10 +30,10 @@ class ConversationRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function findByUser(User $user): array
+    public function findVisibleForUser(User $user): array
     {
         return $this->createQueryBuilder('c')
-            ->where('c.client = :user OR c.artist = :user')
+            ->where('(c.client = :user AND c.isDeletedByClient = false) OR (c.artist = :user AND c.isDeletedByArtist = false)')
             ->setParameter('user', $user)
             ->orderBy('c.updatedAt', 'DESC')
             ->getQuery()

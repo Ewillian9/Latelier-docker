@@ -40,9 +40,20 @@ class Conversation
     #[ORM\ManyToOne(inversedBy: 'conversations')]
     private ?Artwork $artwork = null;
 
+    #[ORM\Column(options: ['default' => false])]
+    private ?bool $isDeletedByClient = false;
+
+    #[ORM\Column(options: ['default' => false])]
+    private ?bool $isDeletedByArtist = false;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
+    }
+
+    public function isDeletedByBoth(): bool
+    {
+        return $this->isDeletedByClient && $this->isDeletedByArtist;
     }
 
     public function getId(): ?int
@@ -165,6 +176,30 @@ class Conversation
     public function setArtwork(?Artwork $artwork): static
     {
         $this->artwork = $artwork;
+
+        return $this;
+    }
+
+    public function isDeletedByClient(): ?bool
+    {
+        return $this->isDeletedByClient;
+    }
+
+    public function setIsDeletedByClient(bool $isDeletedByClient): static
+    {
+        $this->isDeletedByClient = $isDeletedByClient;
+
+        return $this;
+    }
+
+    public function isDeletedByArtist(): ?bool
+    {
+        return $this->isDeletedByArtist;
+    }
+
+    public function setIsDeletedByArtist(bool $isDeletedByArtist): static
+    {
+        $this->isDeletedByArtist = $isDeletedByArtist;
 
         return $this;
     }
