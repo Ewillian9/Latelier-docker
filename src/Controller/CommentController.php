@@ -68,6 +68,14 @@ final class CommentController extends AbstractController
                     'remainingUserCommentsCount' => $cr->count(['commenter' => $user]),
                 ])
             ));
+            $hub->publish(new Update(
+                'comment',
+                $this->renderBlock('comment/comment.stream.html.twig', 'delete', [
+                    'id' => $commentId,
+                    'remainingCommentsCount' => $cr->count(['artwork' => $comment->getArtwork()]),
+                    'remainingUserCommentsCount' => $cr->count(['commenter' => $user]),
+                ])
+            ));
         }
         return new Response(null, Response::HTTP_NO_CONTENT);
     }
