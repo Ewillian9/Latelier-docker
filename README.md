@@ -9,25 +9,29 @@
 
 ### Administration
 - Modération des commentaires ---OK
-- et des utilisateurs avec strikes
+- Modération des utilisateurs avec strikes
+- Modération des Oeuvres ---OK
 
 ### Artists
 - Gestion de ses œuvres (ajout, modification, suppression) ---OK
 - Ajout de titre, images, description et mots-clés ---OK
 - Generation par IA de titre, description, mots-clés ---LATER (Gemma 3 14/27b)
+- Voir ses oeuvres ---OK
 
 ### Utilisateurs (inscription requise)
-- Création de compte avec confirmation par email ---OK
-- Communication avec l'artiste via une messagerie instantanée ---PARTIAL
-- Commande d'une œuvre et suivi du statut (validation et avancement via la messagerie instantanée) ---SOON
-- Notification par email une fois l'œuvre terminée
+- Création de compte avec confirmation par email ---OK (CHECK IT)
+- Communication avec l'artiste via une messagerie instantanée ---OK
+- Commande d'une œuvre et suivi du statut (en attente, en cours et terminé) ---OK
+- Notification par email une fois l'œuvre terminée ---TO DO
 - Commentaires instantanés sous les œuvres avec edition et suppression ---OK
+- Voir ses conversation, commentaire et commandes ---OK
 
 ### Visiteurs (sans inscription)
 - Consultation des œuvres ---OK
-- Recherche par titre, description et mots-clés ---OK
+- Recherche par titre, description et mots-clés, nombre de likes ---OK (LIKES TO DO)
 - Mode clair/sombre ---OK
 - Support multilingues ---OK
+- Acceder au profil publique d'un artist ---OK
 
 ## Getting Started
 
