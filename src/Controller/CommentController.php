@@ -3,9 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
-use App\Entity\Artwork;
 use App\Form\CommentType;
-use Symfony\UX\Turbo\TurboBundle;
 use App\Repository\CommentRepository;
 use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\Mercure\Update;
@@ -21,29 +19,31 @@ final class CommentController extends AbstractController
     public function edit(Request $request, Comment $comment, HubInterface $hub, EntityManagerInterface $em): Response
     {
         if ($comment->getUser() !== $this->getUser() && !$this->isGranted('ROLE_ADMIN')) {
-            $this->addFlash('error', 'You must login to do that!');
-            return $this->redirectToRoute('app_login');
+            $this->addFlash('error', 'You dont have the privileges to do that');
+            return $this->redirectToRoute('app_artwork_index');
         }
+
         $form = $this->createForm(CommentType::class, $comment);
-        
+
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $artwork = $comment->getArtwork();
                 $em->flush();
+
                 $hub->publish(new Update(
                     'comment' . $artwork->getId(),
                     $this->renderBlock('comment/comment.stream.html.twig', 'update', [
                         'id' => $comment->getId(),
-                        'comment' => $form->getData([]),
+                        'comment' => $form->getData([])
                     ])
                 ));
             }
         }
 
         return $this->render('comment/edit.html.twig', [
-            'form' => $form,
+            'form' => $form
         ]);
     }
 
@@ -51,9 +51,11 @@ final class CommentController extends AbstractController
     public function delete(Request $request, Comment $comment, HubInterface $hub, CommentRepository $cr, EntityManagerInterface $em): Response
     {
         $user = $comment->getUser();
+
         if ($user !== $this->getUser() && !$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException();
         }
+        
         if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->getPayload()->getString('_token'))) {
             $commentId = $comment->getId();
             $artwork = $comment->getArtwork();
