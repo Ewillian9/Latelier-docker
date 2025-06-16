@@ -9,7 +9,7 @@
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
-    <h1 class="text-2xl font-semibold text-center">{{ 'register'|trans }}!</h1>
+    <h2 class="text-2xl font-semibold text-center">{{ 'register'|trans }}!</h2>
     {{ form_row(registrationForm.email, {
         row_attr: { class: 'w-full' },
         attr: { class: 'w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600', placeholder: 'email'|trans },
@@ -28,7 +28,7 @@
         label_attr: { class: 'text-sm' }
     }) }}
 
-    <button type="submit" class="btn-blue w-full font-semibold py-2 px-4 rounded-md transition">{{ 'register'|trans }}</button>
+    <button type="submit" class="btn-accent w-full font-semibold py-2 px-4 rounded-md transition">{{ 'register'|trans }}</button>
     <a href="{{ path('app_login') }}" class="btn-gray w-2/3 text-center p-2 rounded-md text-sm">{{ 'signin.notnew'|trans }}</a>
 {{ form_end(registrationForm) }}
 {% endblock %}
