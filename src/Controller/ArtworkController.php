@@ -39,20 +39,23 @@ final class ArtworkController extends AbstractController
             'query' => $query,
         ]);
     }
-    
+
     #[Route('artwork/new', name: 'app_artwork_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $em): Response
     {
         if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_ARTIST')) {
-            $this->addFlash('error', 'You must login to do that!');
-            return $this->redirectToRoute('app_login');
+            $this->addFlash('error', 'You dont have the privileges to do that');
+            return $this->redirectToRoute('app_artwork_index');
         }
-        $artwork = new Artwork();
-        $artwork->setArtist($this->getUser());
+
+        $artwork = new Artwork()
+            ->setArtist($this->getUser());
+
         for ($i = 0; $i < 6; $i++) {
             $artworkImage = new ArtworkImage();
             $artwork->addImage($artworkImage);
         }
+
         $form = $this->createForm(ArtworkType::class, $artwork);
         $form->handleRequest($request);
 
@@ -67,11 +70,13 @@ final class ArtworkController extends AbstractController
             }
             $em->persist($artwork);
             $em->flush();
+
+            $this->addFlash('success', 'Your artwork is online!');
             return $this->redirectToRoute('app_artwork_show', ['id' => $artwork->getId()], Response::HTTP_SEE_OTHER);
         }
         return $this->render('artwork/new.html.twig', [
             'artwork' => $artwork,
-            'form' => $form,
+            'form' => $form
         ]);
     }
 
@@ -79,28 +84,32 @@ final class ArtworkController extends AbstractController
     public function show(Artwork $artwork, Request $request, HubInterface $hub, EntityManagerInterface $em): Response
     {
         $form = null;
+
         if ($user = $this->getUser()) {
-            $comment = new Comment();
-            $comment->setArtwork($artwork);
-            $comment->setUser($user);
+            $comment = new Comment()
+                ->setArtwork($artwork)
+                ->setUser($user);
+
             $form = $this->createForm(CommentType::class, $comment);
             $emptyForm = clone $form;
             $form->handleRequest($request);
+
             if ($form->isSubmitted() && $form->isValid()) {
                 $em->persist($comment);
                 $em->flush();
+
                 $hub->publish(new Update(
                     'comment' . $artwork->getId(),
                     $this->renderBlock('comment/comment.stream.html.twig', 'create', [
                         'comment' => $form->getData([]),
-                        'form' => $emptyForm,
+                        'form' => $emptyForm
                     ])
                 ));
             }
         }
         return $this->render('artwork/show.html.twig', [
             'artwork' => $artwork,
-            'form' => $form,
+            'form' => $form
         ]);
     }
 
@@ -108,17 +117,18 @@ final class ArtworkController extends AbstractController
     public function edit(Request $request, Artwork $artwork, EntityManagerInterface $em): Response
     {
         if (!$this->isGranted('ROLE_ADMIN') && $this->getUser() !== $artwork->getArtist()) {
-            $this->addFlash('error', 'No!');
-            return $this->redirectToRoute('app_login');
+            $this->addFlash('error', 'You cant do that sorry');
+            return $this->redirectToRoute('app_artwork_index');
         }
 
-        $imagesToAdd = 8 - $artwork->getImages()->count();
+        $imagesToAdd = 6 - $artwork->getImages()->count();
         if ($imagesToAdd > 0) {
             for ($i = 0; $i < $imagesToAdd; $i++) {
                 $artworkImage = new ArtworkImage();
                 $artwork->addImage($artworkImage);
             }
         }
+
         $form = $this->createForm(ArtworkType::class, $artwork);
         $form->handleRequest($request);
 
@@ -132,12 +142,14 @@ final class ArtworkController extends AbstractController
                 }
             }
             $em->flush();
+
+            $this->addFlash('success', 'Your artwork was edited sucessfully!');
             return $this->redirectToRoute('app_artwork_show', ['id' => $artwork->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('artwork/edit.html.twig', [
             'artwork' => $artwork,
-            'form' => $form,
+            'form' => $form
         ]);
     }
 
@@ -151,11 +163,13 @@ final class ArtworkController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$artwork->getId(), $request->getPayload()->getString('_token'))) {
             $em->remove($artwork);
             $em->flush();
+
             $refererPath = parse_url($request->headers->get('referer'), PHP_URL_PATH);
             $route = $refererPath === '/profile/my-artworks' ? 'app_my_artworks' : 'app_artwork_index';
+            $this->addFlash('success', 'Your artwork was successfully deleted');
             return $this->redirectToRoute($route, [], Response::HTTP_SEE_OTHER);
         } else {
-            $this->addFlash('error', 'Error when trying to delete.');
+            $this->addFlash('error', 'Error when trying to delete, try again');
         }
     }
 }
