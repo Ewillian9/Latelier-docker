@@ -30,8 +30,11 @@ class Order
     #[ORM\ManyToOne(inversedBy: 'orders')]
     private ?Artwork $artwork = null;
 
-    #[ORM\OneToOne(mappedBy: 'order', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'order')]
     private ?Conversation $conversation = null;
+
+    #[ORM\ManyToOne(inversedBy: 'artistOrders')]
+    private ?User $artist = null;
 
     #[ORM\PrePersist]
     public function onPrePersist(): void
@@ -44,6 +47,11 @@ class Order
     public function onPreUpdate(): void
     {
         $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
     }
 
     public function getId(): ?int
@@ -110,6 +118,18 @@ class Order
         }
 
         $this->conversation = $conversation;
+
+        return $this;
+    }
+
+    public function getArtist(): ?User
+    {
+        return $this->artist;
+    }
+
+    public function setArtist(?User $artist): static
+    {
+        $this->artist = $artist;
 
         return $this;
     }

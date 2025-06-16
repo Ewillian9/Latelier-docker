@@ -9,6 +9,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ArtworkRepository;
 use App\Repository\CommentRepository;
+use App\Repository\OrderRepository;
 use App\Repository\UserRepository;
 use App\Repository\ConversationRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -110,6 +111,23 @@ final class UserController extends AbstractController
 
         return $this->render('user/my_conversations.html.twig', [
             'conversations' => $conversations,
+        ]);
+    }
+
+    #[Route('/profile/my-orders', name: 'app_my_orders', methods: ['GET'])]
+    public function myOrders(OrderRepository $or): Response
+    {
+        $user = $this->getUser();
+        if (!$user) {
+            $this->addFlash('error', 'You are not connected!');
+            return $this->redirectToRoute('app_login');
+        }
+        $orders = $user->getOrders();
+        $artistOrders = $user->getArtistOrders();
+        $allOrders = array_merge($orders->toArray(), $artistOrders->toArray());
+
+        return $this->render('user/my_orders.html.twig', [
+            'orders' => $allOrders
         ]);
     }
 }

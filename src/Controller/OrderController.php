@@ -7,38 +7,69 @@ use App\Entity\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Mercure\HubInterface;
+use Symfony\Component\Mercure\Update;
 
 final class OrderController extends AbstractController
 {
     #[Route('/order/create/{conversation}', name: 'app_order_create')]
-    public function create(
-        Conversation $conversation,
-        EntityManagerInterface $em
-    ): Response {
+    public function create(Conversation $conversation, EntityManagerInterface $em): Response
+    {
         $user = $this->getUser();
+        $otherId = $conversation->getArtist() === $user ? $conversation->getClient()->getId() : $conversation->getArtist()->getId();
+        $artwork = $conversation->getArtwork();
 
         if (!$user || $user !== $conversation->getClient()) {
             $this->addFlash('error', 'Unauthorized access.');
-            return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getArtist()->getId(), 'artwork' => $conversation->getArtwork()->getId()]);
+            return $this->redirectToRoute('app_conversation', ['recipient' => $otherId, 'artwork' => $artwork->getId()]);
         }
 
         if ($conversation->getOrder()) {
             $this->addFlash('info', 'An order already exists for this conversation.');
-            return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getArtist()->getId(), 'artwork' => $conversation->getArtwork()->getId()]);
+            return $this->redirectToRoute('app_conversation', ['recipient' => $otherId, 'artwork' => $artwork->getId()]);
         }
 
         $order = new Order()
             ->setStatus('pending')
             ->setClient($user)
-            ->setArtwork($conversation->getArtwork())
+            ->setArtist($conversation->getArtist())
+            ->setArtwork($artwork)
             ->setConversation($conversation);
 
         $em->persist($order);
         $em->flush();
 
         $this->addFlash('success', 'Order successfully created!');
-        return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getArtist()->getId(), 'artwork' => $conversation->getArtwork()->getId()]);
+        return $this->redirectToRoute('app_conversation', ['recipient' => $otherId, 'artwork' => $artwork->getId()]);
+    }
+
+    #[Route('order/delete/{id}', name: 'app_order_delete', methods: ['POST'])]
+    public function delete(Request $request, Order $order, HubInterface $hub, EntityManagerInterface $em): Response
+    {
+        $user = $this->getUser();
+        
+        if (!$user || ($user !== $order->getClient() && $user !== $order->getArtist())) {
+            $this->addFlash('error', 'Unauthorized access');
+            return $this->redirectToRoute('app_artwork_index');
+        }
+
+        if ($order->getStatus() !== 'pending' && $order->getStatus() !== 'completed' && $order->getStatus() !== 'cancelled') {
+            $this->addFlash('error', 'Only pending, completed or cancelled orders can be deleted');
+            return $this->redirectToRoute('app_my_orders');
+        }
+
+        $conversation = $order->getConversation();
+        $conversation->setOrder(null);
+        $other = $conversation->getArtist() === $user ? $conversation->getClient()->getId() : $conversation->getArtist()->getId();
+
+        $em->remove($order);
+        $em->flush();
+
+        $this->addFlash('success', 'Order successfully deleted.');
+        
+        return $this->redirectToRoute('app_conversation', ['recipient' => $other, 'artwork' => $conversation->getArtwork()->getId()]);
     }
 
     #[Route('/order/{id}/accept', name: 'app_order_accept', methods: ['POST'])]

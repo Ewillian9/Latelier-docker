@@ -88,6 +88,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $bio = null;
 
+    /**
+     * @var Collection<int, Order>
+     */
+    #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'artist')]
+    private Collection $artistOrders;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -96,6 +102,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->conversations = new ArrayCollection();
         $this->artistConversations = new ArrayCollection();
         $this->artworks = new ArrayCollection();
+        $this->artistOrders = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -383,6 +390,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setBio(?string $bio): static
     {
         $this->bio = $bio;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Order>
+     */
+    public function getArtistOrders(): Collection
+    {
+        return $this->artistOrders;
+    }
+
+    public function addArtistOrder(Order $artistOrder): static
+    {
+        if (!$this->artistOrders->contains($artistOrder)) {
+            $this->artistOrders->add($artistOrder);
+            $artistOrder->setArtist($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArtistOrder(Order $artistOrder): static
+    {
+        if ($this->artistOrders->removeElement($artistOrder)) {
+            // set the owning side to null (unless already changed)
+            if ($artistOrder->getArtist() === $this) {
+                $artistOrder->setArtist(null);
+            }
+        }
 
         return $this;
     }

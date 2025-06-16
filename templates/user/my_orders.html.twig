@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% block title %}My Conversations{% endblock %}
+{% block body %}
+<section class="base main-color">
+    {{ include('components/_nav.html.twig') }}
+    <section class="w-full border-b border-gray-300 dark:border-gray-600 pb-2 sm:pb-4">
+        <h2 class="text-3xl font-semibold">My Orders</h2>
+        <p class="secondary-text mt-1">Voici la liste de vos commandes</p>
+    </section>
+
+    {% if orders is empty %}
+        <p class="secondary-text">{{'conversation.none'|trans}}</p>
+    {% else %}
+        <ul class="w-full space-y-2 sm:space-y-4">
+            {% for order in orders %}
+                <li class="flex justify-between items-start rounded-xl shadow-md bg-gray-100 dark:bg-gray-900 p-2 sm:p-4">
+                    <div class="flex-1">
+                        <p class="text-xl font-semibold">{{ order.artwork.title }}</p>
+                        {% if app.user is same as(order.artwork.artist) %}
+                            <p class="text-sm">With {{ order.client.username }}</p>
+                        {% else %}
+                            <p class="text-sm">With {{ order.artist.username }}</p>
+                        {% endif %}
+                        <time datetime="{{ order.updatedAt|date('c') }}" class="text-xs secondary-text mt-2">{{'updated'|trans}} {{ order.updatedAt|ago }}</time>
+                    </div>
+                    <div class="flex flex-col items-end gap-2">
+                        <a href="{{ path('app_conversation', {recipient: app.user is same as order.artwork.artist ? order.client.id : order.artist.id, artwork: order.artwork.id}) }}" class="btn btn-gray">{{ ux_icon('ic:outline-arrow-forward', { class: 'w-5 h-5' }) }}<span class="md">{{'conversation.show'|trans}}</span></a>
+                        {% if order.status == 'pending' or order.status == 'completed' or order.status == 'cancelled'%}
+                            {{ include('order/_delete_form.html.twig') }}
+                        {% endif %}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</section>
+{% endblock %}
