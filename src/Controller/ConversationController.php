@@ -12,7 +12,6 @@ use App\Entity\Message;
 use App\Form\MessageType;
 use App\Entity\Conversation;
 use App\Repository\ConversationRepository;
-use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\Mercure\Update;
@@ -20,40 +19,46 @@ use Symfony\Component\Mercure\Update;
 final class ConversationController extends AbstractController
 {
     #[Route('/conversation/{recipient}', name: 'app_conversation', methods: ['GET', 'POST'])]
-    public function show(ConversationRepository $cr, MessageRepository $mr, User $recipient, Request $request, EntityManagerInterface $em, HubInterface $hub): Response
+    public function show(ConversationRepository $cr, User $recipient, Request $request, EntityManagerInterface $em, HubInterface $hub): Response
     {
         $user = $this->getUser();
         if (!$user) {
-            $this->addFlash('info', 'You must login to do that!');
+            $this->addFlash('error', 'You must login to do that');
             return $this->redirectToRoute('app_login');
         }
         
         $artworkId = $request->query->get('artwork');
         $artwork = $em->getRepository(Artwork::class)->find($artworkId);
         if (!$artwork) {
-            $this->addFlash('error', 'The artwork is missing to create a conversation!');
+            $this->addFlash('error', 'The artwork is missing to create a conversation');
             return $this->redirectToRoute('app_artwork_index');
         }
-
+        
         if ($user === $recipient) {
-            $this->addFlash('info', 'You cannot create a conversation with yourself!');
+            $this->addFlash('error', 'You cannot create a conversation with yourself');
             return $this->redirectToRoute('app_artwork_index');
         }
 
         $conversation = $cr->findOneByUsersAndArtwork($user, $recipient, $artwork);
         
         if (!$conversation) {
+            if ($recipient !== $artwork->getArtist()) {
+                $this->addFlash('error', 'Artist/Client/Artwork missmatch');
+                return $this->redirectToRoute('app_artwork_index');
+            }
+
             $conversation = new Conversation()
                 ->setArtwork($artwork)
                 ->setClient($user)
                 ->setArtist($recipient);
         }
 
-        $ids = [$artwork->getId(), $user->getId(), $recipient->getId()];
+        $ids = [$user->getId(), $recipient->getId()];
         sort($ids);
-        $topic = sprintf('%d%d%d', $ids[0], $ids[1], $ids[2]);
+        $topic = sprintf('%d%d%d', $ids[0], $ids[1], $artwork->getId());
 
-        $message = new Message()->setSender($user);
+        $message = new Message()
+            ->setSender($user);
 
         $form = $this->createForm(MessageType::class, $message);
         $emptyForm = clone $form;
@@ -99,7 +104,7 @@ final class ConversationController extends AbstractController
     }
 
     #[Route('/conversation/{id}/delete', name: 'app_conversation_delete', methods: ['POST'])]
-    public function delete(Conversation $conversation, EntityManagerInterface $em): Response
+    public function delete(Request $request, Conversation $conversation, EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
         if (!$user) {
@@ -114,14 +119,17 @@ final class ConversationController extends AbstractController
             throw $this->createAccessDeniedException();
         }
 
-        if ($conversation->isDeletedByBoth()) {
-            $em->remove($conversation);
+        if ($this->isCsrfTokenValid('delete'.$conversation->getId(), $request->getPayload()->getString('_token'))) {
+            if ($conversation->isDeletedByBoth()) {
+                $em->remove($conversation);
+            }
+            $em->flush();
+            
+            $this->addFlash('success', 'Conversation deleted successfully');
+        } else {
+            $this->addFlash('error', 'Error when deleting conversation, try again');
         }
-
-        $em->flush();
-
-        $this->addFlash('success', 'Conversation deleted.');
-        return $this->redirectToRoute('app_my_conversations');
+        return $this->redirectToRoute('app_my_conversations', [], Response::HTTP_SEE_OTHER);
     }
 
 }
