@@ -164,12 +164,14 @@ final class ArtworkController extends AbstractController
             $em->remove($artwork);
             $em->flush();
 
-            $refererPath = parse_url($request->headers->get('referer'), PHP_URL_PATH);
-            $route = $refererPath === '/profile/my-artworks' ? 'app_my_artworks' : 'app_artwork_index';
-            $this->addFlash('success', 'Your artwork was successfully deleted');
-            return $this->redirectToRoute($route, [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'Your artwork was deleted successfully');
         } else {
-            $this->addFlash('error', 'Error when trying to delete, try again');
+            $this->addFlash('error', 'Error when trying to delete your artwork, try again');
         }
+        
+        $refererPath = parse_url($request->headers->get('referer'), PHP_URL_PATH);
+        $route = $refererPath === '/profile/my-artworks' ? 'app_my_artworks' : 'app_artwork_index';
+
+        return $this->redirectToRoute($route, [], Response::HTTP_SEE_OTHER);
     }
 }
