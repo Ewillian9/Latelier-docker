@@ -9,136 +9,157 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Mercure\HubInterface;
-use Symfony\Component\Mercure\Update;
 
 final class OrderController extends AbstractController
 {
-    #[Route('/order/create/{conversation}', name: 'app_order_create')]
-    public function create(Conversation $conversation, EntityManagerInterface $em): Response
+    #[Route('/order/create/{conversation}', name: 'app_order_create', methods: ['POST'])]
+    public function create(Request $request, Conversation $conversation, EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
         $otherId = $conversation->getArtist() === $user ? $conversation->getClient()->getId() : $conversation->getArtist()->getId();
         $artwork = $conversation->getArtwork();
 
         if (!$user || $user !== $conversation->getClient()) {
-            $this->addFlash('error', 'Unauthorized access.');
-            return $this->redirectToRoute('app_conversation', ['recipient' => $otherId, 'artwork' => $artwork->getId()]);
+            $this->addFlash('error', 'Only the client can initiate an order');
+            return $this->redirectToRoute('app_conversation', ['recipient' => $otherId, 'artwork' => $artwork->getId()], Response::HTTP_SEE_OTHER);
         }
 
         if ($conversation->getOrder()) {
-            $this->addFlash('info', 'An order already exists for this conversation.');
-            return $this->redirectToRoute('app_conversation', ['recipient' => $otherId, 'artwork' => $artwork->getId()]);
+            $this->addFlash('info', 'An order already exists for this conversation');
+            return $this->redirectToRoute('app_conversation', ['recipient' => $otherId, 'artwork' => $artwork->getId()], Response::HTTP_SEE_OTHER);
         }
 
-        $order = new Order()
-            ->setStatus('pending')
-            ->setClient($user)
-            ->setArtist($conversation->getArtist())
-            ->setArtwork($artwork)
-            ->setConversation($conversation);
+        if ($this->isCsrfTokenValid('create'.$conversation->getId(), $request->getPayload()->getString('_token'))) {
+            $order = new Order()
+                ->setStatus('pending')
+                ->setClient($user)
+                ->setArtist($conversation->getArtist())
+                ->setArtwork($artwork)
+                ->setConversation($conversation);
 
-        $em->persist($order);
-        $em->flush();
-
-        $this->addFlash('success', 'Order successfully created!');
-        return $this->redirectToRoute('app_conversation', ['recipient' => $otherId, 'artwork' => $artwork->getId()]);
+            $em->persist($order);
+            $em->flush();
+            $this->addFlash('success', 'Order successfully created!');
+        } else {
+            $this->addFlash('error', 'Something when wrong, please reload the page');
+        }
+        return $this->redirectToRoute('app_conversation', ['recipient' => $otherId, 'artwork' => $artwork->getId()], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('order/delete/{id}', name: 'app_order_delete', methods: ['POST'])]
-    public function delete(Request $request, Order $order, HubInterface $hub, EntityManagerInterface $em): Response
+    public function delete(Request $request, Order $order, EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
         
         if (!$user || ($user !== $order->getClient() && $user !== $order->getArtist())) {
-            $this->addFlash('error', 'Unauthorized access');
-            return $this->redirectToRoute('app_artwork_index');
+            $this->addFlash('error', 'Only participants can delete order');
+            return $this->redirectToRoute('app_my_orders', [], Response::HTTP_SEE_OTHER);
         }
 
         if ($order->getStatus() !== 'pending' && $order->getStatus() !== 'completed' && $order->getStatus() !== 'cancelled') {
             $this->addFlash('error', 'Only pending, completed or cancelled orders can be deleted');
-            return $this->redirectToRoute('app_my_orders');
+            return $this->redirectToRoute('app_my_orders', [], Response::HTTP_SEE_OTHER);
         }
 
-        $conversation = $order->getConversation();
-        $conversation->setOrder(null);
-        $other = $conversation->getArtist() === $user ? $conversation->getClient()->getId() : $conversation->getArtist()->getId();
+        if ($this->isCsrfTokenValid('delete'.$order->getId(), $request->getPayload()->getString('_token'))) {
+            $conversation = $order->getConversation();
+            $conversation->setOrder(null);
 
-        $em->remove($order);
-        $em->flush();
+            $em->remove($order);
+            $em->flush();
 
-        $this->addFlash('success', 'Order successfully deleted.');
-        
-        return $this->redirectToRoute('app_conversation', ['recipient' => $other, 'artwork' => $conversation->getArtwork()->getId()]);
+            $this->addFlash('success', 'Order successfully deleted');
+        } else {
+            $this->addFlash('error', 'Something when wrong, please reload the page');
+        }
+        return $this->redirectToRoute('app_my_orders', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/order/{id}/accept', name: 'app_order_accept', methods: ['POST'])]
-    public function accept(Order $order, EntityManagerInterface $em): Response
+    public function accept(Request $request, Order $order, EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
         $conversation = $order->getConversation();
 
         if (!$user || $user !== $conversation->getArtist()) {
-            $this->addFlash('error', 'Unauthorized access.');
-            return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getClient()->getId(), 'artwork' => $conversation->getArtwork()->getId()]);
+            $this->addFlash('error', 'Only the owner of the artwork can accept the related order');
+            return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getClient()->getId(), 'artwork' => $conversation->getArtwork()->getId()], Response::HTTP_SEE_OTHER);
         }
 
         if ($order->getStatus() !== 'pending') {
-            $this->addFlash('info', 'Order is not pending.');
-            return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getClient()->getId(), 'artwork' => $conversation->getArtwork()->getId()]);
+            $this->addFlash('info', 'Only pending orders can be accepted');
+            return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getClient()->getId(), 'artwork' => $conversation->getArtwork()->getId()], Response::HTTP_SEE_OTHER);
         }
 
-        $order->setStatus('accepted');
-        $em->flush();
+        if ($this->isCsrfTokenValid('accept'.$order->getId(), $request->getPayload()->getString('_token'))) {
+            $order->setStatus('accepted');
+            $em->flush();
 
-        $this->addFlash('success', 'Order accepted.');
-        return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getClient()->getId(), 'artwork' => $conversation->getArtwork()->getId()]);
+            $this->addFlash('success', 'Order accepted!');
+        } else {
+            $this->addFlash('error', 'Something when wrong, please reload the page');
+        }
+        return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getClient()->getId(), 'artwork' => $conversation->getArtwork()->getId()], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/order/{id}/complete', name: 'app_order_complete', methods: ['POST'])]
-    public function complete(Order $order, EntityManagerInterface $em): Response
+    public function complete(Request $request, Order $order, EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
         $conversation = $order->getConversation();
 
         if (!$user || $user !== $conversation->getArtist()) {
-            $this->addFlash('error', 'Unauthorized access.');
-            return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getClient()->getId(), 'artwork' => $conversation->getArtwork()->getId()]);
+            $this->addFlash('error', 'Only the owner of the artwork can complete the related order');
+            return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getClient()->getId(), 'artwork' => $conversation->getArtwork()->getId()], Response::HTTP_SEE_OTHER);
         }
 
         if ($order->getStatus() !== 'accepted') {
             $this->addFlash('info', 'Order must be accepted before completion.');
-            return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getClient()->getId(), 'artwork' => $conversation->getArtwork()->getId()]);
+            return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getClient()->getId(), 'artwork' => $conversation->getArtwork()->getId()], Response::HTTP_SEE_OTHER);
         }
 
-        $order->setStatus('completed');
-        $em->flush();
+        if ($this->isCsrfTokenValid('complete'.$order->getId(), $request->getPayload()->getString('_token'))) {
+            $order->setStatus('completed');
+            $em->flush();
 
-        $this->addFlash('success', 'Order marked as completed.');
-        return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getClient()->getId(), 'artwork' => $conversation->getArtwork()->getId()]);
+            $this->addFlash('success', 'Order is completed!');
+        } else {
+            $this->addFlash('error', 'Something when wrong, please reload the page');
+        }
+        return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getClient()->getId(), 'artwork' => $conversation->getArtwork()->getId()], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/order/{id}/cancel', name: 'app_order_cancel', methods: ['POST'])]
-    public function cancel(Order $order, EntityManagerInterface $em): Response
+    public function cancel(Request $request, Order $order, EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
         $conversation = $order->getConversation();
+        $otherId = $conversation->getArtist() === $user ? $conversation->getClient()->getId() : $conversation->getArtist()->getId();
 
-        if (!$user || $user !== $conversation->getArtist()) {
-            $this->addFlash('error', 'Unauthorized access.');
-            return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getClient()->getId(), 'artwork' => $conversation->getArtwork()->getId()]);
+        if (!$user || ($user !== $conversation->getArtist() && $user !== $conversation->getClient())) {
+            $this->addFlash('error', 'Only the owner of the artwork can cancel the related order');
+            return $this->redirectToRoute('app_conversation', ['recipient' => $otherId, 'artwork' => $conversation->getArtwork()->getId()], Response::HTTP_SEE_OTHER);
         }
 
         if ($order->getStatus() === 'completed') {
-            $this->addFlash('info', 'Completed order cannot be cancelled.');
-            return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getClient()->getId(), 'artwork' => $conversation->getArtwork()->getId()]);
+            $this->addFlash('info', 'Completed order cannot be cancelled');
+            return $this->redirectToRoute('app_conversation', ['recipient' => $otherId, 'artwork' => $conversation->getArtwork()->getId()], Response::HTTP_SEE_OTHER);
         }
 
-        $order->setStatus('cancelled');
-        $em->flush();
+        if ($user === $order->getClient() && $order->getStatus() === 'accepted') {
+            $this->addFlash('info', 'Completed order cannot be cancelled.');
+            return $this->redirectToRoute('app_conversation', ['recipient' => $otherId, 'artwork' => $conversation->getArtwork()->getId()], Response::HTTP_SEE_OTHER);
+        }
 
-        $this->addFlash('success', 'Order marked as cancelled.');
-        return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getClient()->getId(), 'artwork' => $conversation->getArtwork()->getId()]);
+        if ($this->isCsrfTokenValid('cancel'.$order->getId(), $request->getPayload()->getString('_token'))) {
+            $order->setStatus('cancelled');
+            $em->flush();
+
+            $this->addFlash('success', 'Order cancelled successfully, you can delete it to create a new one');
+        } else {
+            $this->addFlash('error', 'Something when wrong, please reload the page');
+        }
+        return $this->redirectToRoute('app_conversation', ['recipient' => $otherId, 'artwork' => $conversation->getArtwork()->getId()], Response::HTTP_SEE_OTHER);
     }
 
 }

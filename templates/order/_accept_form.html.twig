@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('app_order_accept', {'id': order.id}) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('accept' ~ order.id) }}">
+    <button class="btn btn-accent">{{ ux_icon('ic:outline-delete', { class: 'w-5 h-5' }) }}<span class="md">{{'accept.order'|trans}}</span></button>
+</form>

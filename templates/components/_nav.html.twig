@@ -15,15 +15,11 @@
 
         <div class="flex gap-2 sm:gap-4">
         {% if not isArtist and conversation.id is not null and order is null %}
-            <form action="{{ path('app_order_create', { conversation: conversation.id }) }}" method="post">
-                <button type="submit" class="btn btn-accent">Create Order</button>
-            </form>
+            {{ include('order/_create_form.html.twig') }}
         {% endif %}
         {% if not isArtist and order is not null and order.status == 'pending' %}
             <span>en attente de validation</span>
-            <form action="{{ path('app_order_cancel', { id: order.id }) }}" method="post">
-                <button type="submit" class="btn btn-red">Cancel Order</button>
-            </form>
+            {{ include('order/_cancel_form.html.twig') }}
         {% endif %}
         {% if not isArtist and order is not null and order.status == 'accepted' %}
             <span>en cours de realisation</span>
@@ -32,28 +28,22 @@
             <span>Oeuvre terminée</span>
         {% endif %}
         {% if not isArtist and order is not null and order.status == 'cancelled' %}
-            <span>L'artist a annulé la commande</span>
+            <span>La commande est annulé</span>
         {% endif %}
 
         {% if isArtist and order is not null %}
             {% if order.status == 'pending' %}
-                <form action="{{ path('app_order_accept', { id: order.id }) }}" method="post">
-                    <button type="submit" class="btn btn-accent">Accept Order</button>
-                </form>
+                {{ include('order/_accept_form.html.twig') }}
             {% elseif order.status == 'accepted' %}
-                <form action="{{ path('app_order_complete', { id: order.id }) }}" method="post">
-                    <button type="submit" class="btn btn-accent">Mark as Finished</button>
-                </form>
+                {{ include('order/_complete_form.html.twig') }}
             {% elseif order.status == 'completed' %}
                 <span>Oeuvre terminée</span>
             {% elseif order.status == 'cancelled' %}
-                <span>Vous avez annulé la commande</span>
+                <span>La commande est annulé</span>
             {% endif %}
 
             {% if order.status != 'completed' and order.status != 'cancelled' %}
-                <form action="{{ path('app_order_cancel', { id: order.id }) }}" method="post">
-                    <button type="submit" class="btn btn-red">Cancel Order</button>
-                </form>
+                {{ include('order/_cancel_form.html.twig') }}
             {% endif %}
         {% endif %}
         </div>
