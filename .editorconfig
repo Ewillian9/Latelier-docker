@@ -31,7 +31,6 @@ indent_style = tab
 indent_style = space
 indent_size = 4
 
-#true in sf7.3
 [*.{yaml,yml}]
 trim_trailing_whitespace = false
 
@@ -48,11 +47,11 @@ indent_size = 4
 [composer.json]
 indent_size = 4
 
-[{compose,docker-compose}.*.{yaml,yml}]
+[{compose,docker-compose}.{*.yaml,*.yml,yaml,yml}]
 indent_size = 2
 
 [*.*Dockerfile]
 indent_style = tab
 
-[*.*Caddyfile]
+[{Caddyfile,*.*Caddyfile}]
 indent_style = tab
