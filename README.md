@@ -2,20 +2,18 @@
 
 ## Technologies utilisées
 - **Docker/Caddy**
-- **PHP8/PostSQL17/Symfony7**
-- **TailwindCSS4/Twig/Turbo/Mercure**
+- **PHP8.4/PostSQL17.5/Symfony7.3**
+- **TailwindCSS4.1/Twig/Turbo8/Mercure**
 
 ## Fonctionnalités (complémentaires)
 
 ### Administration
 - Modération des commentaires ---OK
-- Modération des utilisateurs avec strikes
-- Modération des Oeuvres ---OK
+- Modération des oeuvres ---OK
 
 ### Artists
 - Gestion de ses œuvres (ajout, modification, suppression) ---OK
 - Ajout de titre, images, description et mots-clés ---OK
-- Generation par IA de titre, description, mots-clés ---LATER (Gemma 3 14/27b)
 - Voir ses oeuvres ---OK
 
 ### Utilisateurs (inscription requise)
@@ -24,6 +22,7 @@
 - Commande d'une œuvre et suivi du statut (en attente, en cours et terminé) ---OK
 - Notification par email une fois l'œuvre terminée ---TO DO
 - Commentaires instantanés sous les œuvres avec edition et suppression ---OK
+- Liker des oeuvres ---TO DO
 - Voir ses conversation, commentaire et commandes ---OK
 
 ### Visiteurs (sans inscription)
@@ -32,6 +31,10 @@
 - Mode clair/sombre ---OK
 - Support multilingues ---OK
 - Acceder au profil publique d'un artist ---OK
+
+## TO DO
+- Generation par IA de titre, description, mots-clés (Gemma 3 14/27b)
+- Modération des utilisateurs avec strikes
 
 ## Getting Started
 
