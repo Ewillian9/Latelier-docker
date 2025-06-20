@@ -60,12 +60,19 @@ class Artwork
     #[ORM\OneToMany(targetEntity: Conversation::class, mappedBy: 'artwork')]
     private Collection $conversations;
 
+    /**
+     * @var Collection<int, Like>
+     */
+    #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'artwork', orphanRemoval: true)]
+    private Collection $likes;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->orders = new ArrayCollection();
         $this->images = new ArrayCollection();
         $this->conversations = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -258,6 +265,36 @@ class Artwork
             // set the owning side to null (unless already changed)
             if ($conversation->getArtwork() === $this) {
                 $conversation->setArtwork(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Like>
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): static
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes->add($like);
+            $like->setArtwork($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): static
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getArtwork() === $this) {
+                $like->setArtwork(null);
             }
         }
 

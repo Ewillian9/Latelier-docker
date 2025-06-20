@@ -11,6 +11,7 @@ use App\Form\CommentType;
 use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\Mercure\Update;
 use App\Repository\ArtworkRepository;
+use App\Repository\LikeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +27,7 @@ final class ArtworkController extends AbstractController
     }
 
     #[Route('/', name: 'app_artwork_index', methods: ['GET'])]
-    public function index(Request $request, ArtworkRepository $artworkRepository): Response
+    public function index(Request $request, ArtworkRepository $artworkRepository, LikeRepository $likeRepository): Response
     {
         $query = $request->query->get('q');
         if ($query) {
@@ -34,9 +35,19 @@ final class ArtworkController extends AbstractController
         } else {
             $artworks = $artworkRepository->findAll();
         }
+
+        $user = $this->getUser();
+        $liked = [];
+
+        if ($user) {
+            foreach ($artworks as $artwork) {
+                $liked[$artwork->getId()] = $likeRepository->hasUserLiked($artwork, $user);
+            }
+        }
         return $this->render('artwork/index.html.twig', [
             'artworks' => $artworks,
             'query' => $query,
+            'liked' => $liked
         ]);
     }
 
@@ -81,11 +92,16 @@ final class ArtworkController extends AbstractController
     }
 
     #[Route('artwork/{id}', name: 'app_artwork_show', methods: ['GET', 'POST'])]
-    public function show(Artwork $artwork, Request $request, HubInterface $hub, EntityManagerInterface $em): Response
+    public function show(Artwork $artwork, Request $request, HubInterface $hub, EntityManagerInterface $em, LikeRepository $likeRepository): Response
     {
         $form = null;
+        $liked = [];
 
         if ($user = $this->getUser()) {
+            
+            $liked[$artwork->getId()] = $likeRepository->hasUserLiked($artwork, $user);
+         
+
             $comment = new Comment()
                 ->setArtwork($artwork)
                 ->setUser($user);
@@ -109,7 +125,8 @@ final class ArtworkController extends AbstractController
         }
         return $this->render('artwork/show.html.twig', [
             'artwork' => $artwork,
-            'form' => $form
+            'form' => $form,
+            'liked' => $liked
         ]);
     }
 

@@ -40,6 +40,9 @@
         {% if user.orders is not empty or user.artistOrders is not empty %}
             <a href="{{ path('app_my_orders') }}" class="btn btn-gray">Mes commandes ({{ user.orders|length + user.artistOrders|length }})</a>
         {% endif %}
+        {% if user.likes is not empty %}
+            <a href="{{ path('app_my_likes') }}" class="btn btn-gray">Mes likes ({{ user.likes|length }})</a>
+        {% endif %}
     </nav>
 </section>
 {% endblock %}

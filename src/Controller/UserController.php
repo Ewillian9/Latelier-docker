@@ -12,6 +12,7 @@ use App\Repository\CommentRepository;
 use App\Repository\OrderRepository;
 use App\Repository\UserRepository;
 use App\Repository\ConversationRepository;
+use App\Repository\LikeRepository;
 use App\Form\UserType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -139,6 +140,21 @@ final class UserController extends AbstractController
 
         return $this->render('user/my_orders.html.twig', [
             'orders' => $allOrders
+        ]);
+    }
+
+    #[Route('/profile/my-likes', name: 'app_my_likes', methods: ['GET'])]
+    public function myLikes(LikeRepository $lr): Response
+    {
+        $user = $this->getUser();
+        if (!$user) {
+            $this->addFlash('error', 'You are not connected!');
+            return $this->redirectToRoute('app_login');
+        }
+        $likes = $lr->findBy(['client' => $user]);
+
+        return $this->render('user/my_likes.html.twig', [
+            'likes' => $likes,
         ]);
     }
 }
