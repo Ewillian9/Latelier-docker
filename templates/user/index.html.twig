@@ -5,22 +5,24 @@
     {{ include('components/_nav.html.twig') }}
     <section class="w-full border-b border-gray-300 dark:border-gray-600 pb-4 flex flex-col justify-between items-center">
         <h2 class="text-3xl font-semibold">{{'hello'|trans }} {{ user.username }}</h2>
-        <p class="secondary-text mt-1">Informations de votre compte</p>
+        <p class="secondary-text text-sm">Informations de votre compte</p>
+        {% if 'ROLE_ARTIST' in user.roles or 'ROLE_ADMIN' in user.roles %}
+            <a href="{{ path('app_artist_profile', {'username': user.username}) }}" class="btn btn-gray">Voir mon profile publique</a>
+        {% endif %}
     </section>
 
-    <ul class="w-full space-y-4">
-        <li class="flex justify-between border-b border-dashed pb-4">
-            <span class="font-medium secondary-text">{{'username'|trans }}</span>
+    <ul class="w-full space-y-4 flex flex-col justify-between items-center">
+        <li class="border-b border-dashed pb-4">
             <span>{{ user.username }}</span>
         </li>
-        <li class="flex justify-between border-b border-dashed pb-4">
-            <span class="font-medium secondary-text">{{'email'|trans }}</span>
+        <li class="border-b border-dashed pb-4">
             <span>{{ user.email }}</span>
         </li>
-        <li class="flex justify-between border-b border-dashed pb-4">
-            <span class="font-medium secondary-text">Rôles</span>
-            <span>{{ user.roles[0] }}</span>
-        </li>
+        {% if 'ROLE_ARTIST' in user.roles or 'ROLE_ADMIN' in user.roles %}
+            <li class="border-b border-dashed pb-4">
+                <p class="text-sm text-center whitespace-pre-line">{{ user.bio|default('No Bio. Add one!') }}</p>
+            </li>
+        {% endif %}
     </ul>
 
     <p class="text-xs secondary-text text-right">{{'created'|trans }} {{ user.createdAt ? user.createdAt|ago : 'N/A' }}<br>{{'updated'|trans }} {{ user.updatedAt ? user.updatedAt|ago : 'N/A' }}</p>

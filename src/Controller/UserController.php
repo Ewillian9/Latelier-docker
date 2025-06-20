@@ -12,6 +12,7 @@ use App\Repository\CommentRepository;
 use App\Repository\OrderRepository;
 use App\Repository\UserRepository;
 use App\Repository\ConversationRepository;
+use App\Form\UserType;
 use Symfony\Component\HttpFoundation\Request;
 
 final class UserController extends AbstractController
@@ -52,20 +53,30 @@ final class UserController extends AbstractController
         }
 
         $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            if ($plainPassword = $form->get('plainPassword')->getData()) {
-                $user->setPassword($hasher->hashPassword($user, $plainPassword));
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                if ($plainPassword = $form->get('plainPassword')->getData()) {
+                    $user->setPassword($hasher->hashPassword($user, $plainPassword));
+                }
+                if ($bio = $form->get('bio')->getData()) {
+                    $user->setBio($bio);
+                }
+                if ($email = $form->get('email')->getData()) {
+                    $user->setEmail($email);
+                }
+                if ($username = $form->get('username')->getData()) {
+                    $user->setUsername($username);
+                }
+                $em->flush();
+                return $this->redirectToRoute('app_profile', [], Response::HTTP_SEE_OTHER);
             }
-            $em->flush();
-
-            $this->addFlash('success', 'Profile updated successfully!');
-            return $this->redirectToRoute('app_profile');
         }
-
         return $this->render('user/edit.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
+            'user' => $user,
         ]);
     }
 
