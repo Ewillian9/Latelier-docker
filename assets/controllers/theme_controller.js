@@ -1,4 +1,5 @@
-import{Controller}from'@hotwired/stimulus'/*stimulusFetch:'lazy'*/
+import{Controller}from'@hotwired/stimulus'
+/* stimulusFetch: 'lazy' */
 export default class extends Controller{static targets=['button']
 connect(){document.documentElement.classList.toggle("dark",localStorage.theme==="dark"||(!("theme"in localStorage)&&window.matchMedia("(prefers-color-scheme: dark)").matches),)
 this.updateIcon()}
