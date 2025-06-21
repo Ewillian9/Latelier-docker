@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block title %}{{'home'|trans}} - L'Atelier de Gilles{% endblock %}
 {% block body %}
-    <section id="artwork_results" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4">
+    <section id="artwork_results" class="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4">
         {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ARTIST') %}
             <figure class="main-color rounded-lg shadow-md overflow-hidden">
                 <a href="{{ path('app_artwork_new') }}">
