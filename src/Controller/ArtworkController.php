@@ -30,12 +30,10 @@ final class ArtworkController extends AbstractController
     public function index(Request $request, ArtworkRepository $artworkRepository, LikeRepository $likeRepository): Response
     {
         $query = $request->query->get('q');
-        if ($query) {
-            $artworks = $artworkRepository->findByKeywords($query);
-        } else {
-            $artworks = $artworkRepository->findAll();
-        }
-
+        $sort = $request->query->get('sort');
+        
+        $artworks = $artworkRepository->findWithFilters($query, $sort);
+        
         $user = $this->getUser();
         $liked = [];
 
@@ -44,9 +42,19 @@ final class ArtworkController extends AbstractController
                 $liked[$artwork->getId()] = $likeRepository->hasUserLiked($artwork, $user);
             }
         }
+        $referer = $request->headers->get('referer');
+        if (TurboBundle::STREAM_FORMAT === $request->getPreferredFormat() && $referer === $request->getSchemeAndHttpHost() . '/' . $request->getLocale() . '/') {
+            $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
+            return $this->renderBlock('artwork/_list.html.twig', 'search', [
+                'artworks' => $artworks,
+                'liked' => $liked
+            ]);
+        }
+
         return $this->render('artwork/index.html.twig', [
             'artworks' => $artworks,
             'query' => $query,
+            'sort' => $sort,
             'liked' => $liked
         ]);
     }

@@ -1,7 +1,6 @@
-{% extends 'base.html.twig' %}
-{% block title %}{{'home'|trans}} - L'Atelier de Gilles{% endblock %}
-{% block body %}
-    <section id="artwork_results" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4">
+{% block search %}
+<turbo-stream action="update" target="artwork_results">
+    <template>
         {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ARTIST') %}
             <figure class="main-color rounded-lg shadow-md overflow-hidden">
                 <a href="{{ path('app_artwork_new') }}">
@@ -31,7 +30,6 @@
                             data-like-url-prefix-value="{{ path('artwork_like', {'id': artwork.id})|replace({'/like': ''}) }}"
                             data-action="click->like#toggle"
                             data-like-target="icon">
-
                             {{ ux_icon('mdi:heart') }}
                         </button>
                     {% endif %}
@@ -45,5 +43,7 @@
         {% else %}
             <p class="text-lg font-semibold">{{'nomatch'|trans}} {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ARTIST') %}{{'nomatch.artist'|trans}}{% endif %}</p>
         {% endfor %}
-    </section>
+    </template>
+</turbo-stream>
 {% endblock %}
+
