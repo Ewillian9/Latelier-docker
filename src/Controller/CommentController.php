@@ -3,9 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
-use App\Entity\Artwork;
 use App\Form\CommentType;
-use Symfony\UX\Turbo\TurboBundle;
 use App\Repository\CommentRepository;
 use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\Mercure\Update;
@@ -17,68 +15,69 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class CommentController extends AbstractController
 {
-    #[Route('comment/new', name: 'app_comment_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $em): Response
+    #[Route('comment/{id}/edit', name: 'app_comment_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Comment $comment, HubInterface $hub, EntityManagerInterface $em): Response
     {
-        $comment = new Comment();
-        $form = $this->createForm(CommentForm::class, $comment);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($comment);
-            $em->flush();
-
-            return $this->redirectToRoute('app_comment_index', [], Response::HTTP_SEE_OTHER);
+        if ($comment->getUser() !== $this->getUser() && !$this->isGranted('ROLE_ADMIN')) {
+            $this->addFlash('error', 'You dont have the privileges to do that');
+            return $this->redirectToRoute('app_artwork_index');
         }
 
-        return $this->render('comment/new.html.twig', [
-            'comment' => $comment,
-            'form' => $form,
-        ]);
-    }
-
-    #[Route('comment/{id}', name: 'app_comment_show', methods: ['GET'])]
-    public function show(Comment $comment): Response
-    {
-        return $this->render('comment/show.html.twig', [
-            'comment' => $comment,
-        ]);
-    }
-
-    #[Route('comment/{id}/edit', name: 'app_comment_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Comment $comment, Artwork $artwork, EntityManagerInterface $em): Response
-    {
-        if ($comment->getUser() !== $this->getUser() && !$this->isGranted('ROLE_ADMIN')) throw $this->createAccessDeniedException();
-
         $form = $this->createForm(CommentType::class, $comment);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->flush();
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
 
-            return $this->redirectToRoute('app_artwork_show', ['id' => $artwork->getId()], Response::HTTP_SEE_OTHER);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $artwork = $comment->getArtwork();
+                $em->flush();
+
+                $hub->publish(new Update(
+                    'comment' . $artwork->getId()->toString(),
+                    $this->renderBlock('comment/comment.stream.html.twig', 'update', [
+                        'id' => $comment->getId()->toString(),
+                        'comment' => $form->getData([])
+                    ])
+                ));
+            }
         }
 
         return $this->render('comment/edit.html.twig', [
-            'comment' => $comment,
-            'form' => $form,
+            'form' => $form
         ]);
     }
 
     #[Route('comment/{id}', name: 'app_comment_delete', methods: ['POST'])]
     public function delete(Request $request, Comment $comment, HubInterface $hub, CommentRepository $cr, EntityManagerInterface $em): Response
     {
-        if ($comment->getUser() !== $this->getUser() && !$this->isGranted('ROLE_ADMIN')) throw $this->createAccessDeniedException();
+        $user = $comment->getUser();
 
-        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->getPayload()->getString('_token'))) {
-            $commentId = $comment->getId();
+        if ($user !== $this->getUser() && !$this->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException();
+        }
+        
+        if ($this->isCsrfTokenValid('delete'.$comment->getId()->toString(), $request->getPayload()->getString('_token'))) {
+            $commentId = $comment->getId()->toString();
+            $artwork = $comment->getArtwork();
             $em->remove($comment);
             $em->flush();
-            $update = new Update(
+            
+            $hub->publish(new Update(
+                'comment' . $artwork->getId()->toString(),
+                $this->renderBlock('comment/comment.stream.html.twig', 'delete', [
+                    'id' => $commentId,
+                    'remainingCommentsCount' => $cr->count(['artwork' => $comment->getArtwork()]),
+                    'remainingUserCommentsCount' => $cr->count(['commenter' => $user]),
+                ])
+            ));
+            $hub->publish(new Update(
                 'comment',
-                $this->renderBlock('comment/delete_comment.stream.html.twig', 'delete_comment', ['commentId' => $commentId, 'remainingCommentsCount' => $cr->count(['artwork' => $comment->getArtwork()])])
-            );
-            $hub->publish($update);
+                $this->renderBlock('comment/comment.stream.html.twig', 'delete', [
+                    'id' => $commentId,
+                    'remainingCommentsCount' => $cr->count(['artwork' => $comment->getArtwork()]),
+                    'remainingUserCommentsCount' => $cr->count(['commenter' => $user]),
+                ])
+            ));
         }
         return new Response(null, Response::HTTP_NO_CONTENT);
     }

@@ -10,34 +10,38 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/data-fixtures": "^2.0.2",
-        "doctrine/dbal": "^3.9.4",
-        "doctrine/doctrine-bundle": "^2.14",
+        "doctrine/dbal": "^3.9.5",
+        "doctrine/doctrine-bundle": "^2.15.0",
         "doctrine/doctrine-migrations-bundle": "^3.4.2",
-        "doctrine/orm": "^3.3.3",
+        "doctrine/orm": "^3.4.1",
+        "easycorp/easyadmin-bundle": "^4.24",
         "knplabs/knp-time-bundle": "^2.4",
         "runtime/frankenphp-symfony": "^0.2.0",
-        "symfony/asset": "7.2.*",
-        "symfony/asset-mapper": "7.2.*",
-        "symfony/console": "7.2.*",
-        "symfony/dotenv": "7.2.*",
-        "symfony/flex": "^2.5.1",
-        "symfony/form": "7.2.*",
-        "symfony/framework-bundle": "7.2.*",
-        "symfony/mailer": "7.2.*",
+        "symfony/asset": "7.3.*",
+        "symfony/asset-mapper": "7.3.*",
+        "symfony/console": "7.3.*",
+        "symfony/dotenv": "7.3.*",
+        "symfony/flex": "^2.7.1",
+        "symfony/form": "7.3.*",
+        "symfony/framework-bundle": "7.3.*",
+        "symfony/mailer": "7.3.*",
+        "symfony/mailjet-mailer": "7.3.*",
         "symfony/mercure-bundle": "^0.3.9",
-        "symfony/password-hasher": "7.2.*",
-        "symfony/runtime": "7.2.*",
-        "symfony/security-bundle": "7.2.*",
-        "symfony/stimulus-bundle": "^2.25.1",
-        "symfony/twig-bundle": "7.2.*",
-        "symfony/ux-turbo": "^2.25.1",
-        "symfony/validator": "7.2.*",
-        "symfony/yaml": "7.2.*",
+        "symfony/password-hasher": "7.3.*",
+        "symfony/runtime": "7.3.*",
+        "symfony/security-bundle": "7.3.*",
+        "symfony/stimulus-bundle": "^2.26.1",
+        "symfony/twig-bundle": "7.3.*",
+        "symfony/uid": "7.3.*",
+        "symfony/ux-icons": "^2.26",
+        "symfony/ux-turbo": "^2.26.1",
+        "symfony/validator": "7.3.*",
+        "symfony/yaml": "7.3.*",
         "symfonycasts/tailwind-bundle": "^0.10.0",
         "symfonycasts/verify-email-bundle": "^1.17.3",
         "twig/extra-bundle": "^2.12|^3.21",
         "twig/twig": "^2.12|^3.21.1",
-        "vich/uploader-bundle": "^2.6.1"
+        "vich/uploader-bundle": "^2.7.0"
     },
     "config": {
         "allow-plugins": {
@@ -87,13 +91,14 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "7.2.*",
+            "require": "7.3.*",
             "docker": true
         }
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^4.1",
-        "symfony/stopwatch": "7.2.*",
-        "symfony/web-profiler-bundle": "7.2.*"
+        "symfony/maker-bundle": "^1.63",
+        "symfony/stopwatch": "7.3.*",
+        "symfony/web-profiler-bundle": "7.3.*"
     }
 }

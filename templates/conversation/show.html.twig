@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{conversation.artist.username}} - {{conversation.artwork.title}}{% endblock %}
+{% block body %}
+<section class="base main-color" {{ turbo_stream_listen(topic ~ app.user.id) }}>
+    {{ include('components/_nav.html.twig') }}
+    {% if conversation.artwork is not null %}
+        <a href="{{ path('app_artwork_show', {'id': conversation.artwork.id}) }}" class="flex gap-2 text-xl font-semibold">
+            {% set firstImage = conversation.artwork.images|first %}
+            {% if firstImage %}
+                <img src="{{ vich_uploader_asset(firstImage, 'imageFile') }}" alt="Artwork thumbnail" class="w-16 h-16 object-cover rounded-md">
+            {% endif %}
+            {{conversation.artwork.title}}
+        </a>
+    {% else %}
+        <div class="flex items-center gap-2 text-xl font-semibold text-gray-500">
+            <div class="w-16 h-16 bg-gray-300 dark:bg-gray-700 rounded-md flex items-center justify-center">
+                {{ ux_icon('mdi:cancel-outline', { class: 'w-5 h-5' }) }}
+            </div>
+            <span class="italic">{{ 'Artwork deleted'|trans }}</span>
+        </div>
+    {% endif %}
+    <div data-controller="scroll" data-scroll-target="container" data-action="turbo:before-stream-render@window->scroll#scrollToMessage" id="messages_artwork" class="flex flex-col gap-2 overflow-y-auto max-h-[400px] px-2">
+    {% for message in messages %}
+        {% set isOwn = message.sender == app.user %}
+        <article id="message_{{ message.id }}" class="flex {{ isOwn ? 'justify-end' : 'justify-start' }}">
+            <div class="inline-block max-w-[70%] px-2 py-1 rounded-xl shadow break-words whitespace-normal {{ isOwn ? 'bg-green-300 dark:bg-green-700 rounded-br-none' : 'bg-blue-300 dark:bg-blue-700 rounded-bl-none'}}">
+                <p class="text-sm leading-snug break-words">{{ message.content }}</p>
+                <p class="text-xs secondary-text mt-1 text-right">{{ message.createdAt|ago }}</p>
+            </div>
+        </article>
+    {% endfor %}
+    </div>
+    {{ include('conversation/_form.html.twig') }}
+</section>
+{% endblock %}

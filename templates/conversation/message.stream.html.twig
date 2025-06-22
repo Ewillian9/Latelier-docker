@@ -1,0 +1,20 @@
+{% block create %}
+<turbo-stream action="append" target="messages_artwork">
+    <template>
+    {% set isOwn = message.sender == user %}
+        <article id="message_{{ message.id }}" class="flex {{ isOwn ? 'justify-end' : 'justify-start' }}">
+            <div class="inline-block max-w-[70%] px-2 py-1 rounded-xl shadow break-words whitespace-normal {{ isOwn ? 'bg-green-300 dark:bg-green-700 rounded-br-none' : 'bg-blue-300 dark:bg-blue-700 rounded-bl-none'}}">
+                <p class="text-sm leading-snug break-words">{{ message.content }}</p>
+                <p class="text-xs secondary-text mt-1 text-right">{{ message.createdAt|ago }}</p>
+            </div>
+        </article>
+    </template>
+</turbo-stream>
+{% if isOwn %}
+<turbo-stream action="replace" target="new_message_form">
+    <template>
+        {{ include('conversation/_form.html.twig') }}
+    </template>
+</turbo-stream>
+{% endif %}
+{% endblock %}

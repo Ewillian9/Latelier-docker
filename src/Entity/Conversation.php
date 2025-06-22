@@ -6,67 +6,98 @@ use App\Repository\ConversationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ConversationRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Conversation
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\Column(type: UuidType::NAME, unique: true)]
+    #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
+    private ?Uuid $id = null;
 
     #[ORM\OneToOne(inversedBy: 'conversation', cascade: ['persist', 'remove'])]
-    private ?Order $orderlink = null;
+    private ?Order $order = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     /**
      * @var Collection<int, Message>
      */
-    #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'conversations')]
+    #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'conversation', cascade: ['persist'], orphanRemoval: true)]
     private Collection $messages;
 
     #[ORM\ManyToOne(inversedBy: 'conversations')]
     private ?User $client = null;
 
-    #[ORM\ManyToOne(inversedBy: 'conversations')]
+    #[ORM\ManyToOne(inversedBy: 'artistConversations')]
     private ?User $artist = null;
+
+    #[ORM\ManyToOne(inversedBy: 'conversations')]
+    private ?Artwork $artwork = null;
+
+    #[ORM\Column(options: ['default' => false])]
+    private ?bool $isDeletedByClient = false;
+
+    #[ORM\Column(options: ['default' => false])]
+    private ?bool $isDeletedByArtist = false;
 
     public function __construct()
     {
-        $this->messaginguser = new ArrayCollection();
-        $this->artist = new ArrayCollection();
         $this->messages = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function isDeletedByBoth(): bool
+    {
+        return $this->isDeletedByClient && $this->isDeletedByArtist;
+    }
+
+    public function getId(): ?Uuid
     {
         return $this->id;
     }
 
-    public function getOrderlink(): ?Order
+    public function getOrder(): ?Order
     {
-        return $this->orderlink;
+        return $this->order;
     }
 
-    public function setOrderlink(?Order $orderlink): static
+    public function setOrder(?Order $order): static
     {
-        $this->orderlink = $orderlink;
+        $this->order = $order;
 
         return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    #[ORM\PrePersist]
+    public function onPrePersist(): void
     {
-        $this->created_at = $created_at;
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
+    }
 
-        return $this;
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    #[ORM\PreUpdate]
+    public function onPreUpdate(): void
+    {
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     /**
@@ -81,7 +112,7 @@ class Conversation
     {
         if (!$this->messages->contains($message)) {
             $this->messages->add($message);
-            $message->setConversations($this);
+            $message->setConversation($this);
         }
 
         return $this;
@@ -91,8 +122,8 @@ class Conversation
     {
         if ($this->messages->removeElement($message)) {
             // set the owning side to null (unless already changed)
-            if ($message->getConversations() === $this) {
-                $message->setConversations(null);
+            if ($message->getConversation() === $this) {
+                $message->setConversation(null);
             }
         }
 
@@ -119,6 +150,60 @@ class Conversation
     public function setArtist(?User $artist): static
     {
         $this->artist = $artist;
+
+        return $this;
+    }
+
+    public function isParticipant(User $user): bool
+    {
+        return $this->client === $user || $this->artist === $user;
+    }
+
+    public function getOtherParticipant(User $currentUser): ?User
+    {
+        if ($this->client === $currentUser) {
+            return $this->artist;
+        }
+        
+        if ($this->artist === $currentUser) {
+            return $this->client;
+        }
+        
+        return null;
+    }
+
+    public function getArtwork(): ?Artwork
+    {
+        return $this->artwork;
+    }
+
+    public function setArtwork(?Artwork $artwork): static
+    {
+        $this->artwork = $artwork;
+
+        return $this;
+    }
+
+    public function isDeletedByClient(): ?bool
+    {
+        return $this->isDeletedByClient;
+    }
+
+    public function setIsDeletedByClient(bool $isDeletedByClient): static
+    {
+        $this->isDeletedByClient = $isDeletedByClient;
+
+        return $this;
+    }
+
+    public function isDeletedByArtist(): ?bool
+    {
+        return $this->isDeletedByArtist;
+    }
+
+    public function setIsDeletedByArtist(bool $isDeletedByArtist): static
+    {
+        $this->isDeletedByArtist = $isDeletedByArtist;
 
         return $this;
     }

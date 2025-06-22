@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ artist.username }}{% endblock %}
+{% block body %}
+<section class="base main-color">
+    {{ include('components/_nav.html.twig') }}
+    <section class="w-full border-b border-gray-300 dark:border-gray-600 pb-4 flex flex-col justify-between items-center">
+        <h2 class="text-3xl font-semibold">{{ artist.username }}</h2>
+        <p class="secondary-text text-sm">{{ 'profile.public'|trans }}</p>
+    </section>
+
+    {% if artist.bio is not null %}
+        <p class="text-sm text-center whitespace-pre-line">{{ artist.bio }}</p>
+    {% endif %}
+    
+    <h3 class="text-center text-xl font-semibold">{{ 'my.artworks'|trans }}</h3>
+    {% for artwork in artist.artworks %}
+    <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4">
+        
+            <li class="rounded-lg shadow-md overflow-hidden">
+                <a href="{{ path('app_artwork_show', {'id': artwork.id}) }}">
+                    {% if artwork.images|length > 0 %}
+                        <img src="{{ vich_uploader_asset(artwork.images[0], 'imageFile') }}" alt="{{ artwork.title }}" class="w-full h-48 object-cover" loading="lazy">
+                    {% else %}
+                        <span class="w-full h-48 flex items-center justify-center bg-gray-100 secondary-text text-4xl">X</span>
+                    {% endif %}
+                    <figcaption class="p-2 sm:p-4">
+                        <h2 class="text-lg font-semibold">{{ artwork.title }}</h2>
+                        <p class="text-sm secondary-text">{{ artwork.description|slice(0, 50) }}...</p>
+                    </figcaption>
+                </a>
+            </li>
+        </ul>
+    {% else %}
+        <p class="secondary-text text-center" >{{ 'artist.no.artworks'|trans }}</p>
+    {% endfor %}
+</section>
+{% endblock %}

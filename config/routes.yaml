@@ -1,5 +1,9 @@
 controllers:
+    prefix: "{_locale}"
     resource:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+locale_redirect:
+    path: /
+    controller: App\Controller\ArtworkController::redirectToPreferredLocale

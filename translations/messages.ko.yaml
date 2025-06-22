@@ -1,0 +1,84 @@
+vich_uploader.form_label.delete_confirm: '삭제하시겠습니까?'
+vich_uploader.link.download: 다운로드
+meta.description: Gilles가 만든 나무 수공예 작품 갤러리입니다. 정성스럽고 열정으로 손수 만든 유니크한 작품들입니다.
+search: 작품 검색
+
+profile: 프로필
+profile.info: 프로필 정보
+profile.info.edit: 프로필 정보 수정
+profile.public: 공개 프로필
+profile.no.bio.add: 소개글이 없습니다. 추가해보세요!
+profile.verify: 계정을 활성화하려면 이메일을 확인하세요
+
+artist.no.artworks: 이 아티스트는 아직 작품을 게시하지 않았습니다
+
+my.artworks: 내 작품
+my.artworks.list: 내 작품 목록
+my.comments: 내 댓글
+my.comments.list: 내 댓글 목록
+my.orders: 내 주문
+my.orders.list: 내 주문 목록
+my.likes: 내 좋아요
+my.likes.list: 내 좋아요 목록
+my.conversations: 내 대화
+my.conversations.list: 내 대화 목록
+
+artwork.image.lost: 이미지가 사라졌어요 :/
+artwork.new.decription: 새 작품 추가하려면 클릭하세요
+artwork.new: 새 작품
+artwork.none: 아직 작품을 게시하지 않았어요
+artwork.talk.to: 와 대화 시작하기
+
+form.maxLength: 자 이하로 입력하세요
+form.minLength: 자 이상으로 입력하세요
+form.comment.placeholder: 댓글을 여기에 작성하세요... (최대 100자)
+form.message.placeholder: 메시지를 여기에 작성하세요... (최대 1000자)
+form.profile.bio: 소개글을 여기에 작성하세요... (최대 1000자)
+form.profile.password.new: 새 비밀번호 (최대 128자)
+form.profile.password.confirm: 새 비밀번호 확인
+
+form.artwork.image.maxSize: 이미지는 5MB 이하이어야 합니다
+form.artwork.image.formats: WEBP, AVIF, JPEG 또는 PNG 형식만 허용됩니다
+form.artwork.image.legend: 이미지 설명 (최대 100자)
+form.artwork.description: 작품 상세 설명을 여기에 작성하세요 (최대 4000자)
+form.artwork.title: 눈길을 끄는 제목 (최대 100자)
+form.artwork.keywords: 키워드, 쉼표로 구분된 단어 예 나무,초록,파티
+form.artwork.image.add: 이미지 추가
+
+order.create: 주문 생성
+order.cancel: 주문 취소
+order.delete: 주문 삭제
+order.accept: 주문 수락
+order.pending: 대기 중
+order.complete: 완료
+order.completed: 주문 완료
+
+back: 뒤로
+register: 회원가입
+register.new: 신규? 계정 만들기
+password: 비밀번호
+email: 이메일
+username: 사용자 이름
+signin.notnew: 이미 계정이 있나요? 로그인
+signin: 로그인
+signout: 로그아웃
+
+hello: 안녕하세요
+added: 추가됨
+created: 생성됨
+updated: 업데이트됨
+by: 작성자
+delete: 삭제
+delete.confirm: 정말 삭제하시겠습니까
+edit: 수정
+send: 전송
+save: 저장
+see: 보기
+new: 새로 만들기
+comments: 댓글
+home: 홈
+nocomments: 아직 댓글이 없습니다
+profile.nocomments: 아직 댓글을 작성하지 않았습니다
+connecttocomment: 댓글을 남기려면 로그인하세요
+nomatch: 조건에 맞는 작품이 없습니다.
+nomatch.artist: 당신은 아티스트입니다. 자유롭게 작품을 추가하세요!

@@ -1,34 +1,40 @@
 # L'atelier - Site vitrine pour des œuvres d'art maison
 
 ## Technologies utilisées
-- **Symfony7/Twig/Turbo/Mercure**
-- **TailwindCSS4**
-- **PostSQL**
-- **Docker**
+- **Docker/Caddy**
+- **PHP8.4/PostSQL17.5/Symfony7.3**
+- **TailwindCSS4.1/Twig/Turbo8/Mercure**
 
 ## Fonctionnalités (complémentaires)
 
 ### Administration
 - Modération des commentaires ---OK
-- et des utilisateurs
+- Modération des oeuvres ---OK
 
 ### Artists
 - Gestion de ses œuvres (ajout, modification, suppression) ---OK
 - Ajout de titre, images, description et mots-clés ---OK
-- Generation par IA de titre, description, mots-clés
+- Voir ses oeuvres ---OK
 
 ### Utilisateurs (inscription requise)
-- Création de compte avec confirmation par email
-- Communication avec l'artiste via une messagerie instantanée ---SOON
-- Commande d'une œuvre et suivi du statut (validation et avancement via la messagerie instantanée)
-- Notification par email une fois l'œuvre terminée
-- Commentaires instantanés sous les œuvres ---OK
+- Création de compte avec confirmation par email ---OK (CHECK IT)
+- Communication avec l'artiste via une messagerie instantanée ---OK
+- Commande d'une œuvre et suivi du statut (en attente, en cours et terminé) ---OK
+- Notification par email une fois l'œuvre terminée ---TO DO
+- Commentaires instantanés sous les œuvres avec edition et suppression ---OK
+- Liker des oeuvres ---TO DO
+- Voir ses conversation, commentaire et commandes ---OK
 
 ### Visiteurs (sans inscription)
 - Consultation des œuvres ---OK
-- Recherche par titre et mots-clés ---OK
+- Recherche par titre, description et mots-clés, nombre de likes ---OK (LIKES TO DO)
 - Mode clair/sombre ---OK
-- Support multilingue (FR/EN) ---SOON
+- Support multilingues ---OK
+- Acceder au profil publique d'un artist ---OK
+
+## TO DO
+- Generation par IA de titre, description, mots-clés (Gemma 3 14/27b)
+- Modération des utilisateurs avec strikes
 
 ## Getting Started
 

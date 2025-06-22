@@ -1,3 +1,48 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 html { scrollbar-width: none; }
+div { scrollbar-width: thin; }
+
+.btn {
+    @apply flex items-center gap-1 px-2 sm:px-4 py-2 rounded-lg cursor-pointer text-sm transition;
+}
+
+.btn-gray {
+    @apply bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600;
+}
+.btn-red {
+    @apply bg-red-300 dark:bg-red-700 hover:bg-red-400 dark:hover:bg-red-600;
+}
+.btn-green {
+    @apply bg-green-300 dark:bg-green-700 hover:bg-green-400 dark:hover:bg-green-600;
+}
+.btn-blue {
+    @apply bg-blue-300 dark:bg-blue-700 hover:bg-blue-400 hover:dark:bg-blue-600;
+}
+.btn-accent {
+    @apply bg-amber-300 dark:bg-amber-700 hover:bg-amber-400 hover:dark:bg-amber-600;
+}
+
+.form-gray {
+    @apply w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400;
+}
+
+.sm {
+    @apply hidden sm:inline;
+}
+
+.md {
+    @apply hidden md:inline;
+}
+
+.base {
+    @apply flex flex-col w-full rounded-xl shadow-lg p-2 sm:p-4 gap-2 sm:gap-4;
+}
+
+.main-color {
+    @apply bg-zinc-100 dark:bg-zinc-800;
+}
+
+.secondary-text {
+    @apply text-zinc-600 dark:text-zinc-400;
+}

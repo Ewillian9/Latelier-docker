@@ -1,0 +1,83 @@
+vich_uploader.form_label.delete_confirm: 'हटाना चाहते हैं?'
+vich_uploader.link.download: डाउनलोड करें
+meta.description: गिल्स द्वारा बनाई गई लकड़ी की हस्तनिर्मित कलाकृतियों की गैलरी। अनोखी कृतियाँ, प्यार और देखभाल से बनाई गई।
+search: कलाकृतियों की खोज करें
+
+profile: प्रोफ़ाइल
+profile.info: आपकी प्रोफ़ाइल जानकारी
+profile.info.edit: अपनी प्रोफ़ाइल जानकारी संपादित करें
+profile.public: सार्वजनिक प्रोफ़ाइल
+profile.no.bio.add: आपकी कोई बायो नहीं है। एक जोड़ें!
+profile.verify: अपने खाते को सक्रिय करने के लिए अपने ईमेल की पुष्टि करें
+
+artist.no.artworks: इस कलाकार ने अभी तक कोई कलाकृति प्रकाशित नहीं की है
+
+my.artworks: मेरी कलाकृतियाँ
+my.artworks.list: आपकी कलाकृतियों की सूची
+my.comments: मेरी टिप्पणियाँ
+my.comments.list: आपकी टिप्पणियों की सूची
+my.orders: मेरे ऑर्डर
+my.orders.list: आपके ऑर्डरों की सूची
+my.likes: मेरी पसंद
+my.likes.list: आपकी पसंदीदा सूची
+my.conversations: मेरी बातचीत
+my.conversations.list: आपकी बातचीत की सूची
+
+artwork.image.lost: छवि खो गई है :/
+artwork.new.decription: नई कलाकृति जोड़ने के लिए यहां क्लिक करें
+artwork.new: नई कलाकृति
+artwork.none: आपने अभी तक कोई कलाकृति प्रकाशित नहीं की है
+artwork.talk.to: से बातचीत शुरू करें
+
+form.maxLength: अक्षरों से अधिक नहीं हो सकता
+form.minLength: अक्षरों से कम नहीं हो सकता
+form.comment.placeholder: अपनी टिप्पणी यहां लिखें... (अधिकतम 100 अक्षर)
+form.message.placeholder: अपना संदेश यहां लिखें... (अधिकतम 1000 अक्षर)
+form.profile.bio: अपनी बायो यहां लिखें... (अधिकतम 1000 अक्षर)
+form.profile.password.new: नया पासवर्ड (अधिकतम 128 अक्षर)
+form.profile.password.confirm: नए पासवर्ड की पुष्टि करें
+form.artwork.image.maxSize: छवि 5 एमबी से छोटी होनी चाहिए
+form.artwork.image.formats: केवल WEBP, AVIF, JPEG या PNG छवियाँ अनुमत हैं
+form.artwork.image.legend: छवि विवरण (अधिकतम 100 अक्षर)
+form.artwork.description: अपनी कलाकृति का विस्तृत विवरण यहां लिखें (अधिकतम 4000 अक्षर)
+form.artwork.title: एक आकर्षक शीर्षक (अधिकतम 100 अक्षर)
+form.artwork.keywords: शब्दों को कॉमा से अलग करें। जैसे पेड़,हरा,पार्टी
+form.artwork.image.add: छवि जोड़ें
+
+order.create: ऑर्डर बनाएं
+order.cancel: ऑर्डर रद्द करें
+order.delete: ऑर्डर हटाएं
+order.accept: ऑर्डर स्वीकार करें
+order.pending: लंबित
+order.complete: पूर्ण
+order.completed: ऑर्डर पूर्ण हुआ
+
+back: वापस
+register: पंजीकरण करें
+register.new: नए हैं? खाता बनाएं
+password: आपका पासवर्ड
+email: आपका ईमेल
+username: आपका उपयोगकर्ता नाम
+signin.notnew: पहले से खाता है? साइन इन करें
+signin: साइन इन करें
+signout: साइन आउट करें
+
+hello: नमस्ते
+added: जोड़ा गया
+created: बनाया गया
+updated: अद्यतन किया गया
+by: द्वारा
+delete: हटाएं
+delete.confirm: क्या आप वाकई हटाना चाहते हैं
+edit: संपादित करें
+send: भेजें
+save: सहेजें
+see: देखें
+new: नया
+comments: टिप्पणियाँ
+home: होम
+nocomments: अभी तक कोई टिप्पणी पोस्ट नहीं की गई है
+profile.nocomments: आपने अभी तक कोई टिप्पणी पोस्ट नहीं की है
+connecttocomment: टिप्पणी छोड़ने के लिए लॉगिन करें
+nomatch: कोई कलाकृति आपकी मानदंडों से मेल नहीं खाती।
+nomatch.artist: आप एक कलाकार हैं, बेझिझक एक जोड़ें!

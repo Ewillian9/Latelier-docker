@@ -26,6 +26,39 @@ class ArtworkRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findWithFilters(?string $query, ?string $sort): array
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->leftJoin('a.likes', 'l')
+            ->addSelect('COUNT(l.id) AS HIDDEN likesCount')
+            ->groupBy('a.id');
+
+        if ($query) {
+            $qb->andWhere('a.title LIKE :q OR a.description LIKE :q OR a.keywords LIKE :q')
+            ->setParameter('q', '%' . $query . '%');
+        }
+
+        switch ($sort) {
+            case 'likes_desc':
+                $qb->orderBy('likesCount', 'DESC');
+                break;
+            case 'updated_asc':
+                $qb->orderBy('a.updatedAt', 'ASC');
+                break;
+            case 'updated_desc':
+                $qb->orderBy('a.updatedAt', 'DESC');
+                break;
+            case 'title_asc':
+                $qb->orderBy('a.title', 'ASC');
+                break;
+
+            default:
+                $qb->orderBy('a.updatedAt', 'DESC');
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
     //    /**
     //     * @return Artwork[] Returns an array of Artwork objects
     //     */

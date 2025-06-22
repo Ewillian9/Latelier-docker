@@ -1,34 +1,49 @@
 {% extends 'base.html.twig' %}
-{% block title %}Home - Artworks{% endblock %}
+{% block title %}{{'home'|trans}} - L'Atelier de Gilles{% endblock %}
 {% block body %}
-    <section class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+    <section id="artwork_results" class="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4">
         {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ARTIST') %}
-            <figure class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+            <figure class="main-color rounded-lg shadow-md overflow-hidden">
                 <a href="{{ path('app_artwork_new') }}">
-                    <span class="w-full h-48 flex items-center justify-center bg-gray-100 text-gray-400 text-4xl">+</span>
-                    <figcaption class="p-4">
-                        <h2 class="text-lg font-semibold">New</h2>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">{{ 'Add a new artwork' ~ '...' }}</p>
+                    <span class="w-full h-48 flex items-center justify-center bg-gray-100 secondary-text">{{ ux_icon('mdi:plus', { class: 'w-16 h-16' }) }}</span>
+                    <figcaption class="p-2 sm:p-4">
+                        <h2 class="text-lg font-semibold">{{'artwork.new'|trans}}</h2>
+                        <p class="text-sm secondary-text">{{'artwork.new.decription'|trans}}</p>
                     </figcaption>
                 </a>
             </figure> 
         {% endif %}
         {% for artwork in artworks %}
-            <figure class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-                <a href="{{ path('app_artwork_show', {'id': artwork.id}) }}">
+            <figure class="main-color rounded-lg shadow-md overflow-hidden">
+                <a href="{{ path('app_artwork_show', {'id': artwork.id}) }}" class="relative">
                     {% if artwork.images|length > 0 %}
-                        <img src="{{ vich_uploader_asset(artwork.images[0], 'imageFile') }}" alt="{{ artwork.title }}" class="w-full h-48 object-cover">
+                        <img src="{{ vich_uploader_asset(artwork.images[0], 'imageFile') }}" alt="{{ artwork.title }}" class="w-full h-48 object-cover" loading="lazy">
                     {% else %}
-                        <span class="w-full h-48 flex items-center justify-center bg-gray-100 text-gray-400 text-4xl">X</span>
+                        <span class="w-full h-48 flex items-center justify-center bg-gray-100 secondary-text text-4xl">X</span>
                     {% endif %}
-                    <figcaption class="p-4">
+
+                    {% if app.user and artwork.artist is not same as(app.user) and app.user.isVerified() %}
+                        <button
+                            class="absolute top-2 right-2 z-10 w-10 h-10 bg-zinc-100/50 rounded-lg p-0.5 backdrop-blur-xs hover:scale-105 like-button transition {{ liked[artwork.id.toString()] ? 'text-amber-500' : 'text-zinc-100' }}"
+                            data-controller="like"
+                            data-like-artwork-id-value="{{ artwork.id }}"
+                            data-like-liked-value="{{ liked[artwork.id.toString()] ? 'true' : 'false' }}"
+                            data-like-url-prefix-value="{{ path('artwork_like', {'id': artwork.id})|replace({'/like': ''}) }}"
+                            data-action="click->like#toggle"
+                            data-like-target="icon">
+
+                            {{ ux_icon('mdi:heart') }}
+                        </button>
+                    {% endif %}
+
+                    <figcaption class="p-2 sm:p-4">
                         <h2 class="text-lg font-semibold">{{ artwork.title }}</h2>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">{{ artwork.description|slice(0, 50) ~ '...' }}</p>
+                        <p class="text-sm secondary-text">{{ artwork.description|slice(0, 50) }}...</p>
                     </figcaption>
                 </a>
             </figure>
         {% else %}
-            <p class="text-lg font-semibold">No artworks match your criterias. {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ARTIST') %}You are an artist, feel free to add one!{% endif %}</p>
+            <p class="text-lg font-semibold">{{'nomatch'|trans}} {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ARTIST') %}{{'nomatch.artist'|trans}}{% endif %}</p>
         {% endfor %}
     </section>
 {% endblock %}

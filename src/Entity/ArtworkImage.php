@@ -6,15 +6,19 @@ use Symfony\Component\HttpFoundation\File\File;
 use App\Repository\ArtworkImageRepository;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ArtworkImageRepository::class)]
 #[Vich\Uploadable]
 class ArtworkImage
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\Column(type: UuidType::NAME, unique: true)]
+    #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
+    private ?Uuid $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'images')]
     private ?Artwork $artwork = null;
@@ -29,7 +33,10 @@ class ArtworkImage
     private ?int $imageSize = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $updatedAt = null;
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $legend = null;
 
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
@@ -45,7 +52,7 @@ class ArtworkImage
         $this->imageFile = $imageFile;
 
         if (null !== $imageFile) {
-            $this->updatedAt = new \DateTimeImmutable();
+            $this->createdAt = new \DateTimeImmutable();
         }
     }
 
@@ -82,12 +89,26 @@ class ArtworkImage
     public function setArtwork(?Artwork $artwork): static
     {
         $this->artwork = $artwork;
-
+        if ($artwork !== null) {
+            $artwork->setUpdatedAt();
+        }
         return $this;
     }
 
-    public function getId(): ?int
+    public function getId(): ?Uuid
     {
         return $this->id;
+    }
+
+    public function getLegend(): ?string
+    {
+        return $this->legend;
+    }
+
+    public function setLegend(?string $legend): static
+    {
+        $this->legend = $legend;
+
+        return $this;
     }
 }

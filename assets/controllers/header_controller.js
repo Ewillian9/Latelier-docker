@@ -1,4 +1,5 @@
-import{Controller}from'@hotwired/stimulus'/*stimulusFetch:'lazy'*/
+import{Controller}from'@hotwired/stimulus'
+/* stimulusFetch: 'lazy' */
 export default class extends Controller{
     lastScroll=0
     isHovered=false

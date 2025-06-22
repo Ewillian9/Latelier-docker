@@ -1,0 +1,84 @@
+vich_uploader.form_label.delete_confirm: 'Excluir?'
+vich_uploader.link.download: Baixar
+meta.description: Galeria de obras de arte artesanais em madeira feitas por Gilles. Peças únicas, feitas à mão com cuidado e paixão.
+search: Buscar obras
+
+profile: Perfil
+profile.info: Informações do seu perfil
+profile.info.edit: Editar informações do perfil
+profile.public: Perfil público
+profile.no.bio.add: Você não tem biografia. Adicione uma!
+profile.verify: Verifique seu e-mail para ativar sua conta
+
+artist.no.artworks: Este artista ainda não publicou nenhuma obra
+
+my.artworks: Minhas obras
+my.artworks.list: Lista das suas obras
+my.comments: Meus comentários
+my.comments.list: Lista dos seus comentários
+my.orders: Meus pedidos
+my.orders.list: Lista dos seus pedidos
+my.likes: Meus favoritos
+my.likes.list: Lista dos seus favoritos
+my.conversations: Minhas conversas
+my.conversations.list: Lista das suas conversas
+
+artwork.image.lost: A imagem foi perdida :/
+artwork.new.decription: Clique aqui para adicionar uma nova obra
+artwork.new: Nova obra
+artwork.none: Você ainda não publicou nenhuma obra
+artwork.talk.to: Comece uma conversa com
+
+form.maxLength: Não pode ter mais que {{ limit }} caracteres
+form.minLength: Não pode ter menos que {{ limit }} caracteres
+form.comment.placeholder: Escreva seu comentário aqui... (máximo 100 caracteres)
+form.message.placeholder: Escreva sua mensagem aqui... (máximo 1000 caracteres)
+form.profile.bio: Escreva sua biografia aqui... (máximo 1000 caracteres)
+form.profile.password.new: Nova senha (máximo 128 caracteres)
+form.profile.password.confirm: Confirme a nova senha
+
+form.artwork.image.maxSize: A imagem deve ser menor que 5 MB
+form.artwork.image.formats: Apenas imagens WEBP, AVIF, JPEG ou PNG são permitidas
+form.artwork.image.legend: Legenda da imagem (máximo 100 caracteres)
+form.artwork.description: Escreva a descrição detalhada da sua obra aqui (máximo 4000 caracteres)
+form.artwork.title: Um título atraente (máximo 100 caracteres)
+form.artwork.keywords: Palavras-chave, separadas por vírgula. ex. árvore,verde,festa
+form.artwork.image.add: Adicionar imagem
+
+order.create: Criar pedido
+order.cancel: Cancelar pedido
+order.delete: Excluir pedido
+order.accept: Aceitar pedido
+order.pending: Pendente
+order.complete: Concluído
+order.completed: Pedido concluído
+
+back: Voltar
+register: Registrar
+register.new: Novo? Crie uma conta
+password: Sua senha
+email: Seu e-mail
+username: Seu nome de usuário
+signin.notnew: Já tem uma conta? Faça login
+signin: Entrar
+signout: Sair
+
+hello: Olá
+added: Adicionado
+created: Criado
+updated: Atualizado
+by: por
+delete: Excluir
+delete.confirm: Tem certeza que deseja excluir
+edit: Editar
+send: Enviar
+save: Salvar
+see: Ver
+new: Novo
+comments: Comentários
+home: Início
+nocomments: Nenhum comentário postado ainda
+profile.nocomments: Você ainda não postou nenhum comentário
+connecttocomment: Conecte-se para deixar um comentário
+nomatch: Nenhuma obra corresponde aos seus critérios.
+nomatch.artist: Você é um artista, sinta-se à vontade para adicionar uma!

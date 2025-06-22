@@ -5,14 +5,19 @@ namespace App\Entity;
 use App\Repository\MessageRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Message
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\Column(type: UuidType::NAME, unique: true)]
+    #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
+    private ?Uuid $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
@@ -21,15 +26,12 @@ class Message
     private ?User $sender = null;
 
     #[ORM\ManyToOne(inversedBy: 'messages')]
-    private ?Conversation $conversations = null;
+    private ?Conversation $conversation = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $edited_at = null;
-
-    public function getId(): ?int
+    public function getId(): ?Uuid
     {
         return $this->id;
     }
@@ -58,39 +60,26 @@ class Message
         return $this;
     }
 
-    public function getConversations(): ?Conversation
+    public function getConversation(): ?Conversation
     {
-        return $this->conversations;
+        return $this->conversation;
     }
 
-    public function setConversations(?Conversation $conversations): static
+    public function setConversation(?Conversation $conversation): static
     {
-        $this->conversations = $conversations;
+        $this->conversation = $conversation;
 
         return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    #[ORM\PrePersist]
+    public function onPrePersist(): void
     {
-        $this->created_at = $created_at;
-
-        return $this;
-    }
-
-    public function getEditedAt(): ?\DateTimeImmutable
-    {
-        return $this->edited_at;
-    }
-
-    public function setEditedAt(\DateTimeImmutable $edited_at): static
-    {
-        $this->edited_at = $edited_at;
-
-        return $this;
+        $this->createdAt = new \DateTimeImmutable();
     }
 }

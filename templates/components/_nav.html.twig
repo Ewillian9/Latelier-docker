@@ -1,14 +1,62 @@
-<nav aria-label="Artwork actions" class="flex justify-between items-center mb-4">
-    <button data-controller="back-button" data-action="click->back-button#goBack" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm inline-block hover:bg-gray-400 dark:hover:bg-gray-600 transition">← Back</button>
-    {% if app.request.attributes.get('_route') == 'app_artwork_show' and (is_granted('ROLE_ADMIN') or is_granted('ROLE_ARTIST') and artwork.artist == app.user) %}
-        <ul class="flex gap-2 md:gap-4">
-            <li><a href="{{ path('app_artwork_edit', {'id': artwork.id}) }}" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm inline-block hover:bg-gray-400 dark:hover:bg-gray-600 transition">Edit</a></li>
-            <li>{{ include('artwork/_delete_form.html.twig') }}</li>
-        </ul>
+<nav aria-label="Artwork actions" class="flex justify-between items-center">
+    <button data-controller="back-button" data-action="click->back-button#goBack" class="btn btn-gray">{{ ux_icon('mdi:arrow-left', { class: 'w-5 h-5' }) }}<span class="md">{{'back'|trans}}</span></button>
+    
+    {% if app.request.attributes.get('_route') == 'app_artwork_show' %}
+        {% if app.user and app.user != artwork.artist and app.user.isVerified() %}
+            <a href="{{ path('app_conversation', {recipient: artwork.artist.id, artwork: artwork.id}) }}" class="btn btn-accent">{{ ux_icon('mdi:conversation-plus-outline', { class: 'w-5 h-5' }) }}{{ 'artwork.talk.to'|trans }} {{ artwork.artist.username }}</a>
+        {% endif %}
+        {% if (is_granted('ROLE_ADMIN') or artwork.artist == app.user) %}
+            <ul class="flex gap-2 sm:gap-4">
+                <li><a href="{{ path('app_artwork_edit', {'id': artwork.id}) }}" class="btn btn-gray">{{ ux_icon('mdi:edit-outline', { class: 'w-5 h-5' }) }}<span class="md">{{'edit'|trans}}</span></a></li>
+                <li>{{ include('artwork/_delete_form.html.twig') }}</li>
+            </ul>
+        {% endif %}
     {% endif %}
-    {% if app.request.attributes.get('_route') == 'app_profile' %}
-        <ul class="flex gap-2 md:gap-4">
-            <li><a href="{{ path('app_profile_edit') }}" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-700 text-sm inline-block hover:bg-gray-400 dark:hover:bg-gray-600 transition">Modifier mon profil</a></li>
-        </ul>
+    
+    {% if app.request.attributes.get('_route') is same as('app_profile') %}
+        {% if not app.user.isVerified() %}
+            {{ include('registration/_verify_account_form.html.twig') }}
+        {% endif %}
+        <a href="{{ path('app_profile_edit') }}" class="btn btn-gray">{{ ux_icon('mdi:account-edit-outline', { class: 'w-5 h-5' }) }}<span class="md">{{'edit'|trans}}</span></a>
+    {% endif %}
+
+    {% if app.request.attributes.get('_route') is same as('app_conversation') and conversation.artwork is not null %}
+        {% set isArtist = conversation.artwork is not null and artwork.artist == app.user %}
+        {% set order = conversation.order %}
+
+        <div class="flex gap-2 sm:gap-4">
+        {% if not isArtist and conversation.id is not null and order is null %}
+            {{ include('order/_create_form.html.twig') }}
+        {% endif %}
+        {% if not isArtist and order is not null and order.status == 'pending' %}
+            <span>{{'order.pending'|trans}}</span>
+            {{ include('order/_cancel_form.html.twig') }}
+        {% endif %}
+        {% if not isArtist and order is not null and order.status == 'accepted' %}
+            <span>{{'order.accepted'|trans}}</span>
+        {% endif %}
+        {% if not isArtist and order is not null and order.status == 'completed' %}
+            <span>{{'order.completed'|trans}}</span>
+        {% endif %}
+        {% if not isArtist and order is not null and order.status == 'cancelled' %}
+            <span>{{'order.cancelled'|trans}}</span>
+        {% endif %}
+
+        {% if isArtist and order is not null %}
+            {% if order.status == 'pending' %}
+                {{ include('order/_accept_form.html.twig') }}
+            {% elseif order.status == 'accepted' %}
+                {{ include('order/_complete_form.html.twig') }}
+            {% elseif order.status == 'completed' %}
+                <span>{{'order.completed'|trans}}</span>
+            {% elseif order.status == 'cancelled' %}
+                <span>{{'order.cancelled'|trans}}</span>
+            {% endif %}
+
+            {% if order.status != 'completed' and order.status != 'cancelled' %}
+                {{ include('order/_cancel_form.html.twig') }}
+            {% endif %}
+        {% endif %}
+        </div>
     {% endif %}
 </nav>

@@ -1,47 +1,34 @@
 {% extends 'base.html.twig' %}
-{% block title %}Register{% endblock %}
+{% block title %}{{ 'register'|trans }}{% endblock %}
 {% block body %}
-<main class="flex-1 pt-24 md:pt-28 w-[95%] max-w-md mx-auto">
-        {{ form_errors(registrationForm) }}
+{{ form_errors(registrationForm) }}
 
-        {{ form_start(registrationForm, {
-            attr: { class: 'bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-8 space-y-6 flex items-center flex-col' }
-        }) }}
-            {% for flash_error in app.flashes('verify_email_error') %}
-                <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-            {% endfor %}
-            <h1 class="text-2xl font-semibold text-gray-800 dark:text-white text-center">Register!</h1>
-            {{ form_row(registrationForm.email, {
-                row_attr: {
-                    class: 'w-full'
-                },
-                attr: {
-                    class: 'w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white', placeholder: 'Email'
-                },
-                label_attr: {
-                    class: 'hidden'
-                }
-            }) }}
-            {{ form_row(registrationForm.plainPassword, {
-                row_attr: {
-                    class: 'w-full'
-                },
-                attr: {
-                    class: 'w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white', placeholder: 'Password'
-                },
-                label_attr: {
-                    class: 'hidden'
-                }
-            }) }}
-            {{ form_row(registrationForm.agreeTerms, {
-                label_attr: {
-                    class: 'text-sm text-gray-700 dark:text-gray-300'
-                }
-            }) }}
+{{ form_start(registrationForm, {
+    attr: { class: 'base main-color items-center max-w-md' }
+}) }}
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+    <h2 class="text-2xl font-semibold text-center">{{ 'register'|trans }}!</h2>
+    {{ form_row(registrationForm.email, {
+        row_attr: { class: 'w-full' },
+        attr: { class: 'w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600', placeholder: 'email'|trans },
+        label_attr: { class: 'hidden' }
+    }) }}
+    {{ form_row(registrationForm.username, {
+        row_attr: { class: 'w-full' },
+        attr: { class: 'w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600', placeholder: 'username'|trans },
+        label_attr: { class: 'hidden' }
+    }) }}
+    {{ form_row(registrationForm.plainPassword, {
+        row_attr: { class: 'w-full' },
+        attr: { class: 'w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600', placeholder: 'password'|trans },
+    }) }}
+    {{ form_row(registrationForm.agreeTerms, {
+        label_attr: { class: 'text-sm' }
+    }) }}
 
-            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition">Register</button>
-            <a href="{{ path('app_login') }}" class="w-2/3 py-2 text-center px-3 rounded-md bg-gray-300 dark:bg-gray-700 text-sm">Already an account? Sign in</a>
-        {{ form_end(registrationForm) }}
-        
-</main>
+    <button type="submit" class="btn-accent w-full font-semibold py-2 px-4 rounded-md transition">{{ 'register'|trans }}</button>
+    <a href="{{ path('app_login') }}" class="btn-gray w-2/3 text-center p-2 rounded-md text-sm">{{ 'signin.notnew'|trans }}</a>
+{{ form_end(registrationForm) }}
 {% endblock %}

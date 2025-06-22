@@ -1,35 +1,83 @@
 {% extends 'base.html.twig' %}
 {% block title %}{{ artwork.title }}{% endblock %}
 {% block body %}
-    <article data-controller="carousel" class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-4 md:p-8 w-full overflow-hidden">
+    <section data-controller="carousel" class="base main-color">
         {{ include('components/_nav.html.twig') }}
         {% if artwork.images|length > 0 %}
-            <figure aria-live="polite" class="relative aspect-video overflow-hidden rounded-lg shadow-lg mb-4">
+            <figure aria-live="polite" data-action="keydown@window->carousel#keyPressed mouseenter->carousel#pauseAutoSlide mouseleave->carousel#resumeAutoSlide" class="relative aspect-video overflow-hidden rounded-lg shadow-lg">
                 {% for image in artwork.images %}
-                    <img data-carousel-target="mainImage" src="{{ vich_uploader_asset(image, 'imageFile') }}" alt="Image {{ artwork.title }} n°{{ loop.index }}" data-index="{{ loop.index0 }}" class="carousel-main-image w-full h-full object-cover absolute top-0 left-0 transition-opacity duration-500 ease-in-out {% if loop.first %}opacity-100 z-10{% else %}opacity-0 z-0{% endif %}">
+                    <img loading="lazy" data-carousel-target="mainImage" src="{{ vich_uploader_asset(image, 'imageFile') }}" alt="Image {{ artwork.title }} n°{{ loop.index }}" data-index="{{ loop.index0 }}" class="carousel-main-image w-full h-full object-cover absolute top-0 left-0 transition-opacity duration-500 ease-in-out {% if loop.first %}opacity-100 z-10{% else %}opacity-0 z-0{% endif %}">
                 {% endfor %}
+
+                {% if app.user and artwork.artist is not same as(app.user) and app.user.isVerified() %}
+                    <button
+                        class="absolute top-2 right-2 z-10 w-10 h-10 bg-zinc-100/50 rounded-lg p-0.5 backdrop-blur-xs hover:scale-105 like-button transition {{ liked[artwork.id.toString()] ? 'text-amber-500' : 'text-zinc-100' }}"
+                        data-controller="like"
+                        data-like-artwork-id-value="{{ artwork.id }}"
+                        data-like-liked-value="{{ liked[artwork.id.toString()] ? 'true' : 'false' }}"
+                        data-like-url-prefix-value="{{ path('artwork_like', {'id': artwork.id})|replace({'/like': ''}) }}"
+                        data-action="click->like#toggle"
+                        data-like-target="icon">
+
+                        {{ ux_icon('mdi:heart') }}
+                    </button>
+                {% endif %}
+
+                <figcaption class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 z-20">
+                    <div class="relative h-6">
+                    {% for image in artwork.images %}
+                        <p data-carousel-target="legend" data-index="{{ loop.index0 }}" class="carousel-legend absolute bottom-0 left-0 right-0 text-center text-white text-sm md:text-base transition-opacity duration-500 ease-in-out {% if loop.first %}opacity-100{% else %}opacity-0{% endif %}">{% if image.legend %}{{ image.legend }}{% endif %}</p>
+                    {% endfor %}
+                    </div>
+                </figcaption>
             </figure>
             <figure class="flex gap-2 justify-center">
                 {% for image in artwork.images %}
-                    <img src="{{ vich_uploader_asset(image, 'imageFile') }}" data-carousel-target="thumb" class="carousel-thumb w-16 h-16 object-cover rounded cursor-pointer border-2 border-transparent hover:border-gray-400 transition" data-index="{{ loop.index0 }}" alt="Thumb {{ artwork.title }} n°{{ loop.index }}">
+                    <img loading="lazy" src="{{ vich_uploader_asset(image, 'imageFile') }}" data-carousel-target="thumb" data-action="click->carousel#thumbClicked" class="carousel-thumb w-16 h-16 object-cover rounded cursor-pointer border-2 border-transparent hover:border-gray-400 transition" data-index="{{ loop.index0 }}" alt="Thumb {{ artwork.title }} n°{{ loop.index }}">
                 {% endfor %}
             </figure>
         {% else %}
-            <p class="w-full rounded-lg shadow-lg h-48 flex items-center justify-center bg-gray-300 dark:bg-white text-gray-400 text-4xl">L'image a été perdu :/</p>
+            <p class="w-full rounded-lg shadow-lg h-48 flex items-center justify-center bg-gray-300 dark:bg-white secondary-text text-4xl">{{'artwork.image.lost'|trans}}</p>
         {% endif %}
+
         <section class="space-y-4">
-            <h2 class="text-3xl font-bold text-gray-800 dark:text-white">{{ artwork.title }}</h2>
-            <p class="text-gray-600 dark:text-gray-300">{{ artwork.description|default('No description.') }}</p>
-            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ARTIST') %}
-                <ul class="flex flex-wrap gap-2">
-                    {% for keyword in artwork.keywords|split(',') %}
-                        <li class="bg-gray-200 dark:bg-gray-700 text-sm text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full">{{ keyword|trim }}</li>
-                    {% endfor %}
-                </ul>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Updated <time datetime="{{ artwork.updatedAt ? artwork.updatedAt|date('c') : '' }}">{{ artwork.updatedAt ? artwork.updatedAt|ago : 'NaN' }}</time></p>
-            {% endif %}
-            <p class="text-sm text-gray-500 dark:text-gray-400">Added <time datetime="{{ artwork.createdAt ? artwork.createdAt|date('c') : '' }}">{{ artwork.createdAt ? artwork.createdAt|ago : 'NaN' }}</time> by {{ artwork.artist.username }}</p>
+            <h2 class="text-3xl font-bold">{{ artwork.title }}</h2>
+            <p>{{ artwork.description|default('No description.') }}</p>
+            
+            <ul class="flex flex-wrap gap-2">
+                {% for keyword in artwork.keywords|split(',') %}
+                    <li class="bg-gray-200 dark:bg-gray-700 text-sm secondary-text px-3 py-1 rounded-full">{{ keyword|trim }}</li>
+                {% endfor %}
+            </ul>
+            <p class="text-xs secondary-text">{{'updated'|trans}} <time datetime="{{ artwork.updatedAt ? artwork.updatedAt|date('c') : '' }}">{{ artwork.updatedAt ? artwork.updatedAt|ago : 'NaN' }}</time></p>
+            <p class="text-xs secondary-text">{{'added'|trans}} <time datetime="{{ artwork.createdAt ? artwork.createdAt|date('c') : '' }}">{{ artwork.createdAt ? artwork.createdAt|ago : 'NaN' }}</time> {{'by'|trans}} <a href="{{ path('app_artist_profile', {'username': artwork.artist.username}) }}">{{ artwork.artist.username }}</a></p>
         </section>
-    </article>
-    {{ include('comment/_comment.html.twig') }}
+    </section>
+
+    <section class="base main-color">
+        <turbo-frame id="comments_artwork" {{ turbo_stream_listen('comment' ~ artwork.id) }} class="flex flex-col gap-2">
+        {% for comment in artwork.comments %}
+            <article id="comment_{{ comment.id }}" class="border-l-4 border-amber-500 pl-2">
+                <turbo-frame id="comment_edit_{{ comment.id }}">
+                    {% if app.user == comment.user or is_granted('ROLE_ADMIN') %}
+                        <nav aria-label="Comment actions" class="flex gap-2 text-sm">
+                            <a href="{{ path('app_comment_edit', {'id': comment.id}) }}" class="btn btn-gray" data-turbo-frame="comment_edit_{{ comment.id }}">{{ ux_icon('mdi:edit-outline', { class: 'w-5 h-5' }) }}<span class="md">{{'edit'|trans}}</span></a>
+                            {{ include('comment/_delete_form.html.twig', {'comment': comment}) }}
+                        </nav>
+                    {% endif %}
+                    <p>{{ comment.content }}</p>
+                    <p class="text-xs secondary-text">{{ comment.user.username }} • {{ comment.createdAt|ago }}</p>
+                </turbo-frame>
+            </article>
+        {% else %}
+            <p id="no_comment_artwork" class="secondary-text">{{'nocomments'|trans}}</p>
+        {% endfor %}
+        </turbo-frame>
+
+        {% if app.user and app.user.isVerified() %}
+            {{ include('comment/_form.html.twig') }}
+        {% else %}
+            <p class="text-sm secondary-text">{{'connecttocomment'|trans}}</p>
+        {% endif %}
+    </section>
 {% endblock %}

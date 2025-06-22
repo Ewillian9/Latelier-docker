@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{'edit'|trans}} {{'profile'|trans}}{% endblock %}
+{% block body %}
+<section class="base main-color">
+    {{ include('components/_nav.html.twig') }}
+    <section class="w-full border-b border-gray-300 dark:border-gray-600 pb-4 flex flex-col justify-between items-center">
+        <h2 class="text-3xl font-semibold">{{'hello'|trans }} {{ user.username }}</h2>
+        <p class="secondary-text text-sm">{{'profile.info.edit'|trans}}</p>
+    </section>
+
+    {{ form_start(form, {
+    action: path('app_profile_edit'),
+    method: 'POST',
+    attr: { class: 'w-full' }
+    }) }}
+
+        <ul class="w-full space-y-4 flex flex-col justify-between items-center">
+            <li class="border-b border-dashed pb-4 w-full max-w-md">
+                {{ form_widget(form.username, {
+                    attr: {
+                        class: 'bg-transparent border border-gray-300 rounded px-2 py-1 text-sm text-center w-full max-w-md focus:border-amber-500 focus:outline-none'
+                    }
+                }) }}
+                {{ form_errors(form.username) }}
+            </li>
+
+            <li class="border-b border-dashed pb-4 w-full max-w-md">
+                {{ form_widget(form.email, {
+                    attr: {
+                        class: 'bg-transparent border border-gray-300 rounded px-2 py-1 text-sm text-center w-full max-w-md focus:border-amber-500 focus:outline-none'
+                    }
+                }) }}
+                {{ form_errors(form.email) }}
+            </li>
+
+            {% if 'ROLE_ARTIST' in user.roles or 'ROLE_ADMIN' in user.roles %}
+                <li class="border-b border-dashed pb-4 w-full max-w-2xl">
+                {{ form_widget(form.bio, {
+                    attr: {
+                        class: 'bg-transparent border border-gray-300 rounded px-2 py-1 text-sm text-center w-full max-w-2xl min-h-[100px] focus:border-amber-500 focus:outline-none whitespace-pre-line'
+                    }
+                }) }}
+                {{ form_errors(form.bio) }}
+            </li>
+            {% endif %}
+            
+            <li class="border-b border-dashed pb-4 w-full max-w-md">
+                {{ form_widget(form.plainPassword.first, {
+                    attr: {
+                        class: 'bg-transparent border border-gray-300 rounded px-2 py-1 text-sm text-center w-full max-w-md mb-2 focus:border-amber-500 focus:outline-none'
+                    }
+                }) }}
+                {{ form_errors(form.plainPassword.first) }}
+                <br>
+                {{ form_widget(form.plainPassword.second, {
+                    attr: {
+                        class: 'bg-transparent border border-gray-300 rounded px-2 py-1 text-sm text-center w-full max-w-md focus:border-amber-500 focus:outline-none'
+                    }
+                }) }}
+                {{ form_errors(form.plainPassword.second) }}
+
+                {{ form_errors(form.plainPassword) }}
+            </li>
+        </ul>
+        {{ form_widget(form._token) }}
+        <button class="btn btn-green mt-4">{{ 'save'|trans }}</button>
+    {{ form_end(form, { render_rest: false }) }}
+</section>
+{% endblock %}

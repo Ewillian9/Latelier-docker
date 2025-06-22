@@ -1,0 +1,83 @@
+vich_uploader.form_label.delete_confirm: 'Eliminare?'
+vich_uploader.link.download: Scarica
+meta.description: Galleria di opere d'arte artigianali in legno realizzate da Gilles. Pezzi unici, fatti a mano con cura e passione.
+search: Cerca opere
+
+profile: Profilo
+profile.info: Informazioni del tuo profilo
+profile.info.edit: Modifica le informazioni del profilo
+profile.public: Profilo pubblico
+profile.no.bio.add: Non hai una biografia. Aggiungine una!
+profile.verify: Verifica la tua email per attivare il tuo account
+
+artist.no.artworks: Questo artista non ha ancora pubblicato opere
+
+my.artworks: Le mie opere
+my.artworks.list: Elenco delle tue opere
+my.comments: I miei commenti
+my.comments.list: Elenco dei tuoi commenti
+my.orders: I miei ordini
+my.orders.list: Elenco dei tuoi ordini
+my.likes: I miei preferiti
+my.likes.list: Elenco dei tuoi preferiti
+my.conversations: Le mie conversazioni
+my.conversations.list: Elenco delle tue conversazioni
+
+artwork.image.lost: L'immagine è andata persa :/
+artwork.new.decription: Clicca qui per aggiungere una nuova opera
+artwork.new: Nuova opera
+artwork.none: Non hai ancora pubblicato nessuna opera
+artwork.talk.to: Inizia una conversazione con
+
+form.maxLength: Non può superare {{ limit }} caratteri
+form.minLength: Non può essere inferiore a {{ limit }} caratteri
+form.comment.placeholder: Scrivi qui il tuo commento... (max 100 caratteri)
+form.message.placeholder: Scrivi qui il tuo messaggio... (max 1000 caratteri)
+form.profile.bio: Scrivi qui la tua biografia... (max 1000 caratteri)
+form.profile.password.new: Nuova password (max 128 caratteri)
+form.profile.password.confirm: Conferma la nuova password
+form.artwork.image.maxSize: L'immagine deve essere inferiore a 5 MB
+form.artwork.image.formats: Sono consentite solo immagini WEBP, AVIF, JPEG o PNG
+form.artwork.image.legend: Didascalia immagine (max 100 caratteri)
+form.artwork.description: Scrivi qui la descrizione dettagliata della tua opera (max 4000 caratteri)
+form.artwork.title: Un titolo accattivante (max 100 caratteri)
+form.artwork.keywords: Parole chiave separate da virgole. es. albero,verde,festa
+form.artwork.image.add: Aggiungi immagine
+
+order.create: Crea ordine
+order.cancel: Annulla ordine
+order.delete: Elimina ordine
+order.accept: Accetta ordine
+order.pending: In attesa
+order.complete: Completato
+order.completed: Ordine completato
+
+back: Indietro
+register: Registrati
+register.new: Nuovo? Crea un account
+password: La tua password
+email: La tua email
+username: Il tuo nome utente
+signin.notnew: Hai già un account? Accedi
+signin: Accedi
+signout: Esci
+
+hello: Ciao
+added: Aggiunto
+created: Creato
+updated: Aggiornato
+by: da
+delete: Elimina
+delete.confirm: Sei sicuro di voler eliminare
+edit: Modifica
+send: Invia
+save: Salva
+see: Vedi
+new: Nuovo
+comments: Commenti
+home: Home
+nocomments: Nessun commento è stato ancora pubblicato
+profile.nocomments: Non hai ancora pubblicato nessun commento
+connecttocomment: Accedi per lasciare un commento
+nomatch: Nessuna opera corrisponde ai tuoi criteri.
+nomatch.artist: Sei un artista, sentiti libero di aggiungerne una!

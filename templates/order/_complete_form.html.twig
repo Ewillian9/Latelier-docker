@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('app_order_complete', {'id': order.id}) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('complete' ~ order.id) }}">
+    <button class="btn btn-accent">{{ ux_icon('mdi:check', { class: 'w-5 h-5' }) }}{{'order.complete'|trans}}</button>
+</form>

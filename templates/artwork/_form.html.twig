@@ -1,23 +1,61 @@
 <turbo-frame id="upload_form">
-{{ form_start(form, {'attr': {'enctype': 'multipart/form-data', 'data-turbo-frame': 'upload_form', 'data-turbo-frame': '_top'}}) }}
-    <div id="image-fields" data-controller="image-fields" data-image-fields-target="container" data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}" data-max="10">
-        {{ form_label(form.images, null, {'label_attr': {'class': 'font-semibold'}}) }}
-        {% for imageForm in form.images %}
-            <div>{{ form_widget(imageForm) }}</div>
-        {% endfor %}
-    </div>
-    <div>
-        {{ form_label(form.title, null, {'label_attr': {'class': 'font-semibold'}}) }}
-        {{ form_widget(form.title, {'attr': {'class': 'border p-2 w-full'}}) }}
-    </div>
-    <div>
-        {{ form_label(form.description, null, {'label_attr': {'class': 'font-semibold'}}) }}
-        {{ form_widget(form.description, {'attr': {'class': 'border p-2 w-full'}}) }}
-    </div>
-    <div>
-        {{ form_label(form.keywords, null, {'label_attr': {'class': 'font-semibold'}}) }}
-        {{ form_widget(form.keywords, {'attr': {'class': 'border p-2 w-full'}}) }}
-    </div>
-    <button class="px-3 py-1 rounded bg-green-300 dark:bg-green-700 text-sm inline-block hover:bg-green-400 dark:hover:bg-green-600 transition">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+    {{ form_start(form, { attr: { enctype: 'multipart/form-data', class: 'space-y-4', 'data-turbo-frame': 'upload_form', 'data-turbo-frame': '_top'}}) }}
+
+        <div id="image-fields" data-controller="image-preview collection" data-collection-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}">
+            {{ form_label(form.images, null) }}
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-2 sm:gap-4" data-collection-target="container">
+                {% for imageForm in form.images %}
+                    <div>
+                        <div class="image-input-square relative w-full aspect-square border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-500 transition-colors cursor-pointer overflow-hidden group" 
+                            data-image-preview-target="group">
+                            
+                            {{ form_widget(imageForm.imageFile, {
+                                'attr': {
+                                    'class': 'absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10',
+                                    'data-action': 'change->image-preview#handleFileChange',
+                                    'data-image-preview-target': 'input',
+                                    'accept': 'image/*'
+                                }
+                            }) }}
+                            
+                            <div class="absolute inset-0 flex flex-col items-center justify-center secondary-text group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors" data-image-preview-target="placeholder">
+                                <svg class="w-8 h-8 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                </svg>
+                                <span class="text-xs font-medium">{{'form.artwork.image.add'|trans}}</span>
+                            </div>
+                            
+                            <div class="absolute inset-0 hidden" data-image-preview-target="preview">
+                                <img class="w-full h-full object-cover rounded-lg" 
+                                    data-image-preview-target="image" alt="Preview">
+                                
+                                <button type="button" 
+                                        class="absolute top-2 right-2 w-6 h-6 bg-red-500 hover:bg-red-600 text-white rounded-full text-xs font-bold flex items-center justify-center shadow-lg transition-colors z-20"
+                                        data-action="click->image-preview#removeImage click->collection#removeItem"
+                                        data-image-preview-target="removeBtn">×</button>
+
+                                <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-75 text-white text-xs p-1 rounded-b-lg truncate opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <span data-image-preview-target="filename"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="absolute inset-0 bg-gray-100 dark:bg-gray-600 flex items-center justify-center hidden" data-image-preview-target="loading">
+                                <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500"></div>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            {{ form_widget(imageForm.legend, {
+                                'attr': { 'class': 'w-full p-2 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400',}
+                            }) }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {{ form_widget(form.title, {'attr': {'class': 'form-gray'}}) }}
+        {{ form_widget(form.description, {'attr': {'class': 'form-gray'}}) }}
+        {{ form_widget(form.keywords, {'attr': {'class': 'form-gray'}}) }}
+        <button class="btn btn-green">{{'save'|trans}}</button>
+    {{ form_end(form) }}
 </turbo-frame>

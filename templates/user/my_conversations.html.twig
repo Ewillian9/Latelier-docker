@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{'my.conversations'|trans}}{% endblock %}
+{% block body %}
+<section class="base main-color">
+    {{ include('components/_nav.html.twig') }}
+    <section class="w-full border-b border-gray-300 dark:border-gray-600 pb-2 sm:pb-4">
+        <h2 class="text-3xl font-semibold">{{'my.conversations'|trans}}</h2>
+        <p class="secondary-text mt-1">{{'my.conversations.list'|trans}}</p>
+    </section>
+
+    {% if conversations is empty %}
+        <p class="secondary-text">{{'conversation.none'|trans}}</p>
+    {% else %}
+        <ul class="w-full space-y-2 sm:space-y-4">
+            {% for conversation in conversations %}
+                <li class="flex justify-between items-start rounded-xl shadow-md bg-gray-100 dark:bg-gray-900 p-2 sm:p-4">
+                    <div class="flex-1">
+                        {% set other = conversation.getOtherParticipant(app.user) %}
+
+                        {% if conversation.artwork is not null %}
+                            <p class="text-xl font-semibold">{{ conversation.artwork.title }}</p>
+                        {% else %}
+                            <p class="text-xl font-semibold italic text-gray-500">{{ 'artwork.deleted'|trans }}</p>
+                        {% endif %}
+
+                        <p class="text-sm">With {{ other.username }}</p>
+                        <time datetime="{{ conversation.updatedAt|date('c') }}" class="text-xs secondary-text mt-2">{{'updated'|trans}} {{ conversation.updatedAt|ago }}</time>
+                    </div>
+                    <div class="flex flex-col items-end gap-2">
+                        <a href="{{ path('app_conversation', {recipient: other.id, conversation: conversation.id}) }}" class="btn btn-gray">{{ ux_icon('mdi:arrow-right', { class: 'w-5 h-5' }) }}<span class="md">{{'see'|trans}}</span></a>
+                        {{ include('conversation/_delete_form.html.twig') }}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</section>
+{% endblock %}

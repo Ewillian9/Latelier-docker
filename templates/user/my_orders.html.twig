@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ 'my.orders'|trans }}{% endblock %}
+{% block body %}
+<section class="base main-color">
+    {{ include('components/_nav.html.twig') }}
+    <section class="w-full border-b border-gray-300 dark:border-gray-600 pb-2 sm:pb-4">
+        <h2 class="text-3xl font-semibold">{{ 'my.orders'|trans }}</h2>
+        <p class="secondary-text mt-1">{{ 'my.orders.list'|trans }}</p>
+    </section>
+
+    {% if orders is empty %}
+        <p class="secondary-text">{{'order.none'|trans}}</p>
+    {% else %}
+        <ul class="w-full space-y-2 sm:space-y-4">
+            {% for order in orders %}
+                <li class="flex justify-between items-start rounded-xl shadow-md bg-gray-100 dark:bg-gray-900 p-2 sm:p-4">
+                    <div class="flex-1">
+                        {% if order.artwork is not null %}
+                            <p class="text-xl font-semibold">{{ order.artwork.title }}</p>
+                        {% else %}
+                            <p class="text-xl font-semibold italic text-gray-500">{{ 'artwork.deleted'|trans }}</p>
+                        {% endif %}
+
+                        {% if app.user is same as(order.artist) %}
+                            <p class="text-sm">With {{ order.client.username }}</p>
+                        {% else %}
+                            <p class="text-sm">With {{ order.artist.username }}</p>
+                        {% endif %}
+                        <time datetime="{{ order.updatedAt|date('c') }}" class="text-xs secondary-text mt-2">{{'updated'|trans}} {{ order.updatedAt|ago }}</time>
+                    </div>
+                    <div class="flex flex-col items-end gap-2">
+                        {% if app.user is same as(order.artist) and order.conversation.isDeletedByArtist() %}
+                            <p class="text-sm font-semibold italic text-gray-500">{{ 'conversation.deleted'|trans }}</p>
+                        {% elseif app.user is same as(order.client) and order.conversation.isDeletedByClient() %}
+                            <p class="text-sm font-semibold italic text-gray-500">{{ 'conversation.deleted'|trans }}</p>
+                        {% else %}
+                            <a href="{{ path('app_conversation', {recipient: app.user is same as order.artist ? order.client.id : order.artist.id, conversation: order.conversation.id}) }}" class="btn btn-gray">{{ ux_icon('mdi:arrow-right', { class: 'w-5 h-5' }) }}<span class="md">{{'see'|trans}}</span></a>
+                        {% endif %}
+
+                        {% if order.status == 'pending' or order.status == 'completed' or order.status == 'cancelled'%}
+                            {{ include('order/_delete_form.html.twig') }}
+                        {% endif %}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</section>
+{% endblock %}

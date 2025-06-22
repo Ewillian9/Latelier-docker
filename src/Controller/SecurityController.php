@@ -12,7 +12,10 @@ class SecurityController extends AbstractController
     #[Route(path: '/login', name: 'app_login', methods: ['GET', 'POST'])]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        if ($this->getUser()) return $this->redirectToRoute('app_artwork_index', [], Response::HTTP_SEE_OTHER);
+        if ($this->getUser()) {
+            $this->addFlash('info', 'You are already connected!');
+            return $this->redirectToRoute('app_artwork_index');
+        }
         
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();

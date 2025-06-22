@@ -1,4 +1,7 @@
-{{ form_start(form, {'attr': {'class': 'mt-6'}}) }}
-    {{ form_widget(form) }}
-    <button class="px-3 py-1 rounded bg-green-300 dark:bg-green-700 hover:bg-green-400 hover:dark:bg-green-600 text-sm inline-block transition">{{ button_label|default('Send') }}</button>
-{{ form_end(form) }}
+<turbo-frame id="new_comment_form">
+    {{ form_start(form, {'attr': {'class': 'flex items-center gap-2 p-2 rounded-lg border border-gray-200 focus-within:border-green-500 transition-colors'}}) }}
+        {{ form_errors(form.content) }}
+        {{ form_widget(form.content, {'attr': { 'class': 'flex-1 bg-transparent border-0 outline-none resize-none placeholder-gray-500 text-sm leading-relaxed'}}) }}
+        <button class="btn btn-green">{{ ux_icon('mdi:send-outline', { class: 'w-5 h-5' }) }}<span class="md">{{'send'|trans}}</span></button>
+    {{ form_end(form) }}
+</turbo-frame>

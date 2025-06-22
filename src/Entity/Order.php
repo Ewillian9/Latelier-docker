@@ -4,35 +4,61 @@ namespace App\Entity;
 
 use App\Repository\OrderRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Table(name: '`order`')]
 class Order
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\Column(type: UuidType::NAME, unique: true)]
+    #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
+    private ?Uuid $id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $status = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $updated_at = null;
+    private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
-    private ?User $orderinguser = null;
+    private ?User $client = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
     private ?Artwork $artwork = null;
 
-    #[ORM\OneToOne(mappedBy: 'orderlink', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'order')]
     private ?Conversation $conversation = null;
 
-    public function getId(): ?int
+    #[ORM\ManyToOne(inversedBy: 'artistOrders')]
+    private ?User $artist = null;
+
+    #[ORM\PrePersist]
+    public function onPrePersist(): void
+    {
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    #[ORM\PreUpdate]
+    public function onPreUpdate(): void
+    {
+        $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function getId(): ?Uuid
     {
         return $this->id;
     }
@@ -51,36 +77,17 @@ class Order
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    public function getClient(): ?User
     {
-        $this->created_at = $created_at;
-
-        return $this;
+        return $this->client;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function setClient(?User $client): static
     {
-        return $this->updated_at;
-    }
-
-    public function setUpdatedAt(\DateTimeImmutable $updated_at): static
-    {
-        $this->updated_at = $updated_at;
-
-        return $this;
-    }
-
-    public function getOrderinguser(): ?User
-    {
-        return $this->orderinguser;
-    }
-
-    public function setOrderinguser(?User $orderinguser): static
-    {
-        $this->orderinguser = $orderinguser;
+        $this->client = $client;
 
         return $this;
     }
@@ -106,15 +113,27 @@ class Order
     {
         // unset the owning side of the relation if necessary
         if ($conversation === null && $this->conversation !== null) {
-            $this->conversation->setOrderlink(null);
+            $this->conversation->setOrder(null);
         }
 
         // set the owning side of the relation if necessary
-        if ($conversation !== null && $conversation->getOrderlink() !== $this) {
-            $conversation->setOrderlink($this);
+        if ($conversation !== null && $conversation->getOrder() !== $this) {
+            $conversation->setOrder($this);
         }
 
         $this->conversation = $conversation;
+
+        return $this;
+    }
+
+    public function getArtist(): ?User
+    {
+        return $this->artist;
+    }
+
+    public function setArtist(?User $artist): static
+    {
+        $this->artist = $artist;
 
         return $this;
     }

@@ -1,0 +1,84 @@
+vich_uploader.form_label.delete_confirm: 'Silmek istiyor musunuz?'
+vich_uploader.link.download: İndir
+meta.description: Gilles tarafından yapılmış ahşap el sanatları eserleri galerisi. Özenle ve tutkuyla el yapımı benzersiz parçalar.
+search: Eserlerde ara
+
+profile: Profil
+profile.info: Profil bilgilerin
+profile.info.edit: Profil bilgilerini düzenle
+profile.public: Açık profil
+profile.no.bio.add: Biyografin yok. Bir tane ekle!
+profile.verify: Hesabını etkinleştirmek için e-postanı doğrula
+
+artist.no.artworks: Bu sanatçı henüz eser yayınlamadı
+
+my.artworks: Benim eserlerim
+my.artworks.list: Eserlerin listesi
+my.comments: Benim yorumlarım
+my.comments.list: Yorumlarının listesi
+my.orders: Benim siparişlerim
+my.orders.list: Siparişlerinin listesi
+my.likes: Beğenilerim
+my.likes.list: Beğenilerinin listesi
+my.conversations: Benim sohbetlerim
+my.conversations.list: Sohbetlerinin listesi
+
+artwork.image.lost: Resim kayboldu :/
+artwork.new.decription: Yeni eser eklemek için tıklayın
+artwork.new: Yeni eser
+artwork.none: Henüz eser yayınlamadınız
+artwork.talk.to: İle sohbet başlat
+
+form.maxLength: karakterden uzun olamaz
+form.minLength: karakterden kısa olamaz
+form.comment.placeholder: Yorumunu buraya yaz... (maksimum 100 karakter)
+form.message.placeholder: Mesajını buraya yaz... (maksimum 1000 karakter)
+form.profile.bio: Biyografini buraya yaz... (maksimum 1000 karakter)
+form.profile.password.new: Yeni şifre (maksimum 128 karakter)
+form.profile.password.confirm: Yeni şifreyi onayla
+
+form.artwork.image.maxSize: Resim 5 MB'dan küçük olmalıdır
+form.artwork.image.formats: Sadece WEBP, AVIF, JPEG veya PNG formatındaki resimlere izin verilir
+form.artwork.image.legend: Resim başlığı (maksimum 100 karakter)
+form.artwork.description: Eserinin detaylı açıklamasını buraya yaz (maksimum 4000 karakter)
+form.artwork.title: Dikkat çekici bir başlık (maksimum 100 karakter)
+form.artwork.keywords: Anahtar kelimeler, virgülle ayrılmış kelimeler. örn ağaç,yeşil,parti
+form.artwork.image.add: Resim ekle
+
+order.create: Sipariş oluştur
+order.cancel: Siparişi iptal et
+order.delete: Siparişi sil
+order.accept: Siparişi kabul et
+order.pending: Beklemede
+order.complete: Tamamlandı
+order.completed: Sipariş tamamlandı
+
+back: Geri
+register: Kayıt ol
+register.new: Yeni misin? Hesap oluştur
+password: Şifren
+email: E-posta adresin
+username: Kullanıcı adın
+signin.notnew: Zaten hesabın var mı? Giriş yap
+signin: Giriş yap
+signout: Çıkış yap
+
+hello: Merhaba
+added: Eklendi
+created: Oluşturuldu
+updated: Güncellendi
+by: tarafından
+delete: Sil
+delete.confirm: Silmek istediğine emin misin
+edit: Düzenle
+send: Gönder
+save: Kaydet
+see: Gör
+new: Yeni
+comments: Yorumlar
+home: Ana Sayfa
+nocomments: Henüz yorum yapılmadı
+profile.nocomments: Henüz yorum yapmadınız
+connecttocomment: Yorum yapmak için giriş yap
+nomatch: Kriterlerinize uygun eser bulunamadı.
+nomatch.artist: Bir sanatçısın, eser eklemekten çekinme!
