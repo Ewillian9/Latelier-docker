@@ -5,12 +5,14 @@
     {{ include('components/_nav.html.twig') }}
     <section class="w-full border-b border-gray-300 dark:border-gray-600 pb-4 flex flex-col justify-between items-center">
         <h2 class="text-3xl font-semibold">{{ artist.username }}</h2>
-        <p class="secondary-text text-sm">Page publique</p>
+        <p class="secondary-text text-sm">{{ 'profile.public'|trans }}</p>
     </section>
 
-    <p class="text-sm text-center whitespace-pre-line">{{ artist.bio|default('No biography yet.') }}</p>
-
-    <h3 class="text-center text-xl font-semibold">Voici mes oeuvre(s)</h3>
+    {% if artist.bio is not null %}
+        <p class="text-sm text-center whitespace-pre-line">{{ artist.bio }}</p>
+    {% endif %}
+    
+    <h3 class="text-center text-xl font-semibold">{{ 'my.artworks'|trans }}</h3>
     <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4">
         {% for artwork in artist.artworks %}
             <li class="rounded-lg shadow-md overflow-hidden">
@@ -27,7 +29,7 @@
                 </a>
             </li>
         {% else %}
-            <li>This artist hasn't uploaded anything yet</li>
+            <li>{{ 'artist.no.artworks'|trans }}</li>
         {% endfor %}
     </ul>
 </section>

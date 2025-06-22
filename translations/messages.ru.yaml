@@ -1,32 +1,81 @@
 vich_uploader.form_label.delete_confirm: 'Удалить?'
 vich_uploader.link.download: Скачать
+meta.description: Галерея художественных изделий из дерева ручной работы от Gilles. Уникальные работы, сделанные с заботой и страстью.
+search: Поиск работ
+
+profile: Профиль
+profile.info: Информация о вашем профиле
+profile.info.edit: Редактировать информацию профиля
+profile.public: Публичный профиль
+profile.no.bio.add: У вас нет биографии. Добавьте!
+
+my.artworks: Мои работы
+my.artworks.list: Список ваших работ
+my.comments: Мои комментарии
+my.comments.list: Список ваших комментариев
+my.orders: Мои заказы
+my.orders.list: Список ваших заказов
+my.likes: Мои лайки
+my.likes.list: Список ваших лайков
+my.conversations: Мои беседы
+my.conversations.list: Список ваших бесед
+
 artwork.image.lost: Изображение потеряно :/
-artwork.new.decription: Нажмите здесь, чтобы добавить новое произведение
-artwork.new: Новое произведение
-artwork.show: Посмотреть
-artwork.none: Вы еще не опубликовали ни одного произведения
+artwork.new.decription: Нажмите здесь, чтобы добавить новую работу
+artwork.new: Новая работа
+artwork.none: Вы ещё не опубликовали ни одной работы
+artwork.talk.to: Начать беседу с
+
+form.maxLength: Не может быть длиннее {{ limit }} символов
+form.minLength: Не может быть короче {{ limit }} символов
+form.comment.placeholder: Напишите ваш комментарий здесь... (макс. 100 символов)
+form.message.placeholder: Напишите ваше сообщение здесь... (макс. 1000 символов)
+form.profile.bio: Напишите вашу биографию здесь... (макс. 1000 символов)
+form.profile.password.new: Новый пароль (макс. 128 символов)
+form.profile.password.confirm: Подтвердите новый пароль
+
+form.artwork.image.maxSize: Изображение должно быть меньше 5 МБ
+form.artwork.image.formats: Разрешены только изображения WEBP, AVIF, JPEG или PNG
+form.artwork.image.legend: Подпись к изображению (макс. 100 символов)
+form.artwork.description: Напишите подробное описание вашей работы здесь (макс. 4000 символов)
+form.artwork.title: Привлекательное название (макс. 100 символов)
+form.artwork.keywords: Ключевые слова, через запятую. напр. дерево,зелёный,вечеринка
+form.artwork.image.add: Добавить изображение
+
+order.create: Создать заказ
+order.cancel: Отменить заказ
+order.delete: Удалить заказ
+order.accept: Принять заказ
+order.pending: В ожидании
+order.complete: Завершён
+order.completed: Заказ завершён
+
 back: Назад
 register: Регистрация
 register.new: Новый пользователь? Создайте аккаунт
 password: Ваш пароль
-email: Ваша электронная почта
-username: Имя пользователя
-signin.notnew: Уже есть аккаунт? Войти
+email: Ваш email
+username: Ваше имя пользователя
+signin.notnew: Уже есть аккаунт? Войдите
 signin: Войти
 signout: Выйти
-profile: Профиль
+
 hello: Привет
 added: Добавлено
 created: Создано
 updated: Обновлено
 by: от
 delete: Удалить
+delete.confirm: Вы уверены, что хотите удалить
 edit: Редактировать
 send: Отправить
+save: Сохранить
+see: Смотреть
+new: Новый
 comments: Комментарии
 home: Главная
 nocomments: Пока нет комментариев
-profile.nocomments: Вы еще не оставляли комментариев
+profile.nocomments: Вы ещё не оставляли комментариев
 connecttocomment: Войдите, чтобы оставить комментарий
-nomatch: Нет произведений, соответствующих вашим критериям.
-nomatch.artist: Вы — художник, не стесняйтесь добавить своё произведение!
+nomatch: Нет работ, соответствующих вашим критериям.
+nomatch.artist: Вы художник, не стесняйтесь добавить работу!

@@ -1,32 +1,81 @@
 vich_uploader.form_label.delete_confirm: '删除？'
 vich_uploader.link.download: 下载
+meta.description: Gilles手工制作的木质工艺品画廊。独一无二的作品，用心与热情手工打造。
+search: 搜索作品
+
+profile: 个人资料
+profile.info: 您的个人资料信息
+profile.info.edit: 编辑您的个人资料信息
+profile.public: 公开资料
+profile.no.bio.add: 您还没有个人简介。添加一个吧！
+
+my.artworks: 我的作品
+my.artworks.list: 您的作品列表
+my.comments: 我的评论
+my.comments.list: 您的评论列表
+my.orders: 我的订单
+my.orders.list: 您的订单列表
+my.likes: 我的喜欢
+my.likes.list: 您的喜欢列表
+my.conversations: 我的对话
+my.conversations.list: 您的对话列表
+
 artwork.image.lost: 图片丢失了 :/
-artwork.new.decription: 点击此处添加新作品
+artwork.new.decription: 点击这里添加新作品
 artwork.new: 新作品
-artwork.show: 查看
 artwork.none: 您还没有发布任何作品
+artwork.talk.to: 与……开始对话
+
+form.maxLength: 不能超过 {{ limit }} 个字符
+form.minLength: 不能少于 {{ limit }} 个字符
+form.comment.placeholder: 在这里写评论...（最多100个字符）
+form.message.placeholder: 在这里写消息...（最多1000个字符）
+form.profile.bio: 在这里写个人简介...（最多1000个字符）
+form.profile.password.new: 新密码（最多128个字符）
+form.profile.password.confirm: 确认新密码
+
+form.artwork.image.maxSize: 图片必须小于5MB
+form.artwork.image.formats: 仅允许WEBP、AVIF、JPEG或PNG格式的图片
+form.artwork.image.legend: 图片说明（最多100个字符）
+form.artwork.description: 在这里写您的作品详细描述（最多4000个字符）
+form.artwork.title: 一个吸引人的标题（最多100个字符）
+form.artwork.keywords: 关键词，逗号分隔。例如 树，绿色，派对
+form.artwork.image.add: 添加图片
+
+order.create: 创建订单
+order.cancel: 取消订单
+order.delete: 删除订单
+order.accept: 接受订单
+order.pending: 待处理
+order.complete: 完成
+order.completed: 订单完成
+
 back: 返回
 register: 注册
-register.new: 新用户？创建账号
-password: 密码
-email: 电子邮件
-username: 用户名
-signin.notnew: 已有账号？登录
+register.new: 新用户？创建账户
+password: 您的密码
+email: 您的邮箱
+username: 您的用户名
+signin.notnew: 已有账户？登录
 signin: 登录
 signout: 登出
-profile: 个人资料
+
 hello: 你好
 added: 已添加
 created: 已创建
 updated: 已更新
 by: 由
 delete: 删除
+delete.confirm: 您确定要删除吗
 edit: 编辑
 send: 发送
+save: 保存
+see: 查看
+new: 新建
 comments: 评论
 home: 首页
-nocomments: 还没有发布任何评论
-profile.nocomments: 您还没有发布过评论
+nocomments: 尚无评论
+profile.nocomments: 您尚未发表任何评论
 connecttocomment: 登录以发表评论
 nomatch: 没有符合您条件的作品。
 nomatch.artist: 您是艺术家，欢迎添加作品！

@@ -28,8 +28,8 @@ class ArtworkImageType extends AbstractType
                         'image/webp',
                         'image/avif',
                     ],
-                    'mimeTypesMessage' => 'Only WEBP, AVIF, JPEG or PNG images are allowed',
-                    'maxSizeMessage' => 'Image must be 5 Mo max',
+                    'mimeTypesMessage' => 'form.artwork.image.formats',
+                    'maxSizeMessage' => 'form.artwork.image.maxSize',
                 ])
             ],
         ])
@@ -37,7 +37,7 @@ class ArtworkImageType extends AbstractType
             'label' => false,
             'required' => false,
             'attr' => [
-                'placeholder' => 'Image caption...',
+                'placeholder' => 'form.artwork.image.legend',
                 'maxlength' => 100,
             ],
             'constraints' => [

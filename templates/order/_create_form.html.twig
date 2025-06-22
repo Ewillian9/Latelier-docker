@@ -1,4 +1,4 @@
 <form method="post" action="{{ path('app_order_create', {'conversation': conversation.id}) }}">
     <input type="hidden" name="_token" value="{{ csrf_token('create' ~ conversation.id) }}">
-    <button class="btn btn-accent">{{ ux_icon('icon-park-outline:buy', { class: 'w-5 h-5' }) }}{{'create.order'|trans}}</button>
+    <button class="btn btn-accent">{{ ux_icon('icon-park-outline:buy', { class: 'w-5 h-5' }) }}{{'order.create'|trans}}</button>
 </form>

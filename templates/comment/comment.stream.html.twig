@@ -10,7 +10,7 @@
                         </nav>
                     {% endif %}
                     <p>{{ comment.content }}</p>
-                    <p class="text-sm secondary-text">By {{ comment.user.username }} • {{ comment.createdAt|ago }}</p>
+                    <p class="text-sm secondary-text">{{'by'|trans}} {{ comment.user.username }} • {{ comment.createdAt|ago }}</p>
                 </turbo-frame>
             </article>
         </template>
@@ -42,7 +42,7 @@
                     </nav>
                 {% endif %}
                 <p>{{ comment.content }}</p>
-                <p class="text-sm secondary-text">By {{ comment.user.username }} • {{ comment.createdAt|ago }}</p>
+                <p class="text-sm secondary-text">{{'by'|trans}} {{ comment.user.username }} • {{ comment.createdAt|ago }}</p>
             </turbo-frame>
         </template>
     </turbo-stream>

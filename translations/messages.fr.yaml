@@ -1,32 +1,80 @@
 vich_uploader.form_label.delete_confirm: 'Supprimer?'
 vich_uploader.link.download: Télécharger
+meta.description: Galerie d’œuvres artisanales en bois réalisées par Gilles. Pièces uniques, faites main avec soin et passion.
+search: Rechercher des œuvres
+
+profile: Profil
+profile.info: Informations de votre profil
+profile.info.edit: Modifier les informations
+profile.public: Profil public
+profile.no.bio.add: Vous n'avez pas de bio. Ajoutez-en une !
+
+my.artworks: Mes oeuvres
+my.artworks.list: Liste de vos oeuvres
+my.comments: Mes commentaires
+my.comments.list: Liste de vos commentaires
+my.orders: Mes commandes
+my.orders.list: Liste de vos commandes
+my.likes: Mes favoris
+my.likes.list: Liste de vos favoris
+my.conversations: Mes conversations
+my.conversations.list: Liste de vos conversations
+
 artwork.image.lost: L'image a été perdue :/
 artwork.new.decription: Cliquez ici pour ajouter une nouvelle œuvre
-artwork.new: Nouvelle oeuvre
-artwork.show: Voir
-artwork.none: Vous n’avez publié aucune œuvre
+artwork.new: Nouvelle œuvre
+artwork.none: Vous n'avez encore publié aucune œuvre
+artwork.talk.to: Démarrer une conversation avec
+
+form.maxLength: Ne peut pas dépasser {{ limit }} caractères
+form.minLength: Doit comporter au moins {{ limit }} caractères
+form.comment.placeholder: Écrivez votre commentaire ici... (100 caractères max)
+form.message.placeholder: Écrivez votre message ici... (1000 caractères max)
+form.profile.bio: Écrivez votre bio ici... (1000 caractères max)
+form.profile.password.new: Nouveau mot de passe (128 caractères max)
+form.profile.password.confirm: Confirmez le nouveau mot de passe
+form.artwork.image.maxSize: L'image doit faire moins de 5 Mo
+form.artwork.image.formats: Seules les images WEBP, AVIF, JPEG ou PNG sont autorisées
+form.artwork.image.legend: Légende de l'image (100 caractères max)
+form.artwork.description: Décrivez ici en détail votre œuvre (4000 caractères max)
+form.artwork.title: Un titre accrocheur (100 caractères max)
+form.artwork.keywords: Mots-clés, séparés par des virgules. ex arbre,vert,fête
+form.artwork.image.add: Ajouter une image
+
+order.create: Créer une commande
+order.cancel: Annuler la commande
+order.delete: Supprimer la commande
+order.accept: Accepter la commande
+order.pending: En attente
+order.complete: Terminée
+order.completed: Commande terminée
+
 back: Retour
 register: S'inscrire
-register.new: Nouveau ? Crée un compte
-password: Ton mot de passe
-email: Ton adresse e-mail
-username: Nom d’utilisateur
-signin.notnew: Déjà un compte ? Connecte-toi
-signin: Se connecter
-signout: Se déconnecter
-profile: Profil
+register.new: Nouveau ? Créez un compte
+password: Votre mot de passe
+email: Votre e-mail
+username: Votre nom d'utilisateur
+signin.notnew: Déjà un compte ? Connectez-vous
+signin: Connexion
+signout: Déconnexion
+
 hello: Bonjour
 added: Ajouté
 created: Créé
 updated: Mis à jour
 by: par
 delete: Supprimer
+delete.confirm: Voulez-vous vraiment supprimer
 edit: Modifier
 send: Envoyer
+save: Sauvegarder
+see: Voir
+new: Nouveau
 comments: Commentaires
-home: Acceuil
-nocomments: Aucun commentaire publié pour le moment
-profile.nocomments: Vous n'avez encore posté aucun commentaire
-connecttocomment: Connectez-vous pour laisser un commantaire
+home: Accueil
+nocomments: Aucun commentaire n'a encore été publié
+profile.nocomments: Vous n'avez publié aucun commentaire
+connecttocomment: Connectez-vous pour laisser un commentaire
 nomatch: Aucune œuvre ne correspond à vos critères.
-nomatch.artist: Vous êtes artiste, ajoutez en une !
+nomatch.artist: Vous êtes artiste, n'hésitez pas à en ajouter une !

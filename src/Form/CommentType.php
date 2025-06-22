@@ -16,13 +16,13 @@ class CommentType extends AbstractType
         $builder
             ->add('content', TextareaType::class, [
             'attr' => [
-                'placeholder' => 'Type a message... (max 100 caracteres)',
+                'placeholder' => 'form.comment.placeholder',
                 'maxlength' => 100
             ],
             'constraints' => [
                 new Length([
                     'max' => 100,
-                    'maxMessage' => 'Cannot be longer than {{ limit }} characters'
+                    'maxMessage' => 'form.comment.maxlength',
                 ])
             ]
         ]);

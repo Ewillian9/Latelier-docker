@@ -1,10 +1,54 @@
 vich_uploader.form_label.delete_confirm: '削除しますか？'
 vich_uploader.link.download: ダウンロード
-artwork.image.lost: 画像が失われました :/
-artwork.new.decription: ここをクリックして新しい作品を追加
+meta.description: Gillesによって作られた木製の手作りアート作品のギャラリー。ユニークな作品、丁寧に心を込めて作られています。
+search: アート作品を検索
+
+profile: プロフィール
+profile.info: あなたのプロフィール情報
+profile.info.edit: プロフィール情報を編集
+profile.public: 公開プロフィール
+profile.no.bio.add: 自己紹介がありません。追加してください！
+
+my.artworks: 自分の作品
+my.artworks.list: あなたの作品一覧
+my.comments: 自分のコメント
+my.comments.list: あなたのコメント一覧
+my.orders: 自分の注文
+my.orders.list: あなたの注文一覧
+my.likes: いいね
+my.likes.list: いいね一覧
+my.conversations: 自分の会話
+my.conversations.list: あなたの会話一覧
+
+artwork.image.lost: 画像が見つかりません :/
+artwork.new.decription: 新しい作品を追加するにはここをクリック
 artwork.new: 新しい作品
-artwork.show: 表示
 artwork.none: まだ作品を公開していません
+artwork.talk.to: と会話を始める
+
+form.maxLength: 文字以内で入力してください
+form.minLength: 文字以上で入力してください
+form.comment.placeholder: コメントを入力してください...(最大100文字)
+form.message.placeholder: メッセージを入力してください...(最大1000文字)
+form.profile.bio: 自己紹介を入力してください...(最大1000文字)
+form.profile.password.new: 新しいパスワード (最大128文字)
+form.profile.password.confirm: 新しいパスワードを確認
+form.artwork.image.maxSize: 画像サイズは5MB以下にしてください
+form.artwork.image.formats: 使用可能な画像形式 WEBP、AVIF、JPEG、PNG
+form.artwork.image.legend: 画像のキャプション (最大100文字)
+form.artwork.description: 作品の詳細な説明を入力してください (最大4000文字)
+form.artwork.title: キャッチーなタイトル (最大100文字)
+form.artwork.keywords: キーワード（カンマ区切り）。例：木、緑、パーティー
+form.artwork.image.add: 画像を追加
+
+order.create: 注文を作成
+order.cancel: 注文をキャンセル
+order.delete: 注文を削除
+order.accept: 注文を承認
+order.pending: 保留中
+order.complete: 完了
+order.completed: 注文完了
+
 back: 戻る
 register: 登録
 register.new: 初めてですか？ アカウントを作成
@@ -12,21 +56,25 @@ password: パスワード
 email: メールアドレス
 username: ユーザー名
 signin.notnew: すでにアカウントをお持ちですか？ ログイン
-signin: サインイン
-signout: サインアウト
-profile: プロフィール
+signin: ログイン
+signout: ログアウト
+
 hello: こんにちは
 added: 追加済み
 created: 作成済み
 updated: 更新済み
-by: による
+by: 作成者：
 delete: 削除
+delete.confirm: 本当に削除しますか？
 edit: 編集
 send: 送信
+save: 保存
+see: 表示
+new: 新規
 comments: コメント
 home: ホーム
-nocomments: まだコメントが投稿されていません
-profile.nocomments: あなたはまだコメントを投稿していません
-connecttocomment: コメントを残すにはログインしてください
-nomatch: 条件に合う作品がありません。
-nomatch.artist: あなたはアーティストです。自由に作品を追加してください！
+nocomments: まだコメントは投稿されていません
+profile.nocomments: まだコメントを投稿していません
+connecttocomment: コメントするにはログインしてください
+nomatch: 条件に一致する作品が見つかりません。
+nomatch.artist: あなたはアーティストです。ぜひ作品を追加してください！

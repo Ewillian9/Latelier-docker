@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
-{% block title %}{{'profile'|trans}}{% endblock %}
+{% block title %}{{'edit'|trans}} {{'profile'|trans}}{% endblock %}
 {% block body %}
 <section class="base main-color">
     {{ include('components/_nav.html.twig') }}
     <section class="w-full border-b border-gray-300 dark:border-gray-600 pb-4 flex flex-col justify-between items-center">
         <h2 class="text-3xl font-semibold">{{'hello'|trans }} {{ user.username }}</h2>
-        <p class="secondary-text text-sm">Vous pouvez modifier vos informations</p>
+        <p class="secondary-text text-sm">{{'profile.info.edit'|trans}}</p>
     </section>
 
     {{ form_start(form, {

@@ -1,32 +1,80 @@
 vich_uploader.form_label.delete_confirm: 'Löschen?'
 vich_uploader.link.download: Herunterladen
+meta.description: Galerie handgefertigter Holzkunstwerke von Gilles. Einzigartige Stücke, liebevoll und leidenschaftlich gefertigt.
+search: Kunstwerke suchen
+
+profile: Profil
+profile.info: Deine Profilinformationen
+profile.info.edit: Profilinformationen bearbeiten
+profile.public: Öffentliches Profil
+profile.no.bio.add: Du hast keine Biografie. Füge eine hinzu!
+
+my.artworks: Meine Kunstwerke
+my.artworks.list: Liste deiner Kunstwerke
+my.comments: Meine Kommentare
+my.comments.list: Liste deiner Kommentare
+my.orders: Meine Bestellungen
+my.orders.list: Liste deiner Bestellungen
+my.likes: Meine Favoriten
+my.likes.list: Liste deiner Favoriten
+my.conversations: Meine Unterhaltungen
+my.conversations.list: Liste deiner Unterhaltungen
+
 artwork.image.lost: Das Bild ist verloren gegangen :/
 artwork.new.decription: Klicke hier, um ein neues Kunstwerk hinzuzufügen
 artwork.new: Neues Kunstwerk
-artwork.show: Anzeigen
 artwork.none: Du hast noch kein Kunstwerk veröffentlicht
+artwork.talk.to: Starte eine Unterhaltung mit
+
+form.maxLength: Darf nicht länger als {{ limit }} Zeichen sein
+form.minLength: Darf nicht kürzer als {{ limit }} Zeichen sein
+form.comment.placeholder: Schreibe deinen Kommentar hier... (max. 100 Zeichen)
+form.message.placeholder: Schreibe deine Nachricht hier... (max. 1000 Zeichen)
+form.profile.bio: Schreibe deine Biografie hier... (max. 1000 Zeichen)
+form.profile.password.new: Neues Passwort (max. 128 Zeichen)
+form.profile.password.confirm: Neues Passwort bestätigen
+form.artwork.image.maxSize: Das Bild muss kleiner als 5 MB sein
+form.artwork.image.formats: Nur WEBP-, AVIF-, JPEG- oder PNG-Bilder sind erlaubt
+form.artwork.image.legend: Bildunterschrift (max. 100 Zeichen)
+form.artwork.description: Detaillierte Beschreibung deines Kunstwerks (max. 4000 Zeichen)
+form.artwork.title: Ein einprägsamer Titel (max. 100 Zeichen)
+form.artwork.keywords: Stichworte, durch Kommas getrennt. z. B. Baum,grün,Party
+form.artwork.image.add: Bild hinzufügen
+
+order.create: Bestellung erstellen
+order.cancel: Bestellung stornieren
+order.delete: Bestellung löschen
+order.accept: Bestellung annehmen
+order.pending: Ausstehend
+order.complete: Abgeschlossen
+order.completed: Bestellung abgeschlossen
+
 back: Zurück
 register: Registrieren
-register.new: Neu? Erstelle ein Konto
+register.new: Neu hier? Erstelle ein Konto
 password: Dein Passwort
 email: Deine E-Mail
-username: Benutzername
+username: Dein Benutzername
 signin.notnew: Schon ein Konto? Anmelden
 signin: Anmelden
 signout: Abmelden
-profile: Profil
+
 hello: Hallo
 added: Hinzugefügt
 created: Erstellt
 updated: Aktualisiert
 by: von
 delete: Löschen
+delete.confirm: Bist du sicher, dass du löschen möchtest
 edit: Bearbeiten
 send: Senden
+save: Speichern
+see: Ansehen
+new: Neu
 comments: Kommentare
 home: Startseite
-nocomments: Es wurden noch keine Kommentare veröffentlicht
-profile.nocomments: Du hast noch keine Kommentare gepostet
+nocomments: Noch keine Kommentare vorhanden
+profile.nocomments: Du hast noch keine Kommentare veröffentlicht
 connecttocomment: Melde dich an, um einen Kommentar zu hinterlassen
 nomatch: Keine Kunstwerke entsprechen deinen Kriterien.
-nomatch.artist: Du bist Künstler, fühle dich frei, eines hinzuzufügen.
+nomatch.artist: Du bist Künstler – füge gerne eines hinzu!

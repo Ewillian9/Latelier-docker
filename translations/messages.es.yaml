@@ -1,32 +1,80 @@
 vich_uploader.form_label.delete_confirm: '¿Eliminar?'
 vich_uploader.link.download: Descargar
-artwork.image.lost: La imagen se perdió :/
-artwork.new.decription: Haz clic aquí para agregar una nueva obra
+meta.description: Galería de obras artesanales en madera hechas por Gilles. Piezas únicas, hechas a mano con cuidado y pasión.
+search: Buscar obras
+
+profile: Perfil
+profile.info: Información de tu perfil
+profile.info.edit: Editar la información del perfil
+profile.public: Perfil público
+profile.no.bio.add: No tienes una biografía. ¡Agrega una!
+
+my.artworks: Mis obras
+my.artworks.list: Lista de tus obras
+my.comments: Mis comentarios
+my.comments.list: Lista de tus comentarios
+my.orders: Mis pedidos
+my.orders.list: Lista de tus pedidos
+my.likes: Mis favoritos
+my.likes.list: Lista de tus favoritos
+my.conversations: Mis conversaciones
+my.conversations.list: Lista de tus conversaciones
+
+artwork.image.lost: La imagen se ha perdido :/
+artwork.new.decription: Haz clic aquí para añadir una nueva obra
 artwork.new: Nueva obra
-artwork.show: Ver
-artwork.none: No has publicado ninguna obra aún
-back: Atrás
+artwork.none: Aún no has publicado ninguna obra
+artwork.talk.to: Comenzar una conversación con
+
+form.maxLength: No puede tener más de {{ limit }} caracteres
+form.minLength: No puede tener menos de {{ limit }} caracteres
+form.comment.placeholder: Escribe tu comentario aquí... (máx. 100 caracteres)
+form.message.placeholder: Escribe tu mensaje aquí... (máx. 1000 caracteres)
+form.profile.bio: Escribe tu biografía aquí... (máx. 1000 caracteres)
+form.profile.password.new: Nueva contraseña (máx. 128 caracteres)
+form.profile.password.confirm: Confirmar nueva contraseña
+form.artwork.image.maxSize: La imagen debe ser menor de 5 MB
+form.artwork.image.formats: Solo se permiten imágenes WEBP, AVIF, JPEG o PNG
+form.artwork.image.legend: Leyenda de la imagen (máx. 100 caracteres)
+form.artwork.description: Escribe aquí la descripción detallada de tu obra (máx. 4000 caracteres)
+form.artwork.title: Un título llamativo (máx. 100 caracteres)
+form.artwork.keywords: Palabras clave separadas por comas. ej. árbol,verde,fiesta
+form.artwork.image.add: Agregar imagen
+
+order.create: Crear pedido
+order.cancel: Cancelar pedido
+order.delete: Eliminar pedido
+order.accept: Aceptar pedido
+order.pending: Pendiente
+order.complete: Completado
+order.completed: Pedido completado
+
+back: Volver
 register: Registrarse
 register.new: ¿Nuevo? Crea una cuenta
 password: Tu contraseña
 email: Tu correo electrónico
-username: Nombre de usuario
-signin.notnew: ¿Ya tienes una cuenta? Inicia sesión
+username: Tu nombre de usuario
+signin.notnew: ¿Ya tienes cuenta? Inicia sesión
 signin: Iniciar sesión
 signout: Cerrar sesión
-profile: Perfil
+
 hello: Hola
-added: Añadido
+added: Agregado
 created: Creado
 updated: Actualizado
 by: por
 delete: Eliminar
+delete.confirm: ¿Estás seguro de que deseas eliminar?
 edit: Editar
 send: Enviar
+save: Guardar
+see: Ver
+new: Nuevo
 comments: Comentarios
 home: Inicio
-nocomments: No se ha publicado ningún comentario aún
-profile.nocomments: No has publicado ningún comentario aún
+nocomments: Aún no se han publicado comentarios
+profile.nocomments: Aún no has publicado ningún comentario
 connecttocomment: Conéctate para dejar un comentario
 nomatch: Ninguna obra coincide con tus criterios.
-nomatch.artist: Eres artista, siéntete libre de añadir una.
+nomatch.artist: Eres artista, ¡no dudes en añadir una!

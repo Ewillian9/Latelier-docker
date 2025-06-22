@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}Conversation{% endblock %}
+{% block title %}{{conversation.artist.username}} - {{conversation.artwork.title}}{% endblock %}
 {% block body %}
 <section class="base main-color" {{ turbo_stream_listen(topic ~ app.user.id) }}>
     {{ include('components/_nav.html.twig') }}

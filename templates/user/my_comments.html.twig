@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
-{% block title %}My comments{% endblock %}
+{% block title %}{{ 'my.comments'|trans }}{% endblock %}
 {% block body %}
 <section class="base main-color">
     {{ include('components/_nav.html.twig') }}
     <section class="w-full border-b border-gray-300 dark:border-gray-600 pb-2 sm:pb-4">
-        <h2 class="text-3xl font-semibold">Mes commentaires</h2>
-        <p class="secondary-text mt-1">Historique de vos commentaires</p>
+        <h2 class="text-3xl font-semibold">{{ 'my.comments'|trans }}</h2>
+        <p class="secondary-text mt-1">{{ 'my.comments.list'|trans }}</p>
     </section>
 
     {% if comments is empty %}
-        <p id="no_comment_user" class="secondary-text">Vous n'avez pour le moment posté aucun commentaire.</p>
+        <p id="no_comment_user" class="secondary-text">{{'comment.none'|trans}}</p>
     {% else %}
         <ul id="comments_user" class="w-full space-y-2 sm:space-y-4" {{ turbo_stream_listen('comment') }}>
             {% for comment in comments %}
@@ -19,7 +19,7 @@
                         <time datetime="{{ comment.createdAt ? comment.createdAt|date('c') : '' }}" class="text-xs secondary-text mt-2">{{ comment.createdAt ? comment.createdAt|ago : 'il y a un moment'}} on {{comment.artwork.title}}</time>
                     </div>
                     <div class="flex flex-col items-end gap-2">
-                        <a href="{{ path('app_artwork_show', {'id': comment.artwork.id}) }}" class="btn btn-gray">{{ ux_icon('mdi:arrow-right', { class: 'w-5 h-5' }) }}<span class="md">{{'artwork.show'|trans}}</span></a>
+                        <a href="{{ path('app_artwork_show', {'id': comment.artwork.id}) }}" class="btn btn-gray">{{ ux_icon('mdi:arrow-right', { class: 'w-5 h-5' }) }}<span class="md">{{'see'|trans}}</span></a>
                         {{ include('comment/_delete_form.html.twig') }}
                     </div>
                 </li>

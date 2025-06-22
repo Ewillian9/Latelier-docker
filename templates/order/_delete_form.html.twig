@@ -1,4 +1,4 @@
-<form method="post" action="{{ path('app_order_delete', {'id': order.id}) }}" data-turbo-confirm="Are you sure you want to delete this order? Conversation will be deleted from databse only when both users delete it">
+<form method="post" action="{{ path('app_order_delete', {'id': order.id}) }}" data-turbo-confirm="{{'delete.confirm'|trans}}?">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ order.id) }}">
-    <button class="btn btn-red">{{ ux_icon('mdi:delete-outline', { class: 'w-5 h-5' }) }}{{'delete'|trans}}</button>
+    <button class="btn btn-red">{{ ux_icon('mdi:delete-outline', { class: 'w-5 h-5' }) }}{{'order.delete'|trans}}</button>
 </form>

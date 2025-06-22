@@ -23,7 +23,7 @@
                                 <svg class="w-8 h-8 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                                 </svg>
-                                <span class="text-xs font-medium">Add Image</span>
+                                <span class="text-xs font-medium">{{'form.artwork.image.add'|trans}}</span>
                             </div>
                             
                             <div class="absolute inset-0 hidden" data-image-preview-target="preview">
@@ -46,19 +46,16 @@
                         </div>
                         <div class="mt-2">
                             {{ form_widget(imageForm.legend, {
-                                'attr': { 'class': 'w-full p-2 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400',
-                                    'placeholder': 'Image legend... (max 100)',
-                                    'maxlength': '100'
-                                }
+                                'attr': { 'class': 'w-full p-2 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400',}
                             }) }}
                         </div>
                     </div>
                 {% endfor %}
             </div>
         </div>
-        {{ form_widget(form.title, {'attr': {'class': 'form-gray', 'placeholder': 'A catchy title...'}}) }}
-        {{ form_widget(form.description, {'attr': {'class': 'form-gray', 'placeholder': 'Write here the detailed description of your artwork'}}) }}
-        {{ form_widget(form.keywords, {'attr': {'class': 'form-gray', 'placeholder': 'Keywords, comma seperated words. ex: tree,green,party'}}) }}
-        <button class="btn btn-green">{{ button_label|default('Save') }}</button>
+        {{ form_widget(form.title, {'attr': {'class': 'form-gray'}}) }}
+        {{ form_widget(form.description, {'attr': {'class': 'form-gray'}}) }}
+        {{ form_widget(form.keywords, {'attr': {'class': 'form-gray'}}) }}
+        <button class="btn btn-green">{{'save'|trans}}</button>
     {{ form_end(form) }}
 </turbo-frame>

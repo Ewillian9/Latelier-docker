@@ -1,32 +1,80 @@
 vich_uploader.form_label.delete_confirm: 'هل تريد الحذف؟'
 vich_uploader.link.download: تنزيل
+meta.description: معرض للأعمال الفنية اليدوية الخشبية المصنوعة من قبل جيل. قطع فريدة مصنوعة بعناية وشغف.
+search: ابحث عن الأعمال الفنية
+
+profile: الملف الشخصي
+profile.info: معلومات ملفك الشخصي
+profile.info.edit: تعديل معلومات الملف الشخصي
+profile.public: الملف الشخصي العام
+profile.no.bio.add: لا توجد سيرة ذاتية. أضف واحدة!
+
+my.artworks: أعمالي الفنية
+my.artworks.list: قائمة أعمالك الفنية
+my.comments: تعليقاتي
+my.comments.list: قائمة تعليقاتك
+my.orders: طلباتي
+my.orders.list: قائمة طلباتك
+my.likes: إعجاباتي
+my.likes.list: قائمة إعجاباتك
+my.conversations: محادثاتي
+my.conversations.list: قائمة محادثاتك
+
 artwork.image.lost: تم فقدان الصورة :/
-artwork.new.decription: انقر هنا لإضافة عمل جديد
-artwork.new: عمل جديد
-artwork.show: عرض
-artwork.none: لم تنشر أي عمل بعد
+artwork.new.decription: انقر هنا لإضافة عمل فني جديد
+artwork.new: عمل فني جديد
+artwork.none: لم تنشر أي عمل فني بعد
+artwork.talk.to: ابدأ محادثة مع
+
+form.maxLength: لا يمكن أن يتجاوز حرفًا
+form.minLength: لا يمكن أن يكون أقل من حرفًا
+form.comment.placeholder: اكتب تعليقك هنا... (الحد الأقصى 100 حرف)
+form.message.placeholder: اكتب رسالتك هنا... (الحد الأقصى 1000 حرف)
+form.profile.bio: اكتب سيرتك الذاتية هنا... (الحد الأقصى 1000 حرف)
+form.profile.password.new: كلمة مرور جديدة (بحد أقصى 128 حرفًا)
+form.profile.password.confirm: تأكيد كلمة المرور الجديدة
+form.artwork.image.maxSize: يجب أن تكون الصورة أقل من 5 ميجابايت
+form.artwork.image.formats: يُسمح فقط بصور WEBP أو AVIF أو JPEG أو PNG
+form.artwork.image.legend: عنوان الصورة (الحد الأقصى 100 حرف)
+form.artwork.description: اكتب هنا وصفًا تفصيليًا لعملك الفني (الحد الأقصى 4000 حرف)
+form.artwork.title: عنوان جذاب (الحد الأقصى 100 حرف)
+form.artwork.keywords: كلمات مفتاحية مفصولة بفواصل، مثل شجرة،أخضر،حفلة
+form.artwork.image.add: إضافة صورة
+
+order.create: إنشاء طلب
+order.cancel: إلغاء الطلب
+order.delete: حذف الطلب
+order.accept: قبول الطلب
+order.pending: قيد الانتظار
+order.complete: مكتمل
+order.completed: تم اكتمال الطلب
+
 back: رجوع
 register: تسجيل
 register.new: جديد؟ أنشئ حسابًا
 password: كلمة المرور
 email: بريدك الإلكتروني
 username: اسم المستخدم
-signin.notnew: لديك حساب بالفعل؟ سجّل الدخول
+signin.notnew: هل لديك حساب؟ سجّل الدخول
 signin: تسجيل الدخول
 signout: تسجيل الخروج
-profile: الملف الشخصي
+
 hello: مرحبًا
-added: مضاف
+added: تمت الإضافة
 created: تم الإنشاء
-updated: محدث
+updated: تم التحديث
 by: بواسطة
 delete: حذف
+delete.confirm: هل أنت متأكد أنك تريد الحذف
 edit: تعديل
 send: إرسال
-comments: التعليقات
+save: حفظ
+see: عرض
+new: جديد
+comments: تعليقات
 home: الصفحة الرئيسية
-nocomments: لم يتم نشر أي تعليق بعد
-profile.nocomments: لم تنشر أي تعليق بعد
-connecttocomment: سجل الدخول لترك تعليق
-nomatch: لا توجد أعمال تطابق معاييرك.
+nocomments: لم يتم نشر أي تعليقات بعد
+profile.nocomments: لم تقم بنشر أي تعليق بعد
+connecttocomment: قم بتسجيل الدخول لترك تعليق
+nomatch: لا توجد أعمال فنية تطابق معاييرك.
 nomatch.artist: أنت فنان، لا تتردد في إضافة عمل!

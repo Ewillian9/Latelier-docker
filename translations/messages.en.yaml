@@ -1,10 +1,56 @@
 vich_uploader.form_label.delete_confirm: 'Delete?'
 vich_uploader.link.download: Download
+meta.description: Gallery of artisanal artworks in wood made by Gilles. Unique pieces, handmade with care and passion.
+search: Search artworks
+
+profile: Profile
+profile.info: Your profile information
+profile.info.edit: Edit your profile information
+profile.public: Public profile
+profile.no.bio.add: You have no Bio. Add one!
+
+my.artworks: My artworks
+my.artworks.list: List of your artworks
+my.comments: My comments
+my.comments.list: List of your comments
+my.orders: My orders
+my.orders.list: List of your orders
+my.likes: My likes
+my.likes.list: List of your likes
+my.conversations: My conversations
+my.conversations.list: List of your conversations
+
 artwork.image.lost: The image got lost :/
 artwork.new.decription: Click here to add a new artwork
 artwork.new: New artwork
-artwork.show: See it
 artwork.none: You didn't published any artwork yet
+artwork.talk.to: Start a conversation with
+
+form.maxLength: Cannot be longer than {{ limit }} characters
+form.minLength: Cannot be shorter than {{ limit }} characters
+form.comment.placeholder: Write your comment here... (100 characters max)
+form.message.placeholder: Write your message here... (1000 characters max)
+
+form.profile.bio: Write your bio here... (1000 characters max)
+form.profile.password.new: New password (max 128 characters)
+form.profile.password.confirm: Confirm new password
+
+form.artwork.image.maxSize: The image must be smaller than 5 MB
+form.artwork.image.formats: Only WEBP, AVIF, JPEG or PNG images are allowed
+form.artwork.image.legend: Image legend (max 100 characters)
+form.artwork.description: Write here the detailed description of your artwork (max 4000 characters)
+form.artwork.title: A catchy title (max 100 characters)
+form.artwork.keywords: Keywords, comma seperated words. ex tree,green,party
+form.artwork.image.add: Add image
+
+order.create: Create an order
+order.cancel: Cancel order
+order.delete: Delete order
+order.accept: Accept order
+order.pending: Pending
+order.complete: Complete order
+order.completed: Order completed
+
 back: Back
 register: Register
 register.new: New? Create an account
@@ -14,15 +60,19 @@ username: Your Username
 signin.notnew: Already an account? Sign in
 signin: Sign in
 signout: Sign out
-profile: Profile
+
 hello: Hello
 added: Added
 created: Created
 updated: Updated
 by: by
 delete: Delete
+delete.confirm: Are you sure you want to delete
 edit: Edit
 send: Send
+save: Save
+see: See
+new: New
 comments: Comments
 home: Home
 nocomments: No comment have been posted yet

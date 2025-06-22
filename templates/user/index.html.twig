@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
-{% block title %}{{'profile'|trans}}{% endblock %}
+{% block title %}{{'profile'|trans}} - {{ user.username }}{% endblock %}
 {% block body %}
 <section class="base main-color">
     {{ include('components/_nav.html.twig') }}
     <section class="w-full border-b border-gray-300 dark:border-gray-600 pb-4 flex flex-col justify-between items-center">
         <h2 class="text-3xl font-semibold">{{'hello'|trans }} {{ user.username }}</h2>
-        <p class="secondary-text text-sm">Informations de votre compte</p>
+        <p class="secondary-text text-sm">{{'profile.info'|trans}}</p>
         {% if 'ROLE_ARTIST' in user.roles or 'ROLE_ADMIN' in user.roles %}
-            <a href="{{ path('app_artist_profile', {'username': user.username}) }}" class="btn btn-gray">Voir mon profile publique</a>
+            <a href="{{ path('app_artist_profile', {'username': user.username}) }}" class="btn btn-gray">{{'profile.public'|trans}}</a>
         {% endif %}
     </section>
 
@@ -20,7 +20,7 @@
         </li>
         {% if 'ROLE_ARTIST' in user.roles or 'ROLE_ADMIN' in user.roles %}
             <li class="border-b border-dashed pb-4">
-                <p class="text-sm text-center whitespace-pre-line">{{ user.bio|default('No Bio. Add one!') }}</p>
+                <p class="text-sm text-center whitespace-pre-line">{{ user.bio|default('profile.no.bio.add'|trans) }}</p>
             </li>
         {% endif %}
     </ul>
@@ -29,19 +29,19 @@
 
     <nav class="flex flex-col sm:flex-row gap-2">
         {% if user.comments is not empty %}
-            <a href="{{ path('app_my_comments') }}" class="btn btn-gray">{{ ux_icon('mdi:comment-outline', { class: 'w-5 h-5' }) }}Mes commentaires ({{ user.comments|length }})</a>
+            <a href="{{ path('app_my_comments') }}" class="btn btn-gray">{{ ux_icon('mdi:comment-outline', { class: 'w-5 h-5' }) }}{{ 'my.comments'|trans }} ({{ user.comments|length }})</a>
         {% endif %}
         {% if user.artworks is not empty %}
-            <a href="{{ path('app_my_artworks') }}" class="btn btn-gray">{{ ux_icon('mdi:creation-outline', { class: 'w-5 h-5' }) }}Mes œuvres ({{ user.artworks|length }})</a>
+            <a href="{{ path('app_my_artworks') }}" class="btn btn-gray">{{ ux_icon('mdi:creation-outline', { class: 'w-5 h-5' }) }}{{ 'my.artworks'|trans }} ({{ user.artworks|length }})</a>
         {% endif %}
         {% if hasVisibleConversations %}
-            <a href="{{ path('app_my_conversations') }}" class="btn btn-gray">{{ ux_icon('mdi:conversation-outline', { class: 'w-5 h-5' }) }}Mes conversations ({{ visibleConversationsCount }})</a>
+            <a href="{{ path('app_my_conversations') }}" class="btn btn-gray">{{ ux_icon('mdi:conversation-outline', { class: 'w-5 h-5' }) }}{{ 'my.conversations'|trans }} ({{ visibleConversationsCount }})</a>
         {% endif %}
         {% if user.orders is not empty or user.artistOrders is not empty %}
-            <a href="{{ path('app_my_orders') }}" class="btn btn-gray">{{ ux_icon('mdi:shop-outline', { class: 'w-5 h-5' }) }}Mes commandes ({{ user.orders|length + user.artistOrders|length }})</a>
+            <a href="{{ path('app_my_orders') }}" class="btn btn-gray">{{ ux_icon('mdi:shop-outline', { class: 'w-5 h-5' }) }}{{ 'my.orders'|trans }} ({{ user.orders|length + user.artistOrders|length }})</a>
         {% endif %}
         {% if user.likes is not empty %}
-            <a href="{{ path('app_my_likes') }}" class="btn btn-gray">{{ ux_icon('mdi:heart', { class: 'w-5 h-5' }) }}Mes likes ({{ user.likes|length }})</a>
+            <a href="{{ path('app_my_likes') }}" class="btn btn-gray">{{ ux_icon('mdi:heart', { class: 'w-5 h-5' }) }}{{ 'my.likes'|trans }} ({{ user.likes|length }})</a>
         {% endif %}
     </nav>
 </section>

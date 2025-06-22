@@ -20,25 +20,28 @@ class UserType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'attr' => [
-                    'placeholder' => 'Email',
+                    'placeholder' => 'email',
                     'maxlength' => 64
                 ],
                 'constraints' => [
                     new Length([
                         'max' => 64,
-                        'maxMessage' => 'Cannot be longer than {{ limit }} characters'
+                        'maxMessage' => 'form.maxLength',
                     ])
                 ]
             ])
             ->add('username', TextType::class, [
                 'attr' => [
-                    'placeholder' => 'Username',
+                    'placeholder' => 'username',
+                    'minlength' => 4,
                     'maxlength' => 32
                 ],
                 'constraints' => [
                     new Length([
+                        'min' => 4,
+                        'minMessage' => 'form.minLength',
                         'max' => 32,
-                        'maxMessage' => 'Cannot be longer than {{ limit }} characters'
+                        'maxMessage' => 'form.maxLength'
                     ])
                 ]
             ])
@@ -46,13 +49,13 @@ class UserType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'rows' => 10,
-                    'placeholder' => 'Write your bio here, explain your work, passion, inspiration and what brings you',
-                    'maxlength' => 1024
+                    'placeholder' => 'form.profile.bio',
+                    'maxlength' => 1000
                 ],
                 'constraints' => [
                     new Length([
-                        'max' => 1024,
-                        'maxMessage' => 'Cannot be longer than {{ limit }} characters'
+                        'max' => 1000,
+                        'maxMessage' => 'form.maxlength'
                     ])
                 ]
             ])
@@ -61,23 +64,24 @@ class UserType extends AbstractType
                 'required' => false,
                 'mapped' => false,
                 'first_options' => [
-                    'label' => 'New password',
                     'attr' => [
-                        'placeholder' => 'New password (128 max)',
-                        'autocomplete' => 'new-password'],
+                        'placeholder' => 'form.profile.password.new',
+                        'autocomplete' => 'new-password',
+                    ],
                     'constraints' => [
                         new Length([
                             'min' => 8,
-                            'minMessage' => 'Your password should be at least {{ limit }} characters',
+                            'minMessage' => 'form.minLength',
                             'max' => 128,
+                            'maxMessage' => 'form.maxLength',
                         ]),
                     ],
                 ],
                 'second_options' => [
-                    'label' => 'Repeat password',
                     'attr' => [
-                        'placeholder' => 'Repeat password',
-                        'autocomplete' => 'new-password'],
+                        'placeholder' => 'form.profile.password.confirm',
+                        'autocomplete' => 'new-password'
+                    ],
                 ],
                 'invalid_message' => 'The password fields must match.',
             ])

@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
-{% block title %}My Conversations{% endblock %}
+{% block title %}{{ 'my.orders'|trans }}{% endblock %}
 {% block body %}
 <section class="base main-color">
     {{ include('components/_nav.html.twig') }}
     <section class="w-full border-b border-gray-300 dark:border-gray-600 pb-2 sm:pb-4">
-        <h2 class="text-3xl font-semibold">My Orders</h2>
-        <p class="secondary-text mt-1">Voici la liste de vos commandes</p>
+        <h2 class="text-3xl font-semibold">{{ 'my.orders'|trans }}</h2>
+        <p class="secondary-text mt-1">{{ 'my.orders.list'|trans }}</p>
     </section>
 
     {% if orders is empty %}
-        <p class="secondary-text">{{'conversation.none'|trans}}</p>
+        <p class="secondary-text">{{'order.none'|trans}}</p>
     {% else %}
         <ul class="w-full space-y-2 sm:space-y-4">
             {% for order in orders %}
@@ -30,11 +30,11 @@
                     </div>
                     <div class="flex flex-col items-end gap-2">
                         {% if app.user is same as(order.artist) and order.conversation.isDeletedByArtist() %}
-                            <p class="text-sm font-semibold italic text-gray-500">Conversation deleted</p>
+                            <p class="text-sm font-semibold italic text-gray-500">{{ 'conversation.deleted'|trans }}</p>
                         {% elseif app.user is same as(order.client) and order.conversation.isDeletedByClient() %}
-                            <p class="text-sm font-semibold italic text-gray-500">Conversation deleted</p>
+                            <p class="text-sm font-semibold italic text-gray-500">{{ 'conversation.deleted'|trans }}</p>
                         {% else %}
-                            <a href="{{ path('app_conversation', {recipient: app.user is same as order.artist ? order.client.id : order.artist.id, conversation: order.conversation.id}) }}" class="btn btn-gray">{{ ux_icon('mdi:arrow-right', { class: 'w-5 h-5' }) }}<span class="md">{{'conversation.show'|trans}}</span></a>
+                            <a href="{{ path('app_conversation', {recipient: app.user is same as order.artist ? order.client.id : order.artist.id, conversation: order.conversation.id}) }}" class="btn btn-gray">{{ ux_icon('mdi:arrow-right', { class: 'w-5 h-5' }) }}<span class="md">{{'see'|trans}}</span></a>
                         {% endif %}
 
                         {% if order.status == 'pending' or order.status == 'completed' or order.status == 'cancelled'%}

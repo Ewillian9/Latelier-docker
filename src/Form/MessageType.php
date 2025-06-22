@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Message;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,8 +16,14 @@ class MessageType extends AbstractType
         $builder
             ->add('content', TextareaType::class, [
             'attr' => [
-                'placeholder' => 'Type your message... (max 1000 caracteres)',
+                'placeholder' => 'form.message.placeholder',
                 'maxlength' => 1000
+            ],
+            'constraints' => [
+                new Length([
+                    'max' => 1000,
+                    'maxMessage' => 'form.message.maxlength',
+                ])
             ]
         ]);
     }
