@@ -1,6 +1,6 @@
 <header id="site-header" data-controller="header" class="fixed left-1/2 duration-300 transition-transform -translate-x-1/2 z-50 bg-zinc-100/70 dark:bg-zinc-800/70 backdrop-blur-sm rounded-xl shadow-lg w-[97%] max-w-5xl p-2 sm:p-4 top-2 sm:top-4">
     <section class="flex justify-between items-center gap-2 sm:gap-4">
-        <a href="{{ path('app_artwork_index') }}" class="flex items-center gap-1 text-2xl font-bold">{{ ux_icon('ic:round-home', { class: 'w-6 h-6' }) }}<span class="md">ADG</span></a>
+        <a href="{{ path('app_artwork_index') }}" class="flex items-center gap-1 text-2xl font-bold">{{ ux_icon('mdi:home-outline', { class: 'w-6 h-6' }) }}<span class="md">ADG</span></a>
         {% if app.request.attributes.get('_route') == 'app_artwork_index' %}
         <form method="get" action="{{ path('app_artwork_index') }}"
             data-controller="filter"
@@ -49,7 +49,7 @@
                 </ul>
             </div>
             {% if app.user %}
-                <a href="{{ path('app_profile') }}" class="btn btn-gray">{{ ux_icon('ic:outline-account-circle', { class: 'w-5 h-5' }) }}<span class="md">{{'profile'|trans}}</span></a>
+                <a href="{{ path('app_profile') }}" class="btn btn-gray">{{ ux_icon('mdi:account-outline', { class: 'w-5 h-5' }) }}<span class="md">{{'profile'|trans}}</span></a>
                 <a href="{{ path('app_logout') }}" class="btn btn-red">{{ ux_icon('mdi:logout', { class: 'w-5 h-5' }) }}<span class="md">{{'signout'|trans}}</span></a>
             {% else %}
                 {% if (app.request.attributes.get('_route') != 'app_login') and (app.request.attributes.get('_route') != 'app_register') %}
