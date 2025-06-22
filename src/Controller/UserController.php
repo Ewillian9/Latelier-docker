@@ -25,8 +25,31 @@ final class UserController extends AbstractController
             $this->addFlash('error', 'You are not connected!');
             return $this->redirectToRoute('app_login');
         }
+
+        $hasVisibleConversations = false;
+        foreach ($user->getConversations() as $c) {
+            if (!$c->isDeletedByClient()) {
+                $hasVisibleConversations = true;
+                break;
+            }
+        }
+
+        if (!$hasVisibleConversations) {
+            foreach ($user->getArtistConversations() as $c) {
+                if (!$c->isDeletedByArtist()) {
+                    $hasVisibleConversations = true;
+                    break;
+                }
+            }
+        }
+
+        $visibleClientConversations = array_filter($user->getConversations()->toArray(), fn($c) => !$c->isDeletedByClient());
+        $visibleArtistConversations = array_filter($user->getArtistConversations()->toArray(), fn($c) => !$c->isDeletedByArtist());
+        $visibleCount = count($visibleClientConversations) + count($visibleArtistConversations);
         return $this->render('user/index.html.twig', [
             'user' => $user,
+            'hasVisibleConversations' => $hasVisibleConversations,
+            'visibleConversationsCount' => $visibleCount,
         ]);
     }
 
