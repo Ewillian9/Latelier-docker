@@ -9,6 +9,8 @@ profile.info.edit: Profil bilgilerini düzenle
 profile.public: Açık profil
 profile.no.bio.add: Biyografin yok. Bir tane ekle!
 
+artist.no.artworks: Bu sanatçı henüz eser yayınlamadı
+
 my.artworks: Benim eserlerim
 my.artworks.list: Eserlerin listesi
 my.comments: Benim yorumlarım

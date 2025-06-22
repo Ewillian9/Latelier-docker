@@ -9,6 +9,8 @@ profile.info.edit: 프로필 정보 수정
 profile.public: 공개 프로필
 profile.no.bio.add: 소개글이 없습니다. 추가해보세요!
 
+artist.no.artworks: 이 아티스트는 아직 작품을 게시하지 않았습니다
+
 my.artworks: 내 작품
 my.artworks.list: 내 작품 목록
 my.comments: 내 댓글

@@ -9,6 +9,8 @@ profile.info.edit: Edit your profile information
 profile.public: Public profile
 profile.no.bio.add: You have no Bio. Add one!
 
+artist.no.artworks: This artist didnt published any artworks yet
+
 my.artworks: My artworks
 my.artworks.list: List of your artworks
 my.comments: My comments

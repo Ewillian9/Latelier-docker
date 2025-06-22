@@ -9,6 +9,8 @@ profile.info.edit: Editar informações do perfil
 profile.public: Perfil público
 profile.no.bio.add: Você não tem biografia. Adicione uma!
 
+artist.no.artworks: Este artista ainda não publicou nenhuma obra
+
 my.artworks: Minhas obras
 my.artworks.list: Lista das suas obras
 my.comments: Meus comentários

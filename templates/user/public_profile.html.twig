@@ -13,8 +13,9 @@
     {% endif %}
     
     <h3 class="text-center text-xl font-semibold">{{ 'my.artworks'|trans }}</h3>
+    {% for artwork in artist.artworks %}
     <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4">
-        {% for artwork in artist.artworks %}
+        
             <li class="rounded-lg shadow-md overflow-hidden">
                 <a href="{{ path('app_artwork_show', {'id': artwork.id}) }}">
                     {% if artwork.images|length > 0 %}
@@ -28,9 +29,9 @@
                     </figcaption>
                 </a>
             </li>
-        {% else %}
-            <li>{{ 'artist.no.artworks'|trans }}</li>
-        {% endfor %}
-    </ul>
+        </ul>
+    {% else %}
+        <p class="secondary-text text-center" >{{ 'artist.no.artworks'|trans }}</p>
+    {% endfor %}
 </section>
 {% endblock %}

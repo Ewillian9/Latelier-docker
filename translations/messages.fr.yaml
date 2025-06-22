@@ -9,6 +9,8 @@ profile.info.edit: Modifier les informations
 profile.public: Profil public
 profile.no.bio.add: Vous n'avez pas de bio. Ajoutez-en une !
 
+artist.no.artworks: Cet artiste n'a pas encore publié d'œuvres
+
 my.artworks: Mes oeuvres
 my.artworks.list: Liste de vos oeuvres
 my.comments: Mes commentaires

@@ -9,6 +9,8 @@ profile.info.edit: プロフィール情報を編集
 profile.public: 公開プロフィール
 profile.no.bio.add: 自己紹介がありません。追加してください！
 
+artist.no.artworks: このアーティストはまだ作品を公開していません
+
 my.artworks: 自分の作品
 my.artworks.list: あなたの作品一覧
 my.comments: 自分のコメント

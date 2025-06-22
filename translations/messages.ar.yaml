@@ -9,6 +9,8 @@ profile.info.edit: تعديل معلومات الملف الشخصي
 profile.public: الملف الشخصي العام
 profile.no.bio.add: لا توجد سيرة ذاتية. أضف واحدة!
 
+artist.no.artworks: لم ينشر هذا الفنان أي أعمال فنية بعد
+
 my.artworks: أعمالي الفنية
 my.artworks.list: قائمة أعمالك الفنية
 my.comments: تعليقاتي
