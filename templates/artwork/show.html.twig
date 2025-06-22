@@ -66,7 +66,7 @@
                         </nav>
                     {% endif %}
                     <p>{{ comment.content }}</p>
-                    <p class="text-sm secondary-text">{{ comment.user.username }} • {{ comment.createdAt|ago }}</p>
+                    <p class="text-xs secondary-text">{{ comment.user.username }} • {{ comment.createdAt|ago }}</p>
                 </turbo-frame>
             </article>
         {% else %}
