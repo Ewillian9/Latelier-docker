@@ -16,12 +16,18 @@
                 <li class="flex justify-between items-start rounded-xl shadow-md bg-gray-100 dark:bg-gray-900 p-2 sm:p-4">
                     <div class="flex-1">
                         {% set other = conversation.getOtherParticipant(app.user) %}
-                        <p class="text-xl font-semibold">{{ conversation.artwork.title }}</p>
+
+                        {% if conversation.artwork is not null %}
+                            <p class="text-xl font-semibold">{{ conversation.artwork.title }}</p>
+                        {% else %}
+                            <p class="text-xl font-semibold italic text-gray-500">{{ 'artwork.deleted'|trans }}</p>
+                        {% endif %}
+
                         <p class="text-sm">With {{ other.username }}</p>
                         <time datetime="{{ conversation.updatedAt|date('c') }}" class="text-xs secondary-text mt-2">{{'updated'|trans}} {{ conversation.updatedAt|ago }}</time>
                     </div>
                     <div class="flex flex-col items-end gap-2">
-                        <a href="{{ path('app_conversation', {recipient: other.id, artwork: conversation.artwork.id}) }}" class="btn btn-gray">{{ ux_icon('ic:outline-arrow-forward', { class: 'w-5 h-5' }) }}<span class="md">{{'conversation.show'|trans}}</span></a>
+                        <a href="{{ path('app_conversation', {recipient: other.id, conversation: conversation.id}) }}" class="btn btn-gray">{{ ux_icon('mdi:arrow-right', { class: 'w-5 h-5' }) }}<span class="md">{{'conversation.show'|trans}}</span></a>
                         {{ include('conversation/_delete_form.html.twig') }}
                     </div>
                 </li>
