@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('app_new_email') }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('verify' ~ user.id) }}">
+    <button class="btn btn-accent">{{ ux_icon('mdi:check-circle-outline', { class: 'w-5 h-5' }) }}{{'profile.verify'|trans}}</button>
+</form>

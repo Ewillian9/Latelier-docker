@@ -8,6 +8,7 @@ profile.info: Profil bilgilerin
 profile.info.edit: Profil bilgilerini düzenle
 profile.public: Açık profil
 profile.no.bio.add: Biyografin yok. Bir tane ekle!
+profile.verify: Hesabını etkinleştirmek için e-postanı doğrula
 
 artist.no.artworks: Bu sanatçı henüz eser yayınlamadı
 

@@ -8,6 +8,7 @@ profile.info: معلومات ملفك الشخصي
 profile.info.edit: تعديل معلومات الملف الشخصي
 profile.public: الملف الشخصي العام
 profile.no.bio.add: لا توجد سيرة ذاتية. أضف واحدة!
+profile.verify: تحقق من بريدك الإلكتروني لتفعيل حسابك
 
 artist.no.artworks: لم ينشر هذا الفنان أي أعمال فنية بعد
 

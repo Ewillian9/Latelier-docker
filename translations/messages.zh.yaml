@@ -8,6 +8,7 @@ profile.info: 您的个人资料信息
 profile.info.edit: 编辑您的个人资料信息
 profile.public: 公开资料
 profile.no.bio.add: 您还没有个人简介。添加一个吧！
+profile.verify: 请验证您的电子邮件以激活账户
 
 artist.no.artworks: 该艺术家尚未发布任何作品
 

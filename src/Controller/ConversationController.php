@@ -22,7 +22,7 @@ final class ConversationController extends AbstractController
     public function show(ConversationRepository $cr, User $recipient, Request $request, EntityManagerInterface $em, HubInterface $hub): Response
     {
         $user = $this->getUser();
-        if (!$user) {
+        if (!$user || !$user->isVerified()) {
             $this->addFlash('error', 'You must login to do that');
             return $this->redirectToRoute('app_login');
         }
@@ -123,7 +123,7 @@ final class ConversationController extends AbstractController
     public function delete(Request $request, Conversation $conversation, EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
-        if (!$user) {
+        if (!$user || !$user->isVerified()) {
             throw $this->createAccessDeniedException();
         }
 

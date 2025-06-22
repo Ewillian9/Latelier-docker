@@ -21,7 +21,7 @@
                         <span class="w-full h-48 flex items-center justify-center bg-gray-100 secondary-text text-4xl">X</span>
                     {% endif %}
 
-                    {% if app.user and artwork.artist is not same as(app.user) %}
+                    {% if app.user and artwork.artist is not same as(app.user) and app.user.isVerified() %}
                         <button
                             class="absolute top-2 right-2 z-10 w-10 h-10 bg-zinc-100/50 rounded-lg p-0.5 backdrop-blur-xs hover:scale-105 like-button transition {{ liked[artwork.id] ? 'text-amber-500' : 'text-zinc-100' }}"
                             data-controller="like"

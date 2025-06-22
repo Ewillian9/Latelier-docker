@@ -9,7 +9,7 @@
                     <img loading="lazy" data-carousel-target="mainImage" src="{{ vich_uploader_asset(image, 'imageFile') }}" alt="Image {{ artwork.title }} n°{{ loop.index }}" data-index="{{ loop.index0 }}" class="carousel-main-image w-full h-full object-cover absolute top-0 left-0 transition-opacity duration-500 ease-in-out {% if loop.first %}opacity-100 z-10{% else %}opacity-0 z-0{% endif %}">
                 {% endfor %}
 
-                {% if app.user and artwork.artist is not same as(app.user) %}
+                {% if app.user and artwork.artist is not same as(app.user) and app.user.isVerified() %}
                     <button
                         class="absolute top-2 right-2 z-10 w-10 h-10 bg-zinc-100/50 rounded-lg p-0.5 backdrop-blur-xs hover:scale-105 like-button transition {{ liked[artwork.id.toString()] ? 'text-amber-500' : 'text-zinc-100' }}"
                         data-controller="like"
@@ -74,7 +74,7 @@
         {% endfor %}
         </turbo-frame>
 
-        {% if app.user %}
+        {% if app.user and app.user.isVerified() %}
             {{ include('comment/_form.html.twig') }}
         {% else %}
             <p class="text-sm secondary-text">{{'connecttocomment'|trans}}</p>

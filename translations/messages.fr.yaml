@@ -8,6 +8,7 @@ profile.info: Informations de votre profil
 profile.info.edit: Modifier les informations
 profile.public: Profil public
 profile.no.bio.add: Vous n'avez pas de bio. Ajoutez-en une !
+profile.verify: Vérifiez votre e-mail pour activer votre compte
 
 artist.no.artworks: Cet artiste n'a pas encore publié d'œuvres
 

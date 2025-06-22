@@ -57,6 +57,26 @@ class RegistrationController extends AbstractController
         ]);
     }
 
+    #[Route('/new-email-verification', name: 'app_new_email', methods: ['POST'])]
+    public function newVerifyEmail(Request $request, Security $security): Response
+    {
+        $user = $this->getUser();
+
+        if ($user && !$user->isVerified() && $this->isCsrfTokenValid('verify'.$user->getId()->toString(), $request->getPayload()->getString('_token'))) {
+            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                (new TemplatedEmail())
+                    ->from(new Address('latelier@ewii.fun', 'Latelier de Gilles'))
+                    ->to((string) $user->getEmail())
+                    ->subject('Please Confirm your Email')
+                    ->htmlTemplate('registration/confirmation_email.html.twig')
+            );
+            $this->addFlash('success', 'A confirmation email has been sent to your email address. Please check your inbox.');
+        } else {
+            $this->addFlash('error', 'Something went wrong, please try again.');
+        }
+        return $this->redirectToRoute('app_profile', [], Response::HTTP_SEE_OTHER);
+    }
+
     #[Route('/verify/email', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, TranslatorInterface $translator, UserRepository $userRepository, Security $security): Response
     {

@@ -8,6 +8,7 @@ profile.info: 프로필 정보
 profile.info.edit: 프로필 정보 수정
 profile.public: 공개 프로필
 profile.no.bio.add: 소개글이 없습니다. 추가해보세요!
+profile.verify: 계정을 활성화하려면 이메일을 확인하세요
 
 artist.no.artworks: 이 아티스트는 아직 작품을 게시하지 않았습니다
 

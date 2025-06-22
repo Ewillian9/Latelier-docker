@@ -18,7 +18,7 @@ class LikeController extends AbstractController
     {
         $user = $this->getUser();
 
-        if (!$user) {
+        if (!$user || !$user->isVerified()) {
             throw new AccessDeniedException('You must be logged in to like artworks');
         }
 
@@ -53,7 +53,7 @@ class LikeController extends AbstractController
     {
         $user = $this->getUser();
 
-        if (!$user) {
+        if (!$user || !$user->isVerified()) {
             throw new AccessDeniedException('You must be logged in to unlike artworks');
         }
 

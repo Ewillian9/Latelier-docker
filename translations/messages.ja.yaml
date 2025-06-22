@@ -8,6 +8,7 @@ profile.info: あなたのプロフィール情報
 profile.info.edit: プロフィール情報を編集
 profile.public: 公開プロフィール
 profile.no.bio.add: 自己紹介がありません。追加してください！
+profile.verify: アカウントを有効にするためにメールを確認してください
 
 artist.no.artworks: このアーティストはまだ作品を公開していません
 

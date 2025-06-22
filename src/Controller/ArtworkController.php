@@ -37,7 +37,7 @@ final class ArtworkController extends AbstractController
         $user = $this->getUser();
         $liked = [];
 
-        if ($user) {
+        if ($user && $user->isVerified()) {
             foreach ($artworks as $artwork) {
                 $liked[$artwork->getId()->toString()] = $likeRepository->hasUserLiked($artwork, $user);
             }
@@ -104,8 +104,9 @@ final class ArtworkController extends AbstractController
     {
         $form = null;
         $liked = [];
+        $user = $this->getUser();
 
-        if ($user = $this->getUser()) {
+        if ($user && $user->isVerified()) {
             
             $liked[$artwork->getId()->toString()] = $likeRepository->hasUserLiked($artwork, $user);
          
