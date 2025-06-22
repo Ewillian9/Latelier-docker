@@ -127,15 +127,16 @@ final class ConversationController extends AbstractController
             throw $this->createAccessDeniedException();
         }
 
-        if ($user === $conversation->getClient()) {
-            $conversation->setIsDeletedByClient(true);
-        } elseif ($user === $conversation->getArtist()) {
-            $conversation->setIsDeletedByArtist(true);
-        } else {
-            throw $this->createAccessDeniedException();
-        }
-
         if ($this->isCsrfTokenValid('delete'.$conversation->getId()->toString(), $request->getPayload()->getString('_token'))) {
+
+            if ($user === $conversation->getClient()) {
+                $conversation->setIsDeletedByClient(true);
+            } elseif ($user === $conversation->getArtist()) {
+                $conversation->setIsDeletedByArtist(true);
+            } else {
+                throw $this->createAccessDeniedException();
+            }
+
             if ($conversation->isDeletedByBoth()) {
                 $em->remove($conversation);
             }
