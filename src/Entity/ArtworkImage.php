@@ -6,15 +6,19 @@ use Symfony\Component\HttpFoundation\File\File;
 use App\Repository\ArtworkImageRepository;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ArtworkImageRepository::class)]
 #[Vich\Uploadable]
 class ArtworkImage
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\Column(type: UuidType::NAME, unique: true)]
+    #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
+    private ?Uuid $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'images')]
     private ?Artwork $artwork = null;
@@ -91,7 +95,7 @@ class ArtworkImage
         return $this;
     }
 
-    public function getId(): ?int
+    public function getId(): ?Uuid
     {
         return $this->id;
     }

@@ -33,9 +33,9 @@ final class CommentController extends AbstractController
                 $em->flush();
 
                 $hub->publish(new Update(
-                    'comment' . $artwork->getId(),
+                    'comment' . $artwork->getId()->toString(),
                     $this->renderBlock('comment/comment.stream.html.twig', 'update', [
-                        'id' => $comment->getId(),
+                        'id' => $comment->getId()->toString(),
                         'comment' => $form->getData([])
                     ])
                 ));
@@ -56,14 +56,14 @@ final class CommentController extends AbstractController
             throw $this->createAccessDeniedException();
         }
         
-        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->getPayload()->getString('_token'))) {
-            $commentId = $comment->getId();
+        if ($this->isCsrfTokenValid('delete'.$comment->getId()->toString(), $request->getPayload()->getString('_token'))) {
+            $commentId = $comment->getId()->toString();
             $artwork = $comment->getArtwork();
             $em->remove($comment);
             $em->flush();
             
             $hub->publish(new Update(
-                'comment' . $artwork->getId(),
+                'comment' . $artwork->getId()->toString(),
                 $this->renderBlock('comment/comment.stream.html.twig', 'delete', [
                     'id' => $commentId,
                     'remainingCommentsCount' => $cr->count(['artwork' => $comment->getArtwork()]),

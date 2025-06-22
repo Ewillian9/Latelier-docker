@@ -16,20 +16,20 @@ final class OrderController extends AbstractController
     public function create(Request $request, Conversation $conversation, EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
-        $otherId = $conversation->getArtist() === $user ? $conversation->getClient()->getId() : $conversation->getArtist()->getId();
+        $otherId = $conversation->getArtist() === $user ? $conversation->getClient()->getId()->toString() : $conversation->getArtist()->getId()->toString();
         $artwork = $conversation->getArtwork();
 
         if (!$user || $user !== $conversation->getClient()) {
             $this->addFlash('error', 'Only the client can initiate an order');
-            return $this->redirectToRoute('app_conversation', ['recipient' => $otherId, 'artwork' => $artwork->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_conversation', ['recipient' => $otherId, 'artwork' => $artwork->getId()->toString()], Response::HTTP_SEE_OTHER);
         }
 
         if ($conversation->getOrder()) {
             $this->addFlash('info', 'An order already exists for this conversation');
-            return $this->redirectToRoute('app_conversation', ['recipient' => $otherId, 'artwork' => $artwork->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_conversation', ['recipient' => $otherId, 'artwork' => $artwork->getId()->toString()], Response::HTTP_SEE_OTHER);
         }
 
-        if ($this->isCsrfTokenValid('create'.$conversation->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('create'.$conversation->getId()->toString(), $request->getPayload()->getString('_token'))) {
             $order = new Order()
                 ->setStatus('pending')
                 ->setClient($user)
@@ -43,7 +43,7 @@ final class OrderController extends AbstractController
         } else {
             $this->addFlash('error', 'Something when wrong, please reload the page');
         }
-        return $this->redirectToRoute('app_conversation', ['recipient' => $otherId, 'artwork' => $artwork->getId()], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_conversation', ['recipient' => $otherId, 'artwork' => $artwork->getId()->toString()], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('order/delete/{id}', name: 'app_order_delete', methods: ['POST'])]
@@ -61,7 +61,7 @@ final class OrderController extends AbstractController
             return $this->redirectToRoute('app_my_orders', [], Response::HTTP_SEE_OTHER);
         }
 
-        if ($this->isCsrfTokenValid('delete'.$order->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$order->getId()->toString(), $request->getPayload()->getString('_token'))) {
             $conversation = $order->getConversation();
             $conversation->setOrder(null);
 
@@ -83,15 +83,15 @@ final class OrderController extends AbstractController
 
         if (!$user || $user !== $conversation->getArtist()) {
             $this->addFlash('error', 'Only the owner of the artwork can accept the related order');
-            return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getClient()->getId(), 'artwork' => $conversation->getArtwork()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getClient()->getId()->toString(), 'artwork' => $conversation->getArtwork()->getId()->toString()], Response::HTTP_SEE_OTHER);
         }
 
         if ($order->getStatus() !== 'pending') {
             $this->addFlash('info', 'Only pending orders can be accepted');
-            return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getClient()->getId(), 'artwork' => $conversation->getArtwork()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getClient()->getId()->toString(), 'artwork' => $conversation->getArtwork()->getId()->toString()], Response::HTTP_SEE_OTHER);
         }
 
-        if ($this->isCsrfTokenValid('accept'.$order->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('accept'.$order->getId()->toString(), $request->getPayload()->getString('_token'))) {
             $order->setStatus('accepted');
             $em->flush();
 
@@ -99,7 +99,7 @@ final class OrderController extends AbstractController
         } else {
             $this->addFlash('error', 'Something when wrong, please reload the page');
         }
-        return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getClient()->getId(), 'artwork' => $conversation->getArtwork()->getId()], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getClient()->getId()->toString(), 'artwork' => $conversation->getArtwork()->getId()->toString()], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/order/{id}/complete', name: 'app_order_complete', methods: ['POST'])]
@@ -110,15 +110,15 @@ final class OrderController extends AbstractController
 
         if (!$user || $user !== $conversation->getArtist()) {
             $this->addFlash('error', 'Only the owner of the artwork can complete the related order');
-            return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getClient()->getId(), 'artwork' => $conversation->getArtwork()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getClient()->getId()->toString(), 'artwork' => $conversation->getArtwork()->getId()->toString()], Response::HTTP_SEE_OTHER);
         }
 
         if ($order->getStatus() !== 'accepted') {
             $this->addFlash('info', 'Order must be accepted before completion.');
-            return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getClient()->getId(), 'artwork' => $conversation->getArtwork()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getClient()->getId()->toString(), 'artwork' => $conversation->getArtwork()->getId()->toString()], Response::HTTP_SEE_OTHER);
         }
 
-        if ($this->isCsrfTokenValid('complete'.$order->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('complete'.$order->getId()->toString(), $request->getPayload()->getString('_token'))) {
             $order->setStatus('completed');
             $em->flush();
 
@@ -126,7 +126,7 @@ final class OrderController extends AbstractController
         } else {
             $this->addFlash('error', 'Something when wrong, please reload the page');
         }
-        return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getClient()->getId(), 'artwork' => $conversation->getArtwork()->getId()], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_conversation', ['recipient' => $conversation->getClient()->getId()->toString(), 'artwork' => $conversation->getArtwork()->getId()->toString()], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/order/{id}/cancel', name: 'app_order_cancel', methods: ['POST'])]
@@ -134,24 +134,24 @@ final class OrderController extends AbstractController
     {
         $user = $this->getUser();
         $conversation = $order->getConversation();
-        $otherId = $conversation->getArtist() === $user ? $conversation->getClient()->getId() : $conversation->getArtist()->getId();
+        $otherId = $conversation->getArtist() === $user ? $conversation->getClient()->getId()->toString() : $conversation->getArtist()->getId()->toString();
 
         if (!$user || ($user !== $conversation->getArtist() && $user !== $conversation->getClient())) {
             $this->addFlash('error', 'Only the owner of the artwork can cancel the related order');
-            return $this->redirectToRoute('app_conversation', ['recipient' => $otherId, 'artwork' => $conversation->getArtwork()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_conversation', ['recipient' => $otherId, 'artwork' => $conversation->getArtwork()->getId()->toString()], Response::HTTP_SEE_OTHER);
         }
 
         if ($order->getStatus() === 'completed') {
             $this->addFlash('info', 'Completed order cannot be cancelled');
-            return $this->redirectToRoute('app_conversation', ['recipient' => $otherId, 'artwork' => $conversation->getArtwork()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_conversation', ['recipient' => $otherId, 'artwork' => $conversation->getArtwork()->getId()->toString()], Response::HTTP_SEE_OTHER);
         }
 
         if ($user === $order->getClient() && $order->getStatus() === 'accepted') {
             $this->addFlash('info', 'Completed order cannot be cancelled.');
-            return $this->redirectToRoute('app_conversation', ['recipient' => $otherId, 'artwork' => $conversation->getArtwork()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_conversation', ['recipient' => $otherId, 'artwork' => $conversation->getArtwork()->getId()->toString()], Response::HTTP_SEE_OTHER);
         }
 
-        if ($this->isCsrfTokenValid('cancel'.$order->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('cancel'.$order->getId()->toString(), $request->getPayload()->getString('_token'))) {
             $order->setStatus('cancelled');
             $em->flush();
 
@@ -159,7 +159,7 @@ final class OrderController extends AbstractController
         } else {
             $this->addFlash('error', 'Something when wrong, please reload the page');
         }
-        return $this->redirectToRoute('app_conversation', ['recipient' => $otherId, 'artwork' => $conversation->getArtwork()->getId()], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_conversation', ['recipient' => $otherId, 'artwork' => $conversation->getArtwork()->getId()->toString()], Response::HTTP_SEE_OTHER);
     }
 
 }

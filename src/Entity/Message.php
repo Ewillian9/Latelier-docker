@@ -5,15 +5,19 @@ namespace App\Entity;
 use App\Repository\MessageRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class Message
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\Column(type: UuidType::NAME, unique: true)]
+    #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
+    private ?Uuid $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
@@ -27,7 +31,7 @@ class Message
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    public function getId(): ?int
+    public function getId(): ?Uuid
     {
         return $this->id;
     }

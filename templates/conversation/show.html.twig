@@ -1,15 +1,24 @@
 {% extends 'base.html.twig' %}
 {% block title %}Conversation{% endblock %}
 {% block body %}
-<section class="base main-color">
+<section class="base main-color" {{ turbo_stream_listen(topic ~ app.user.id) }}>
     {{ include('components/_nav.html.twig') }}
-    <a href="{{ path('app_artwork_show', {'id': conversation.artwork.id}) }}" class="flex gap-2 text-xl font-semibold" {{ turbo_stream_listen(topic ~ app.user.id) }}>
-        {% set firstImage = conversation.artwork.images|first %}
-        {% if firstImage %}
-            <img src="{{ vich_uploader_asset(firstImage, 'imageFile') }}" alt="Artwork thumbnail" class="w-16 h-16 object-cover rounded-md">
-        {% endif %}
-        {{conversation.artwork.title}}
-    </a>
+    {% if conversation.artwork is not null %}
+        <a href="{{ path('app_artwork_show', {'id': conversation.artwork.id}) }}" class="flex gap-2 text-xl font-semibold">
+            {% set firstImage = conversation.artwork.images|first %}
+            {% if firstImage %}
+                <img src="{{ vich_uploader_asset(firstImage, 'imageFile') }}" alt="Artwork thumbnail" class="w-16 h-16 object-cover rounded-md">
+            {% endif %}
+            {{conversation.artwork.title}}
+        </a>
+    {% else %}
+        <div class="flex items-center gap-2 text-xl font-semibold text-gray-500">
+            <div class="w-16 h-16 bg-gray-300 dark:bg-gray-700 rounded-md flex items-center justify-center">
+                {{ ux_icon('mdi:cancel-outline', { class: 'w-5 h-5' }) }}
+            </div>
+            <span class="italic">{{ 'Artwork deleted'|trans }}</span>
+        </div>
+    {% endif %}
     <div data-controller="scroll" data-scroll-target="container" data-action="turbo:before-stream-render@window->scroll#scrollToMessage" id="messages_artwork" class="flex flex-col gap-2 overflow-y-auto max-h-[400px] px-2">
     {% for message in messages %}
         {% set isOwn = message.sender == app.user %}

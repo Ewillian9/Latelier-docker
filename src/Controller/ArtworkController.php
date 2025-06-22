@@ -39,7 +39,7 @@ final class ArtworkController extends AbstractController
 
         if ($user) {
             foreach ($artworks as $artwork) {
-                $liked[$artwork->getId()] = $likeRepository->hasUserLiked($artwork, $user);
+                $liked[$artwork->getId()->toString()] = $likeRepository->hasUserLiked($artwork, $user);
             }
         }
         $referer = $request->headers->get('referer');
@@ -91,7 +91,7 @@ final class ArtworkController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', 'Your artwork is online!');
-            return $this->redirectToRoute('app_artwork_show', ['id' => $artwork->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_artwork_show', ['id' => $artwork->getId()->toString()], Response::HTTP_SEE_OTHER);
         }
         return $this->render('artwork/new.html.twig', [
             'artwork' => $artwork,
@@ -107,7 +107,7 @@ final class ArtworkController extends AbstractController
 
         if ($user = $this->getUser()) {
             
-            $liked[$artwork->getId()] = $likeRepository->hasUserLiked($artwork, $user);
+            $liked[$artwork->getId()->toString()] = $likeRepository->hasUserLiked($artwork, $user);
          
 
             $comment = new Comment()
@@ -123,7 +123,7 @@ final class ArtworkController extends AbstractController
                 $em->flush();
 
                 $hub->publish(new Update(
-                    'comment' . $artwork->getId(),
+                    'comment' . $artwork->getId()->toString(),
                     $this->renderBlock('comment/comment.stream.html.twig', 'create', [
                         'comment' => $form->getData([]),
                         'form' => $emptyForm
@@ -169,7 +169,7 @@ final class ArtworkController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', 'Your artwork was edited sucessfully!');
-            return $this->redirectToRoute('app_artwork_show', ['id' => $artwork->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_artwork_show', ['id' => $artwork->getId()->toString()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('artwork/edit.html.twig', [
@@ -185,7 +185,11 @@ final class ArtworkController extends AbstractController
             throw $this->createAccessDeniedException();
         }
         
-        if ($this->isCsrfTokenValid('delete'.$artwork->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$artwork->getId()->toString(), $request->getPayload()->getString('_token'))) {
+            $conversations = $artwork->getConversations();
+            foreach ($conversations as $conversation) {
+                $conversation->setArtwork(null);
+            }
             $em->remove($artwork);
             $em->flush();
 

@@ -5,7 +5,7 @@
         {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ARTIST') %}
             <figure class="main-color rounded-lg shadow-md overflow-hidden">
                 <a href="{{ path('app_artwork_new') }}">
-                    <span class="w-full h-48 flex items-center justify-center bg-gray-100 secondary-text">{{ ux_icon('ic:outline-plus', { class: 'w-16 h-16' }) }}</span>
+                    <span class="w-full h-48 flex items-center justify-center bg-gray-100 secondary-text">{{ ux_icon('mdi:plus', { class: 'w-16 h-16' }) }}</span>
                     <figcaption class="p-2 sm:p-4">
                         <h2 class="text-lg font-semibold">{{'artwork.new'|trans}}</h2>
                         <p class="text-sm secondary-text">{{'artwork.new.decription'|trans}}</p>
@@ -24,10 +24,10 @@
 
                     {% if app.user and artwork.artist is not same as(app.user) %}
                         <button
-                            class="absolute top-2 right-2 z-10 w-10 h-10 bg-zinc-100/50 rounded-lg p-0.5 backdrop-blur-xs hover:scale-105 like-button transition {{ liked[artwork.id] ? 'text-amber-500' : 'text-zinc-100' }}"
+                            class="absolute top-2 right-2 z-10 w-10 h-10 bg-zinc-100/50 rounded-lg p-0.5 backdrop-blur-xs hover:scale-105 like-button transition {{ liked[artwork.id.toString()] ? 'text-amber-500' : 'text-zinc-100' }}"
                             data-controller="like"
                             data-like-artwork-id-value="{{ artwork.id }}"
-                            data-like-liked-value="{{ liked[artwork.id] ? 'true' : 'false' }}"
+                            data-like-liked-value="{{ liked[artwork.id.toString()] ? 'true' : 'false' }}"
                             data-like-url-prefix-value="{{ path('artwork_like', {'id': artwork.id})|replace({'/like': ''}) }}"
                             data-action="click->like#toggle"
                             data-like-target="icon">

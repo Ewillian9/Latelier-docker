@@ -11,10 +11,10 @@
 
                 {% if app.user and artwork.artist is not same as(app.user) %}
                     <button
-                        class="absolute top-2 right-2 z-10 w-10 h-10 bg-zinc-100/50 rounded-lg p-0.5 backdrop-blur-xs hover:scale-105 like-button transition {{ liked[artwork.id] ? 'text-amber-500' : 'text-zinc-100' }}"
+                        class="absolute top-2 right-2 z-10 w-10 h-10 bg-zinc-100/50 rounded-lg p-0.5 backdrop-blur-xs hover:scale-105 like-button transition {{ liked[artwork.id.toString()] ? 'text-amber-500' : 'text-zinc-100' }}"
                         data-controller="like"
                         data-like-artwork-id-value="{{ artwork.id }}"
-                        data-like-liked-value="{{ liked[artwork.id] ? 'true' : 'false' }}"
+                        data-like-liked-value="{{ liked[artwork.id.toString()] ? 'true' : 'false' }}"
                         data-like-url-prefix-value="{{ path('artwork_like', {'id': artwork.id})|replace({'/like': ''}) }}"
                         data-action="click->like#toggle"
                         data-like-target="icon">
@@ -43,18 +43,14 @@
         <section class="space-y-4">
             <h2 class="text-3xl font-bold">{{ artwork.title }}</h2>
             <p>{{ artwork.description|default('No description.') }}</p>
-            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ARTIST') %}
-                <ul class="flex flex-wrap gap-2">
-                    {% for keyword in artwork.keywords|split(',') %}
-                        <li class="bg-gray-200 dark:bg-gray-700 text-sm secondary-text px-3 py-1 rounded-full">{{ keyword|trim }}</li>
-                    {% endfor %}
-                </ul>
-                <p class="text-xs secondary-text">{{'updated'|trans}} <time datetime="{{ artwork.updatedAt ? artwork.updatedAt|date('c') : '' }}">{{ artwork.updatedAt ? artwork.updatedAt|ago : 'NaN' }}</time></p>
-            {% endif %}
+            
+            <ul class="flex flex-wrap gap-2">
+                {% for keyword in artwork.keywords|split(',') %}
+                    <li class="bg-gray-200 dark:bg-gray-700 text-sm secondary-text px-3 py-1 rounded-full">{{ keyword|trim }}</li>
+                {% endfor %}
+            </ul>
+            <p class="text-xs secondary-text">{{'updated'|trans}} <time datetime="{{ artwork.updatedAt ? artwork.updatedAt|date('c') : '' }}">{{ artwork.updatedAt ? artwork.updatedAt|ago : 'NaN' }}</time></p>
             <p class="text-xs secondary-text">{{'added'|trans}} <time datetime="{{ artwork.createdAt ? artwork.createdAt|date('c') : '' }}">{{ artwork.createdAt ? artwork.createdAt|ago : 'NaN' }}</time> {{'by'|trans}} <a href="{{ path('app_artist_profile', {'username': artwork.artist.username}) }}">{{ artwork.artist.username }}</a></p>
-            {% if app.user != artwork.artist %}
-                <a href="{{ path('app_conversation', {recipient: artwork.artist.id, artwork: artwork.id}) }}" class="inline-block mt-4 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium rounded-lg shadow">💬 {{ 'artwork.talk.to'|trans }} {{ artwork.artist.username }}</a>
-            {% endif %}
         </section>
     </section>
 
@@ -65,7 +61,7 @@
                 <turbo-frame id="comment_edit_{{ comment.id }}">
                     {% if app.user == comment.user or is_granted('ROLE_ADMIN') %}
                         <nav aria-label="Comment actions" class="flex gap-2 text-sm">
-                            <a href="{{ path('app_comment_edit', {'id': comment.id}) }}" class="btn btn-blue" data-turbo-frame="comment_edit_{{ comment.id }}">{{ ux_icon('ic:outline-edit', { class: 'w-5 h-5' }) }}<span class="md">{{'edit'|trans}}</span></a>
+                            <a href="{{ path('app_comment_edit', {'id': comment.id}) }}" class="btn btn-gray" data-turbo-frame="comment_edit_{{ comment.id }}">{{ ux_icon('mdi:edit-outline', { class: 'w-5 h-5' }) }}<span class="md">{{'edit'|trans}}</span></a>
                             {{ include('comment/_delete_form.html.twig', {'comment': comment}) }}
                         </nav>
                     {% endif %}

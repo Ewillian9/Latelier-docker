@@ -6,15 +6,19 @@ use App\Repository\ConversationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ConversationRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class Conversation
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\Column(type: UuidType::NAME, unique: true)]
+    #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
+    private ?Uuid $id = null;
 
     #[ORM\OneToOne(inversedBy: 'conversation', cascade: ['persist', 'remove'])]
     private ?Order $order = null;
@@ -34,7 +38,7 @@ class Conversation
     #[ORM\ManyToOne(inversedBy: 'conversations')]
     private ?User $client = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'artistConversations')]
     private ?User $artist = null;
 
     #[ORM\ManyToOne(inversedBy: 'conversations')]
@@ -56,7 +60,7 @@ class Conversation
         return $this->isDeletedByClient && $this->isDeletedByArtist;
     }
 
-    public function getId(): ?int
+    public function getId(): ?Uuid
     {
         return $this->id;
     }

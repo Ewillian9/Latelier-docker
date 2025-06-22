@@ -26,36 +26,52 @@ final class ConversationController extends AbstractController
             $this->addFlash('error', 'You must login to do that');
             return $this->redirectToRoute('app_login');
         }
-        
-        $artworkId = $request->query->get('artwork');
-        $artwork = $em->getRepository(Artwork::class)->find($artworkId);
-        if (!$artwork) {
-            $this->addFlash('error', 'The artwork is missing to create a conversation');
-            return $this->redirectToRoute('app_artwork_index');
-        }
-        
-        if ($user === $recipient) {
-            $this->addFlash('error', 'You cannot create a conversation with yourself');
-            return $this->redirectToRoute('app_artwork_index');
-        }
 
-        $conversation = $cr->findOneByUsersAndArtwork($user, $recipient, $artwork);
-        
-        if (!$conversation) {
-            if ($recipient !== $artwork->getArtist()) {
-                $this->addFlash('error', 'Artist/Client/Artwork missmatch');
+        $conversationId = $request->query->get('conversation');
+        $artworkId = $request->query->get('artwork');
+        if ($conversationId) {
+            $conversation = $cr->find($conversationId);
+
+            if (!$conversation || !$conversation->isParticipant($user)) {
+                $this->addFlash('error', 'Conversation not found or access denied');
                 return $this->redirectToRoute('app_artwork_index');
             }
 
-            $conversation = new Conversation()
-                ->setArtwork($artwork)
-                ->setClient($user)
-                ->setArtist($recipient);
+            $artwork = $conversation->getArtwork();
+        } elseif ($artworkId) {
+            $artwork = $em->getRepository(Artwork::class)->find($artworkId);
+
+            if (!$artwork) {
+                $this->addFlash('error', 'The artwork is missing to create a conversation');
+                return $this->redirectToRoute('app_artwork_index');
+            }
+
+            if ($user === $recipient) {
+                $this->addFlash('error', 'You cannot create a conversation with yourself');
+                return $this->redirectToRoute('app_artwork_index');
+            }
+
+            $conversation = $cr->findOneByUsersAndArtwork($user, $recipient, $artwork);
+
+            if (!$conversation) {
+                if ($recipient !== $artwork->getArtist()) {
+                    $this->addFlash('error', 'Artist/Client/Artwork missmatch');
+                    return $this->redirectToRoute('app_artwork_index');
+                }
+
+                $conversation = new Conversation()
+                    ->setArtwork($artwork)
+                    ->setClient($user)
+                    ->setArtist($recipient);
+            }
+        } else {
+            $this->addFlash('error', 'Missing artwork or conversation ID');
+            return $this->redirectToRoute('app_artwork_index');
         }
 
-        $ids = [$user->getId(), $recipient->getId()];
+        $ids = [$user->getId()->toString(), $recipient->getId()->toString()];
         sort($ids);
-        $topic = sprintf('%d%d%d', $ids[0], $ids[1], $artwork->getId());
+        $topic = sprintf('%s%s%s', $ids[0], $ids[1], $artwork?->getId()?->toString() ?? $conversation->getId()->toString());
 
         $message = new Message()
             ->setSender($user);
@@ -81,14 +97,14 @@ final class ConversationController extends AbstractController
             $em->persist($message);
             $em->flush();
 
-            foreach ([$user, $recipient] as $recipient) {
+            foreach ([$user, $recipient] as $recipientUser) {
                 $hub->publish(new Update(
-                    $topic . $recipient->getId(),
+                    $topic . $recipientUser->getId()->toString(),
                     $this->renderBlock('conversation/message.stream.html.twig', 'create', [
                         'conversation' => $conversation,
                         'message' => $message,
-                        'user' => $recipient === $user ? $user : $recipient,
-                        'form' => $recipient === $user ? $emptyForm : null
+                        'user' => $recipientUser === $user ? $user : $recipientUser,
+                        'form' => $recipientUser === $user ? $emptyForm : null
                     ])
                 ));
             }
@@ -119,7 +135,7 @@ final class ConversationController extends AbstractController
             throw $this->createAccessDeniedException();
         }
 
-        if ($this->isCsrfTokenValid('delete'.$conversation->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$conversation->getId()->toString(), $request->getPayload()->getString('_token'))) {
             if ($conversation->isDeletedByBoth()) {
                 $em->remove($conversation);
             }

@@ -7,15 +7,19 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ArtworkRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class Artwork
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\Column(type: UuidType::NAME, unique: true)]
+    #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
+    private ?Uuid $id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $title = null;
@@ -75,7 +79,7 @@ class Artwork
         $this->likes = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): ?Uuid
     {
         return $this->id;
     }

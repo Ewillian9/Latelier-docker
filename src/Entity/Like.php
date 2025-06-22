@@ -4,6 +4,9 @@ namespace App\Entity;
 
 use App\Repository\LikeRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: LikeRepository::class)]
 #[ORM\Table(name: '`like`')]
@@ -11,9 +14,10 @@ use Doctrine\ORM\Mapping as ORM;
 class Like
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\Column(type: UuidType::NAME, unique: true)]
+    #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
+    private ?Uuid $id = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -24,7 +28,7 @@ class Like
     #[ORM\ManyToOne(inversedBy: 'likes')]
     private ?User $client = null;
 
-    public function getId(): ?int
+    public function getId(): ?Uuid
     {
         return $this->id;
     }
