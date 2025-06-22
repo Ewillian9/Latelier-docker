@@ -1,16 +1,24 @@
 <nav aria-label="Artwork actions" class="flex justify-between items-center">
-    <button data-controller="back-button" data-action="click->back-button#goBack" class="btn btn-gray">{{ ux_icon('ic:outline-arrow-back', { class: 'w-5 h-5' }) }}<span class="md">{{'back'|trans}}</span></button>
-    {% if app.request.attributes.get('_route') == 'app_artwork_show' and (is_granted('ROLE_ADMIN') or artwork.artist == app.user) %}
-        <ul class="flex gap-2 sm:gap-4">
-            <li><a href="{{ path('app_artwork_edit', {'id': artwork.id}) }}" class="btn btn-gray">{{ ux_icon('ic:outline-edit', { class: 'w-5 h-5' }) }}<span class="md">{{'edit'|trans}}</span></a></li>
-            <li>{{ include('artwork/_delete_form.html.twig') }}</li>
-        </ul>
+    <button data-controller="back-button" data-action="click->back-button#goBack" class="btn btn-gray">{{ ux_icon('mdi:arrow-left', { class: 'w-5 h-5' }) }}<span class="md">{{'back'|trans}}</span></button>
+    
+    {% if app.request.attributes.get('_route') == 'app_artwork_show' %}
+        {% if app.user != artwork.artist %}
+            <a href="{{ path('app_conversation', {recipient: artwork.artist.id, artwork: artwork.id}) }}" class="btn btn-accent">{{ ux_icon('mdi:conversation-plus-outline', { class: 'w-5 h-5' }) }}{{ 'artwork.talk.to'|trans }} {{ artwork.artist.username }}</a>
+        {% endif %}
+        {% if (is_granted('ROLE_ADMIN') or artwork.artist == app.user) %}
+            <ul class="flex gap-2 sm:gap-4">
+                <li><a href="{{ path('app_artwork_edit', {'id': artwork.id}) }}" class="btn btn-gray">{{ ux_icon('mdi:edit-outline', { class: 'w-5 h-5' }) }}<span class="md">{{'edit'|trans}}</span></a></li>
+                <li>{{ include('artwork/_delete_form.html.twig') }}</li>
+            </ul>
+        {% endif %}
     {% endif %}
+    
     {% if app.request.attributes.get('_route') is same as('app_profile') %}
-        <a href="{{ path('app_profile_edit') }}" class="btn btn-gray">{{ ux_icon('ic:outline-edit', { class: 'w-5 h-5' }) }}<span class="md">{{'edit'|trans}}</span></a>
+        <a href="{{ path('app_profile_edit') }}" class="btn btn-gray">{{ ux_icon('mdi:account-edit-outline', { class: 'w-5 h-5' }) }}<span class="md">{{'edit'|trans}}</span></a>
     {% endif %}
-    {% if conversation is defined and app.request.attributes.get('_route') == 'app_conversation' %}
-        {% set isArtist = (artwork.artist == app.user) %}
+
+    {% if app.request.attributes.get('_route') is same as('app_conversation') and conversation.artwork is not null %}
+        {% set isArtist = conversation.artwork is not null and artwork.artist == app.user %}
         {% set order = conversation.order %}
 
         <div class="flex gap-2 sm:gap-4">
