@@ -15,8 +15,13 @@
             {% for order in orders %}
                 <li class="flex justify-between items-start rounded-xl shadow-md bg-gray-100 dark:bg-gray-900 p-2 sm:p-4">
                     <div class="flex-1">
-                        <p class="text-xl font-semibold">{{ order.artwork.title }}</p>
-                        {% if app.user is same as(order.artwork.artist) %}
+                        {% if order.artwork is not null %}
+                            <p class="text-xl font-semibold">{{ order.artwork.title }}</p>
+                        {% else %}
+                            <p class="text-xl font-semibold italic text-gray-500">{{ 'artwork.deleted'|trans }}</p>
+                        {% endif %}
+
+                        {% if app.user is same as(order.artist) %}
                             <p class="text-sm">With {{ order.client.username }}</p>
                         {% else %}
                             <p class="text-sm">With {{ order.artist.username }}</p>
@@ -24,7 +29,14 @@
                         <time datetime="{{ order.updatedAt|date('c') }}" class="text-xs secondary-text mt-2">{{'updated'|trans}} {{ order.updatedAt|ago }}</time>
                     </div>
                     <div class="flex flex-col items-end gap-2">
-                        <a href="{{ path('app_conversation', {recipient: app.user is same as order.artwork.artist ? order.client.id : order.artist.id, artwork: order.artwork.id}) }}" class="btn btn-gray">{{ ux_icon('mdi:arrow-right', { class: 'w-5 h-5' }) }}<span class="md">{{'conversation.show'|trans}}</span></a>
+                        {% if app.user is same as(order.artist) and order.conversation.isDeletedByArtist() %}
+                            <p class="text-sm font-semibold italic text-gray-500">Conversation deleted</p>
+                        {% elseif app.user is same as(order.client) and order.conversation.isDeletedByClient() %}
+                            <p class="text-sm font-semibold italic text-gray-500">Conversation deleted</p>
+                        {% else %}
+                            <a href="{{ path('app_conversation', {recipient: app.user is same as order.artist ? order.client.id : order.artist.id, conversation: order.conversation.id}) }}" class="btn btn-gray">{{ ux_icon('mdi:arrow-right', { class: 'w-5 h-5' }) }}<span class="md">{{'conversation.show'|trans}}</span></a>
+                        {% endif %}
+
                         {% if order.status == 'pending' or order.status == 'completed' or order.status == 'cancelled'%}
                             {{ include('order/_delete_form.html.twig') }}
                         {% endif %}

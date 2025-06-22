@@ -187,8 +187,13 @@ final class ArtworkController extends AbstractController
         
         if ($this->isCsrfTokenValid('delete'.$artwork->getId()->toString(), $request->getPayload()->getString('_token'))) {
             $conversations = $artwork->getConversations();
+            $orders = $artwork->getOrders();
+            
             foreach ($conversations as $conversation) {
                 $conversation->setArtwork(null);
+            }
+            foreach ($orders as $order) {
+                $order->setArtwork(null);
             }
             $em->remove($artwork);
             $em->flush();
