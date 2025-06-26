@@ -28,6 +28,7 @@ artwork.new.decription: 点击这里添加新作品
 artwork.new: 新作品
 artwork.none: 您还没有发布任何作品
 artwork.talk.to: 与……开始对话
+artwork.deleted: 作品已删除
 
 form.maxLength: 不能超过 {{ limit }} 个字符
 form.minLength: 不能少于 {{ limit }} 个字符

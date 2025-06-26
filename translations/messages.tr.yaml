@@ -28,6 +28,7 @@ artwork.new.decription: Yeni eser eklemek için tıklayın
 artwork.new: Yeni eser
 artwork.none: Henüz eser yayınlamadınız
 artwork.talk.to: İle sohbet başlat
+artwork.deleted: Eser silindi
 
 form.maxLength: karakterden uzun olamaz
 form.minLength: karakterden kısa olamaz

@@ -28,6 +28,7 @@ artwork.new.decription: Click here to add a new artwork
 artwork.new: New artwork
 artwork.none: You didn't published any artwork yet
 artwork.talk.to: Start a conversation with
+artwork.deleted: Artwork deleted
 
 form.maxLength: Cannot be longer than {{ limit }} characters
 form.minLength: Cannot be shorter than {{ limit }} characters

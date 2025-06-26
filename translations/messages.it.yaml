@@ -28,6 +28,7 @@ artwork.new.decription: Clicca qui per aggiungere una nuova opera
 artwork.new: Nuova opera
 artwork.none: Non hai ancora pubblicato nessuna opera
 artwork.talk.to: Inizia una conversazione con
+artwork.deleted: Opera eliminata
 
 form.maxLength: Non può superare {{ limit }} caratteri
 form.minLength: Non può essere inferiore a {{ limit }} caratteri

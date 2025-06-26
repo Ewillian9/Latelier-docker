@@ -28,6 +28,7 @@ artwork.new.decription: انقر هنا لإضافة عمل فني جديد
 artwork.new: عمل فني جديد
 artwork.none: لم تنشر أي عمل فني بعد
 artwork.talk.to: ابدأ محادثة مع
+artwork.deleted: تم حذف العمل الفني
 
 form.maxLength: لا يمكن أن يتجاوز حرفًا
 form.minLength: لا يمكن أن يكون أقل من حرفًا

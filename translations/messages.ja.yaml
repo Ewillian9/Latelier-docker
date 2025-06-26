@@ -28,6 +28,7 @@ artwork.new.decription: 新しい作品を追加するにはここをクリッ�
 artwork.new: 新しい作品
 artwork.none: まだ作品を公開していません
 artwork.talk.to: と会話を始める
+artwork.deleted: 作品が削除されました
 
 form.maxLength: 文字以内で入力してください
 form.minLength: 文字以上で入力してください

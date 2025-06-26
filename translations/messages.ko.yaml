@@ -28,6 +28,7 @@ artwork.new.decription: 새 작품 추가하려면 클릭하세요
 artwork.new: 새 작품
 artwork.none: 아직 작품을 게시하지 않았어요
 artwork.talk.to: 와 대화 시작하기
+artwork.deleted: 작품이 삭제되었습니다
 
 form.maxLength: 자 이하로 입력하세요
 form.minLength: 자 이상으로 입력하세요
