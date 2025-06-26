@@ -36,6 +36,22 @@
 - Generation par IA de titre, description, mots-clés (Gemma 3 14/27b)
 - Modération des utilisateurs avec strikes
 
+## Tests
+
+| ID    | Fonction testée              | Étapes                                                                 | Données d’entrée                                        | Résultat attendu                                                                 | Résultat obtenu | Statut |
+|-------|------------------------------|------------------------------------------------------------------------|---------------------------------------------------------|----------------------------------------------------------------------------------|------------------|--------|
+| T001  | Création de compte           | Aller sur `/register` → remplir formulaire → soumettre                | `email: test@test.com`, `mdp: Test1234`                  | Connecté + Redirection vers `/` + message “Confirmez votre email”               | ✅               | Pass   |
+| T002  | Champs obligatoires          | Aller sur `/register` → cliquer sans rien remplir                     | —                                                       | Affichage erreurs : “Ce champ est requis”                                       | ✅               | Pass   |
+| T003  | Email déjà utilisé           | Créer compte avec email déjà inscrit                                  | `email: exist@test.com`, `mdp: Test1234`                 | Message d’erreur : “Email déjà utilisé”                                         | ✅               | Pass   |
+| T004  | Création d’un commentaire    | Connecté → visiter œuvre → écrire commentaire → envoyer               | `commentaire: Magnifique travail !`                     | Commentaire enregistré et affiché sous l’œuvre                                  | ✅               | Pass   |
+| T005  | Modification d’un commentaire| Aller sur son commentaire → cliquer “modifier” → changer texte → valider | `nouveau texte: Encore mieux après réflexion !`       | Nouveau texte visible après édition                                             | ✅               | Pass   |
+| T006  | Suppression d’un commentaire | Aller sur son commentaire → cliquer “supprimer”                       | —                                                       | Commentaire supprimé et non visible                                             | ✅               | Pass   |
+| T007  | Création d’une œuvre         | Artiste connecté → `/artwork/new` → remplir → envoyer                 | `titre, description, image`                             | L’œuvre apparaît sur la page d’accueil ou profil                                | ✅               | Pass   |
+| T008  | Édition d’une œuvre          | Artiste connecté → modifier `/artwork/{id}`                            | `nouveau titre, nouvelle desc`                         | L’œuvre est mise à jour avec les nouvelles informations                         | ✅               | Pass   |
+| T009  | Suppression d’une œuvre      | Artiste connecté → supprimer une de ses œuvres                        | —                                                       | L’œuvre n’apparaît plus sur le site                                             | ✅               | Pass   |
+| T010  | Démarrer une conversation    | Utilisateur connecté → visiter œuvre → “Contacter l’artiste”         | `message: Bonjour…`                                      | Nouvelle conversation créée, message visible                                    | ✅               | Pass   |
+
+
 ## Getting Started
 
 1. If not already done, [install Docker Compose](https://docs.docker.com/compose/install/) (v2.10+)
